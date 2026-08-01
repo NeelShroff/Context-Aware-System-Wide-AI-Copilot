@@ -188,11 +188,14 @@ class AgentIntentRouter:
 
                 elif tool_name == "set_reminder":
                     from src.reminders_manager import RemindersManager
+                    from src.tts_engine import announce_reminder_set
                     rem_mgr = RemindersManager()
                     task = args.get("task", text_clean)
                     delay = float(args.get("delay_seconds", 300.0))
                     res_r = rem_mgr.add_reminder(task, delay)
+                    announce_reminder_set(task)
                     return {
+
                         "success": True,
                         "scenario": "REMINDER_SET",
                         "scenario_description": "Reminder Scheduled",

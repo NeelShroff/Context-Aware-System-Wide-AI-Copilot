@@ -96,18 +96,22 @@ class CopilotControlPanel(QWidget):
                 color: {self.TEXT_MAIN};
                 border: 1px solid {self.CARD_BORDER};
                 border-radius: 6px;
-                padding: 8px 12px;
-                font-family: 'Orbitron', 'Share Tech Mono', 'Rajdhani', 'Cascadia Code', 'Consolas', monospace, sans-serif;
+                padding: 7px 12px;
+                font-family: 'Share Tech Mono', 'Rajdhani', 'Cascadia Code', 'Consolas', monospace, sans-serif;
                 font-size: 10.5px;
                 font-weight: 600;
-                letter-spacing: 0.5px;
+                letter-spacing: 0.3px;
                 text-align: left;
+                min-height: 26px;
             }}
+
+
             QPushButton#card:hover {{
                 background: {self.CARD_HOVER_BG};
                 border: 1px solid {self.CARD_HOVER_BORDER};
                 color: #38bdf8;
             }}
+
             QPushButton#close_btn {{
                 background: rgba(239, 68, 68, 0.15);
                 color: #fca5a5;
@@ -207,8 +211,13 @@ class CopilotControlPanel(QWidget):
         section("AI ASSISTANT")
         card("Open AI Chatbot (Ctrl+Alt+C)", self._open_chat)
 
+        # Voice & Audio Settings
+        section("VOICE & AUDIO SETTINGS")
+        self.tts_mute_btn = card("🔊 Voice Output: ENABLED (Click to Mute)", self._toggle_tts_mute)
+
         # Workspace Context
         section("WORKSPACE CONTEXT")
+
         self.app_label_btn = card("Active: Desktop", self._show_active_context)
         card("Search Workspaces (Ctrl+Shift+P)", self._search_workspaces)
 
@@ -266,9 +275,10 @@ class CopilotControlPanel(QWidget):
         screen = QApplication.primaryScreen().availableGeometry()
         
         # Responsive scaling: calculate dynamic width and height based on screen dimensions
-        panel_w = min(400, max(320, int(screen.width() * 0.22)))
-        panel_h = min(580, max(380, screen.height() - 80))
+        panel_w = min(460, max(350, int(screen.width() * 0.25)))
+        panel_h = min(620, max(420, int(screen.height() * 0.70)))
         self.setFixedSize(panel_w, panel_h)
+
 
         pet_x = self.pet_window.x()
         pet_y = self.pet_window.y()
@@ -300,6 +310,14 @@ class CopilotControlPanel(QWidget):
         wander_label = "Pause Screen Wandering" if self.pet_window.is_wandering else "Resume Screen Wandering"
         self.wander_btn.setText(wander_label)
 
+        # Update TTS Mute Status Button
+        try:
+            from src.tts_engine import SelectiveTTSEngine
+            is_muted = SelectiveTTSEngine.is_muted()
+            self.tts_mute_btn.setText("🔇 Voice Output: MUTED (Click to Enable)" if is_muted else "🔊 Voice Output: ENABLED (Click to Mute)")
+        except Exception:
+            pass
+
         # Update Auto-Start Status Button
         try:
             from scripts.manage_startup import is_autostart_enabled
@@ -321,9 +339,23 @@ class CopilotControlPanel(QWidget):
             self.hide_panel()
         super().changeEvent(event)
 
+    def _toggle_tts_mute(self):
+        try:
+            from src.tts_engine import SelectiveTTSEngine
+            is_muted = SelectiveTTSEngine.toggle_muted()
+            if is_muted:
+                self.tts_mute_btn.setText("🔇 Voice Output: MUTED (Click to Enable)")
+                self._speech("Voice Muted")
+            else:
+                self.tts_mute_btn.setText("🔊 Voice Output: ENABLED (Click to Mute)")
+                self._speech("Voice Enabled")
+        except Exception as e:
+            logger.warning(f"Failed to toggle TTS mute state: {e}")
+
     def _open_chat(self):
         self.hide_panel()
         self.pet_window.open_chat_window()
+
 
     def _speech(self, text):
         update_pet_state({"speech_text": text, "speech_duration": 3.0, "speech_timestamp": time.time(), "pet_mode": "TALKING"})

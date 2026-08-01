@@ -203,6 +203,8 @@ def process_request(input_data: Dict[str, Any]) -> Dict[str, Any]:
     except Exception:
         pass
 
+
+
     # 5. Analyze User Behavior Preferences & Persist Graph Updates
     pref_analysis = AdaptiveEngine.analyze_interaction(text, rewritten_text, context)
     extracted_entities = kg_engine.extract_entities(rewritten_text, context)

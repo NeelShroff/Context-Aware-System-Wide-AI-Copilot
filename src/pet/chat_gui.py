@@ -51,6 +51,24 @@ class ChatWorkerThread(QThread):
             })
 
 
+def clean_chatbot_text_for_speech(text: str) -> str:
+    """Strips HTML tags, markdown syntax (```code```, **, ##), and code blocks for clean speech audio."""
+    if not text:
+        return ""
+    import re
+    # Remove code blocks ```...```
+    cleaned = re.sub(r'```[\s\S]*?```', '', text)
+    # Remove inline code `...`
+    cleaned = re.sub(r'`[^`]+`', '', cleaned)
+    # Remove HTML tags <...>
+    cleaned = re.sub(r'<[^>]+>', '', cleaned)
+    # Remove Markdown headings, bold, italic
+    cleaned = re.sub(r'[\#\*\_\~\>]', '', cleaned)
+    # Collapse multiple whitespace
+    cleaned = re.sub(r'\s+', ' ', cleaned).strip()
+    return cleaned
+
+
 def markdown_to_html(text: str) -> str:
     """Converts Markdown syntax (**bold**, ### heading, * lists, `code`, > quotes) to clean HTML for PyQt5 QLabel."""
     if not text:
@@ -163,6 +181,27 @@ class CopilotChatWindow(QWidget):
             QPushButton#send_btn:hover {
                 background: #7dd3fc;
             }
+            QPushButton#mic_btn {
+                background: rgba(56, 189, 248, 0.15);
+                color: #38bdf8;
+                border: 1px solid rgba(56, 189, 248, 0.4);
+                border-radius: 8px;
+                font-size: 14px;
+            }
+            QPushButton#mic_btn:hover {
+                background: #38bdf8;
+                color: #070c16;
+            }
+            QPushButton#speak_btn {
+                background: transparent;
+                color: #38bdf8;
+                border: none;
+                font-size: 12px;
+                padding: 2px 4px;
+            }
+            QPushButton#speak_btn:hover {
+                color: #ffffff;
+            }
             QPushButton#chip_btn {
                 background: rgba(56, 189, 248, 0.12);
                 color: #38bdf8;
@@ -214,7 +253,7 @@ class CopilotChatWindow(QWidget):
         self.chat_content = QWidget()
         self.chat_content.setStyleSheet("background: transparent;")
         self.chat_layout = QVBoxLayout(self.chat_content)
-        self.chat_layout.setContentsMargins(2, 4, 4, 4)
+        self.chat_layout.setContentsMargins(0, 4, 4, 4)
         self.chat_layout.setSpacing(10)
         self.chat_layout.addStretch()
 
@@ -255,6 +294,13 @@ class CopilotChatWindow(QWidget):
         self.input_field.returnPressed.connect(self._on_send_click)
         input_layout.addWidget(self.input_field)
 
+        self.mic_btn = QPushButton("🎙️")
+        self.mic_btn.setObjectName("mic_btn")
+        self.mic_btn.setToolTip("Voice Dictation (Click to Speak)")
+        self.mic_btn.setFixedSize(36, 36)
+        self.mic_btn.clicked.connect(self._trigger_voice_input)
+        input_layout.addWidget(self.mic_btn)
+
         self.send_btn = QPushButton("SEND")
         self.send_btn.setObjectName("send_btn")
         self.send_btn.setFixedHeight(36)
@@ -265,7 +311,7 @@ class CopilotChatWindow(QWidget):
         outer.addWidget(panel)
 
     def add_message(self, sender: str, text: str):
-        """Adds a speech message bubble to the chat stream with rich HTML markdown formatting."""
+        """Adds a speech message bubble to the chat stream with rich HTML markdown formatting and voice readout support."""
         msg_box = QFrame()
         msg_layout = QVBoxLayout(msg_box)
         msg_layout.setContentsMargins(12, 10, 12, 10)
@@ -309,6 +355,18 @@ class CopilotChatWindow(QWidget):
                 }
             """)
 
+            # Add speaker button for bot response playback
+            if text != "Thinking...":
+                bot_header = QHBoxLayout()
+                speak_btn = QPushButton("🔊 Listen")
+                speak_btn.setObjectName("speak_btn")
+                speak_btn.setCursor(Qt.PointingHandCursor)
+                clean_speech = clean_chatbot_text_for_speech(text)
+                speak_btn.clicked.connect(lambda _, s=clean_speech: self._speak_bot_text(s))
+                bot_header.addStretch()
+                bot_header.addWidget(speak_btn)
+                msg_layout.addLayout(bot_header)
+
         msg_layout.addWidget(lbl)
         
         # Remove stretch before adding new item, then add stretch back
@@ -316,6 +374,31 @@ class CopilotChatWindow(QWidget):
 
         # Scroll to bottom
         QTimer.singleShot(50, lambda: self.scroll.verticalScrollBar().setValue(self.scroll.verticalScrollBar().maximum()))
+
+    def _speak_bot_text(self, speech_text: str):
+        if not speech_text:
+            return
+        try:
+            from src.tts_engine import announce_speech_bubble
+            announce_speech_bubble(speech_text)
+        except Exception as e:
+            logger.warning(f"Voice playback error: {e}")
+
+    def _trigger_voice_input(self):
+        self.input_field.setPlaceholderText("🎙️ Listening... Speak now...")
+        QApplication.processEvents()
+        try:
+            from src.voice_capture import dictate_to_text
+            res = dictate_to_text(max_seconds=8.0)
+            if res.get("success") and res.get("text"):
+                spoken_text = res.get("text")
+                self.input_field.setText(spoken_text)
+                self._on_send_click()
+            else:
+                self.input_field.setPlaceholderText("Ask AI anything...")
+        except Exception as e:
+            logger.warning(f"Voice dictation error: {e}")
+            self.input_field.setPlaceholderText("Ask AI anything...")
 
     def _on_send_click(self):
         msg = self.input_field.text().strip()
@@ -361,6 +444,15 @@ class CopilotChatWindow(QWidget):
 
         reply = res.get("reply", "No response generated.")
         self.add_message("bot", reply)
+
+        # Trigger character voice readout for chatbot response
+        try:
+            from src.tts_engine import announce_speech_bubble
+            clean_speech = clean_chatbot_text_for_speech(reply)
+            if clean_speech:
+                announce_speech_bubble(clean_speech)
+        except Exception as e:
+            logger.warning(f"Chatbot voice readout error: {e}")
 
     def show_beside_pet(self):
         """Position chat window beside 3D pet dynamically."""

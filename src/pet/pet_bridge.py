@@ -175,6 +175,16 @@ class PetBridgeRequestHandler(BaseHTTPRequestHandler):
         elif self.path.startswith("/api/health"):
             self._set_headers(200)
             self.wfile.write(json.dumps({"status": "ok", "uptime": time.time()}).encode("utf-8"))
+        elif self.path.startswith("/api/tts/status"):
+            from src.tts_engine import SelectiveTTSEngine
+            self._set_headers(200)
+            self.wfile.write(json.dumps({"muted": SelectiveTTSEngine.is_muted()}).encode("utf-8"))
+        elif self.path.startswith("/api/tts/toggle"):
+            from src.tts_engine import SelectiveTTSEngine
+            new_muted = SelectiveTTSEngine.toggle_muted()
+            self._set_headers(200)
+            self.wfile.write(json.dumps({"status": "toggled", "muted": new_muted}).encode("utf-8"))
+
         elif self.path.startswith("/sprite/"):
             import urllib.parse
             rel_path = urllib.parse.unquote(self.path[len("/sprite/"):])
@@ -231,8 +241,15 @@ class PetBridgeRequestHandler(BaseHTTPRequestHandler):
                     "pet_mode": mode,
                     "mood_expression": "aa" if mode == "TALKING" else "thinking"
                 })
+                if mode == "TALKING" and text and not text.startswith("🎙️"):
+                    try:
+                        from src.tts_engine import announce_speech_bubble
+                        announce_speech_bubble(text)
+                    except Exception:
+                        pass
                 self._set_headers(200)
                 self.wfile.write(json.dumps({"status": "speech_posted"}).encode("utf-8"))
+
             except Exception as e:
                 self._set_headers(400)
                 self.wfile.write(json.dumps({"error": str(e)}).encode("utf-8"))

@@ -112,22 +112,28 @@ class LLMClient:
             except urllib.error.HTTPError as e:
                 err_body = e.read().decode("utf-8") if e.fp else str(e)
                 error_msg = f"HTTP Error {e.code}: {e.reason}"
+
+                fallback_models = ["llama-3.3-70b-versatile", "llama-3.1-8b-instant", "qwen-2.5-32b", "mixtral-8x7b-32768"]
                 
-                # Handle 429 Rate Limit: If multimodal image was attached, strip image and fallback to pure text model
+                # Handle 429 Rate Limit with fallback model chain and backoff
                 if e.code == 429:
-                    error_msg = "Rate limit reached (429). Retrying..."
+                    error_msg = "Rate limit reached (429). Retrying on fallback model..."
+                    # If image was attached, convert prompt to text-only first
                     if isinstance(payload.get("messages", [{}])[-1].get("content"), list):
-                        # Strip base64 image and retry with pure text prompt on fast text model
                         payload["messages"][-1]["content"] = user_prompt
-                        payload["model"] = "llama-3.3-70b-versatile"
-                        data_bytes = json.dumps(payload).encode("utf-8")
-                        time.sleep(1.0)
-                        continue
-                    elif attempt < self.max_retries:
-                        time.sleep(2.0)
-                        continue
-                    else:
-                        return {"success": False, "rewritten_text": "", "error": "Groq API rate limit exceeded (429). Please wait a few seconds."}
+
+                    # Try next model in fallback chain
+                    current_m = payload.get("model", "")
+                    next_m = fallback_models[0]
+                    for idx, m in enumerate(fallback_models):
+                        if m == current_m and idx + 1 < len(fallback_models):
+                            next_m = fallback_models[idx + 1]
+                            break
+
+                    payload["model"] = next_m
+                    data_bytes = json.dumps(payload).encode("utf-8")
+                    time.sleep(1.5)
+                    continue
 
                 if e.code in (400, 404) and "model" in err_body.lower():
                     # Fallback to fast standard model if specified model fails
@@ -135,14 +141,15 @@ class LLMClient:
                         selected_model = "llama-3.3-70b-versatile"
                         payload["model"] = selected_model
                         data_bytes = json.dumps(payload).encode("utf-8")
-                        time.sleep(0.2)
+                        time.sleep(0.5)
                         continue
                     error_msg += f" (Model '{selected_model}' not found on Groq)"
                 
                 if attempt < self.max_retries:
-                    time.sleep(0.5)
+                    time.sleep(1.0)
                     continue
                 return {"success": False, "rewritten_text": "", "error": error_msg}
+
 
 
             except urllib.error.URLError as e:
