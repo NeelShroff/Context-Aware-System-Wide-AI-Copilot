@@ -22,7 +22,7 @@ import webbrowser
 from PyQt5.QtCore import Qt, QPoint, QUrl, QTimer, QEvent
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
-    QLabel, QPushButton, QFrame, QScrollArea, QFileDialog, QMessageBox
+    QLabel, QPushButton, QFrame, QScrollArea, QFileDialog, QMessageBox, QInputDialog
 )
 from PyQt5.QtGui import QColor, QCursor, QFont
 from PyQt5.QtWebEngineWidgets import QWebEngineView, QWebEnginePage, QWebEngineSettings
@@ -47,46 +47,47 @@ class CopilotControlPanel(QWidget):
     """Standalone Qt Widget Control Panel - opens beside the 3D pet on right-click.
     Completely separate from Chromium's event loop. Stays open until user closes it."""
 
-    DARK_BG = "#111318"
-    PANEL_BG = "#161820"
-    BORDER_GOLD = "rgba(196, 164, 104, 0.45)"
+    DARK_BG = "#080e1a"
+    PANEL_BG = "#0f172a"
+    BORDER_CYAN = "rgba(56, 189, 248, 0.45)"
     TEXT_MAIN = "#e2e8f0"
-    HEADER_GOLD = "#dfb86c"
-    SECTION_TEXT = "#94a3b8"
-    CARD_BG = "#1b1e27"
-    CARD_HOVER_BG = "#242936"
-    CARD_BORDER = "rgba(255, 255, 255, 0.07)"
-    CARD_HOVER_BORDER = "#d4af37"
+    HEADER_CYAN = "#38bdf8"
+    SECTION_TEXT = "#38bdf8"
+    CARD_BG = "#131c31"
+    CARD_HOVER_BG = "#1e293b"
+    CARD_BORDER = "rgba(56, 189, 248, 0.2)"
+    CARD_HOVER_BORDER = "#38bdf8"
     DANGER = "#ef4444"
 
     def __init__(self, pet_window):
         super().__init__(None, Qt.Tool | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
         self.pet_window = pet_window
         self.setAttribute(Qt.WA_TranslucentBackground, True)
-        self.setFixedWidth(290)
+        self.setMinimumWidth(330)
+        self.setFixedWidth(330)
         self._build_ui()
 
     def _build_ui(self):
         self.setStyleSheet(f"""
             QWidget#panel {{
-                background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #181a22, stop:1 #0c0d12);
-                border: 1.5px solid {self.BORDER_GOLD};
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #0d1527, stop:1 #070c16);
+                border: 1.5px solid {self.BORDER_CYAN};
                 border-radius: 12px;
             }}
             QLabel#title {{
-                color: {self.HEADER_GOLD};
-                font-family: 'Cinzel', 'Georgia', 'Times New Roman', serif;
+                color: {self.HEADER_CYAN};
+                font-family: 'Orbitron', 'Share Tech Mono', 'Rajdhani', 'Cascadia Code', 'Consolas', monospace, sans-serif;
                 font-size: 11px;
-                font-weight: 800;
-                letter-spacing: 1.8px;
+                font-weight: 700;
+                letter-spacing: 1.6px;
                 text-transform: uppercase;
             }}
             QLabel#section {{
-                color: #c4a468;
-                font-family: 'Cinzel', 'Georgia', 'Times New Roman', serif;
-                font-size: 9px;
+                color: {self.SECTION_TEXT};
+                font-family: 'Orbitron', 'Share Tech Mono', 'Rajdhani', 'Cascadia Code', 'Consolas', monospace, sans-serif;
+                font-size: 9.5px;
                 font-weight: 700;
-                letter-spacing: 1.4px;
+                letter-spacing: 1.2px;
                 text-transform: uppercase;
                 padding: 10px 0 4px 2px;
             }}
@@ -95,9 +96,9 @@ class CopilotControlPanel(QWidget):
                 color: {self.TEXT_MAIN};
                 border: 1px solid {self.CARD_BORDER};
                 border-radius: 6px;
-                padding: 8px 11px;
-                font-family: 'Cinzel', 'Georgia', 'Times New Roman', serif;
-                font-size: 11px;
+                padding: 8px 12px;
+                font-family: 'Orbitron', 'Share Tech Mono', 'Rajdhani', 'Cascadia Code', 'Consolas', monospace, sans-serif;
+                font-size: 10.5px;
                 font-weight: 600;
                 letter-spacing: 0.5px;
                 text-align: left;
@@ -105,7 +106,7 @@ class CopilotControlPanel(QWidget):
             QPushButton#card:hover {{
                 background: {self.CARD_HOVER_BG};
                 border: 1px solid {self.CARD_HOVER_BORDER};
-                color: #ffffff;
+                color: #38bdf8;
             }}
             QPushButton#close_btn {{
                 background: rgba(239, 68, 68, 0.15);
@@ -113,8 +114,8 @@ class CopilotControlPanel(QWidget):
                 border: 1px solid rgba(239, 68, 68, 0.5);
                 border-radius: 5px;
                 padding: 3px 9px;
-                font-family: 'Cinzel', 'Georgia', 'Times New Roman', serif;
-                font-size: 10px;
+                font-family: 'Orbitron', 'Share Tech Mono', 'Rajdhani', 'Cascadia Code', 'Consolas', monospace, sans-serif;
+                font-size: 9.5px;
                 font-weight: 700;
                 letter-spacing: 1px;
             }}
@@ -134,12 +135,12 @@ class CopilotControlPanel(QWidget):
                 margin: 2px 0 2px 0;
             }}
             QScrollBar::handle:vertical {{
-                background: rgba(196, 164, 104, 0.5);
+                background: rgba(56, 189, 248, 0.4);
                 min-height: 25px;
                 border-radius: 2px;
             }}
             QScrollBar::handle:vertical:hover {{
-                background: rgba(212, 175, 55, 0.95);
+                background: rgba(56, 189, 248, 0.95);
             }}
             QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {{
                 border: none;
@@ -162,11 +163,11 @@ class CopilotControlPanel(QWidget):
 
         # Header row
         header = QHBoxLayout()
-        title = QLabel("✦ COPILOT CONTROLS ✦")
+        title = QLabel("COPILOT CONTROLS")
         title.setObjectName("title")
         header.addWidget(title)
         header.addStretch()
-        close_btn = QPushButton("✕ CLOSE")
+        close_btn = QPushButton("CLOSE")
         close_btn.setObjectName("close_btn")
         close_btn.setFixedHeight(23)
         close_btn.clicked.connect(self.hide_panel)
@@ -175,7 +176,7 @@ class CopilotControlPanel(QWidget):
 
         divider = QFrame()
         divider.setFrameShape(QFrame.HLine)
-        divider.setStyleSheet("background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 rgba(212,175,55,0.7), stop:1 rgba(252,211,77,0.05)); height: 1px; border: none;")
+        divider.setStyleSheet("background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 rgba(56,189,248,0.7), stop:1 rgba(56,189,248,0.05)); height: 1px; border: none;")
         layout.addWidget(divider)
 
         # Scrollable content
@@ -202,48 +203,57 @@ class CopilotControlPanel(QWidget):
             content_layout.addWidget(btn)
             return btn
 
+        # AI Assistant Chatbot
+        section("AI ASSISTANT")
+        card("Open AI Chatbot (Ctrl+Alt+C)", self._open_chat)
+
         # Workspace Context
-        section("◆ WORKSPACE CONTEXT")
-        self.app_label_btn = card("◇ Active: Desktop", lambda: None)
-        card("◇ Search Workspaces (Ctrl+Shift+P)", lambda: self._speech("Use Ctrl+Shift+P"))
+        section("WORKSPACE CONTEXT")
+        self.app_label_btn = card("Active: Desktop", self._show_active_context)
+        card("Search Workspaces (Ctrl+Shift+P)", self._search_workspaces)
 
         # Domain
-        section("◆ DOMAIN SCENARIOS")
-        card("◈ Auto-Detect Domain (Smart)", lambda: self._set_domain("AUTO"))
-        card("◇ Work & Enterprise", lambda: self._set_domain("WORK"))
-        card("◇ Personal & Casual", lambda: self._set_domain("PERSONAL"))
-        card("◇ Development & Tech", lambda: self._set_domain("DEVELOPMENT"))
-        card("◇ AI Prompt Engineering", lambda: self._set_domain("PROMPT_ENGINEERING"))
+        section("DOMAIN SCENARIOS")
+        card("Auto-Detect Domain (Smart)", lambda: self._set_domain("AUTO"))
+        card("Work & Enterprise", lambda: self._set_domain("WORK"))
+        card("Personal & Casual", lambda: self._set_domain("PERSONAL"))
+        card("Development & Tech", lambda: self._set_domain("DEVELOPMENT"))
+        card("AI Prompt Engineering", lambda: self._set_domain("PROMPT_ENGINEERING"))
 
         # AI Dashboards
-        section("◆ DASHBOARDS & KNOWLEDGE")
-        card("◈ View Knowledge Graph", lambda: webbrowser.open("http://127.0.0.1:8000/graph"))
-        card("◈ Open Web Dashboard", lambda: webbrowser.open("http://127.0.0.1:8000"))
+        section("DASHBOARDS & KNOWLEDGE")
+        card("View Knowledge Graph", self._open_knowledge_graph)
 
         # Spider-Man Costume Suits Selector
-        section("🕷️ SPIDER-MAN SUITS")
-        card("🔴🔵 Classic Red & Blue", lambda: self._switch_char("01 [Default]"))
-        card("🔴 Crimson Red Suit", lambda: self._switch_char("02 [Red]"))
-        card("🟠 Orange Suit", lambda: self._switch_char("03 [Orange]"))
-        card("🟡 Yellow Suit", lambda: self._switch_char("04 [Yellow]"))
-        card("🥊 Collab Rivals Suit", lambda: self._switch_char("05 [Collab - Rivals]"))
-        card("🖤 Symbiote Black Suit", lambda: self._switch_char("06 [Black - Black Suit]"))
-        card("⚪ Negative Zone White", lambda: self._switch_char("07 [White - Negative Suit]"))
-        card("⚡ Cobalt Electroproof", lambda: self._switch_char("08 [Cobalt - Electroproof]"))
-        card("🟡🔴 Iron Spider Gold", lambda: self._switch_char("09 [Gold - Iron Spidey]"))
+        section("SPIDER-MAN SUITS")
+        card("[01] Classic Red & Blue", lambda: self._switch_char("01 [Default]"))
+        card("[02] Crimson Red Suit", lambda: self._switch_char("02 [Red]"))
+        card("[03] Orange Suit", lambda: self._switch_char("03 [Orange]"))
+        card("[04] Yellow Suit", lambda: self._switch_char("04 [Yellow]"))
+        card("[05] Collab Rivals Suit", lambda: self._switch_char("05 [Collab - Rivals]"))
+        card("[06] Symbiote Black Suit", lambda: self._switch_char("06 [Black - Black Suit]"))
+        card("[07] Negative Zone White", lambda: self._switch_char("07 [White - Negative Suit]"))
+        card("[08] Cobalt Electroproof", lambda: self._switch_char("08 [Cobalt - Electroproof]"))
+        card("[09] Iron Spider Gold", lambda: self._switch_char("09 [Gold - Iron Spidey]"))
 
         # Interactive Spider Actions
-        section("🕸️ ACTION TRIGGERS")
-        card("🕸️ Shoot Web Blast", lambda: self._speech("🕸️ Thwip! Web Shoot!"))
-        card("🕷️ Spider-Sense Alert", lambda: update_pet_state({"pet_mode": "THINKING"}))
-        card("💤 Rest / Sleep Stance", lambda: update_pet_state({"pet_mode": "SLEEP"}))
+        section("ACTION TRIGGERS")
+        card("Shoot Web Blast", lambda: self._speech("Web Shoot"))
+        card("Spider-Sense Alert", lambda: update_pet_state({"pet_mode": "THINKING"}))
+        card("Rest / Sleep Stance", lambda: update_pet_state({"pet_mode": "SLEEP"}))
+
+        # Startup & Launch Controls
+        section("STARTUP & LAUNCH SETTINGS")
+        self.autostart_btn = card("Auto-Start on Boot: Checking...", self._toggle_autostart)
+        card("Re-create Desktop Shortcut", self._create_desktop_shortcut)
 
         # Wandering Controls
-        section("◆ SYSTEM CONTROLS")
-        self.wander_btn = card("◆ Pause Screen Wandering", self._toggle_wander)
-        card("◇ Reset Window Position", self._reset_pos)
-        card("◇ Test Speech Bubble", self._test_speech)
-        card("◇ Hide 3D Companion", self.pet_window.hide)
+        section("SYSTEM CONTROLS")
+        self.wander_btn = card("Pause Screen Wandering", self._toggle_wander)
+        card("Reset Window Position", self._reset_pos)
+        card("Test Speech Bubble", self._test_speech)
+        card("Hide 3D Companion", self.pet_window.hide)
+        card("🛑 TURN OFF SYSTEM COPILOT", self._shutdown_entire_copilot)
 
         content_layout.addStretch()
         scroll.setWidget(content)
@@ -252,32 +262,51 @@ class CopilotControlPanel(QWidget):
         outer.addWidget(panel)
 
     def show_beside_pet(self):
-        """Position panel beside the 3D pet and show it."""
+        """Position panel beside the 3D pet adaptively based on active screen geometry and DPI."""
         screen = QApplication.primaryScreen().availableGeometry()
+        
+        # Responsive scaling: calculate dynamic width and height based on screen dimensions
+        panel_w = min(400, max(320, int(screen.width() * 0.22)))
+        panel_h = min(580, max(380, screen.height() - 80))
+        self.setFixedSize(panel_w, panel_h)
+
         pet_x = self.pet_window.x()
         pet_y = self.pet_window.y()
         pet_w = self.pet_window.width()
-        panel_w = self.width()
-        panel_h = min(500, screen.height() - 60)
-        self.setFixedHeight(panel_h)
 
         # Place left of pet if there's room, else right
-        x = pet_x - panel_w - 8
+        x = pet_x - panel_w - 10
         if x < screen.x():
-            x = pet_x + pet_w + 8
+            x = pet_x + pet_w + 10
+
+        # Keep inside screen bounds
+        if x + panel_w > screen.x() + screen.width():
+            x = screen.x() + screen.width() - panel_w - 10
+        if x < screen.x():
+            x = screen.x() + 10
 
         y = pet_y
         if y + panel_h > screen.y() + screen.height():
             y = screen.y() + screen.height() - panel_h - 10
+        if y < screen.y():
+            y = screen.y() + 10
 
         self.move(x, y)
 
         # Update active app label
         active_app = PET_STATE.get("active_app", "Desktop")
-        short = active_app[:18] + "..." if len(active_app) > 18 else active_app
-        self.app_label_btn.setText(f"◇ Active: {short}")
-        wander_label = "◆ Pause Screen Wandering" if self.pet_window.is_wandering else "◆ Resume Screen Wandering"
+        short = active_app[:20] + "..." if len(active_app) > 20 else active_app
+        self.app_label_btn.setText(f"Active: {short}")
+        wander_label = "Pause Screen Wandering" if self.pet_window.is_wandering else "Resume Screen Wandering"
         self.wander_btn.setText(wander_label)
+
+        # Update Auto-Start Status Button
+        try:
+            from scripts.manage_startup import is_autostart_enabled
+            enabled = is_autostart_enabled()
+            self.autostart_btn.setText(f"Auto-Start on Boot: {'ENABLED' if enabled else 'DISABLED'}")
+        except Exception:
+            self.autostart_btn.setText("Auto-Start on Boot: Toggle")
 
         self.show()
         self.raise_()
@@ -285,6 +314,16 @@ class CopilotControlPanel(QWidget):
 
     def hide_panel(self):
         self.hide()
+
+    def changeEvent(self, event):
+        """Auto-close control panel when user clicks outside on desktop or another window."""
+        if event.type() == QEvent.ActivationChange and not self.isActiveWindow():
+            self.hide_panel()
+        super().changeEvent(event)
+
+    def _open_chat(self):
+        self.hide_panel()
+        self.pet_window.open_chat_window()
 
     def _speech(self, text):
         update_pet_state({"speech_text": text, "speech_duration": 3.0, "speech_timestamp": time.time(), "pet_mode": "TALKING"})
@@ -299,7 +338,7 @@ class CopilotControlPanel(QWidget):
 
     def _toggle_wander(self):
         self.pet_window.toggle_wandering()
-        label = "◆ Pause Screen Wandering" if self.pet_window.is_wandering else "◆ Resume Screen Wandering"
+        label = "Pause Screen Wandering" if self.pet_window.is_wandering else "Resume Screen Wandering"
         self.wander_btn.setText(label)
 
     def _reset_pos(self):
@@ -307,7 +346,83 @@ class CopilotControlPanel(QWidget):
         self.hide_panel()
 
     def _test_speech(self):
-        self._speech("✨ I'm your AI Copilot! Ready to assist.")
+        self._speech("AI Copilot active and ready")
+
+    def _open_knowledge_graph(self):
+        """Launches local Neo4j Desktop application if installed and opens Neo4j Browser in web browser."""
+        self.hide_panel()
+        neo4j_paths = [
+            os.path.expandvars(r"%LOCALAPPDATA%\Programs\Neo4j Desktop\Neo4j Desktop.exe"),
+            os.path.expandvars(r"%PROGRAMFILES%\Neo4j Desktop\Neo4j Desktop.exe"),
+            r"C:\Program Files\Neo4j Desktop\Neo4j Desktop.exe",
+        ]
+        launched = False
+        for p in neo4j_paths:
+            if os.path.exists(p):
+                try:
+                    os.startfile(p)
+                    launched = True
+                    break
+                except Exception as e:
+                    logger.warning(f"Could not open Neo4j Desktop exe: {e}")
+
+        webbrowser.open("http://localhost:7474")
+        msg = "Opened Neo4j Desktop & Browser" if launched else "Opened Neo4j Browser (http://localhost:7474)"
+        self._speech(msg)
+
+    def _search_workspaces(self):
+        """Opens interactive Qt input dialog to search/switch workspace context."""
+        active_app = PET_STATE.get("active_app", "Desktop")
+        text, ok = QInputDialog.getText(
+            self,
+            "Context Quick Search",
+            "Search Workspaces or enter active Context name:",
+            text=active_app
+        )
+        if ok and text.strip():
+            new_context = text.strip()
+            update_pet_state({"active_app": new_context})
+            short = new_context[:20] + "..." if len(new_context) > 20 else new_context
+            self.app_label_btn.setText(f"Active: {short}")
+            self._speech(f"Workspace: {new_context}")
+
+    def _show_active_context(self):
+        """Displays current active workspace context status."""
+        active_app = PET_STATE.get("active_app", "Desktop")
+        domain = PET_STATE.get("domain_category", "AUTO")
+        self._speech(f"Active: {active_app} [{domain}]")
+
+    def _toggle_autostart(self):
+        try:
+            from scripts.manage_startup import is_autostart_enabled, set_autostart
+            current = is_autostart_enabled()
+            new_state = not current
+            set_autostart(new_state)
+            self.autostart_btn.setText(f"Auto-Start on Boot: {'ENABLED' if new_state else 'DISABLED'}")
+            status_str = "ENABLED" if new_state else "DISABLED"
+            self._speech(f"Auto-Start: {status_str}")
+        except Exception as e:
+            logger.error(f"Error toggling autostart: {e}")
+            self._speech("Error toggling startup")
+
+    def _create_desktop_shortcut(self):
+        try:
+            from scripts.manage_startup import create_shortcuts
+            create_shortcuts()
+            self._speech("Shortcut Created!")
+        except Exception as e:
+            logger.error(f"Error creating shortcuts: {e}")
+            self._speech("Shortcut Error")
+
+    def _shutdown_entire_copilot(self):
+        try:
+            import subprocess
+            # Kill AutoHotkey engine background process
+            subprocess.run(["taskkill", "/F", "/IM", "AutoHotkey64.exe"], capture_output=True)
+            subprocess.run(["taskkill", "/F", "/IM", "AutoHotkey.exe"], capture_output=True)
+        except Exception:
+            pass
+        QApplication.quit()
 
 
 class VRMPetWindow(QMainWindow):
@@ -336,7 +451,7 @@ class VRMPetWindow(QMainWindow):
 
         pos_x = self.screen_x + self.screen_w - 200
         pos_y = self.screen_y + self.screen_h - 240
-        self.setGeometry(pos_x, pos_y, 160, 200)
+        self.setGeometry(pos_x, pos_y, 180, 230)
 
         # Web Engine View Setup
         self.web_view = QWebEngineView(self)
@@ -361,6 +476,8 @@ class VRMPetWindow(QMainWindow):
 
         # Native Control Panel (separate Qt window)
         self.control_panel = CopilotControlPanel(self)
+        from src.pet.chat_gui import CopilotChatWindow
+        self.chat_window = CopilotChatWindow(self)
 
         # Attach focusProxy event filter once web view is ready
         QTimer.singleShot(500, self._attach_proxy_filter)
@@ -560,6 +677,11 @@ class VRMPetWindow(QMainWindow):
         """Push state updates directly to Chromium JS engine with zero socket/HTTP latency."""
         update_pet_state(updates)
         try:
+            if not hasattr(self, '_last_js_updates'):
+                self._last_js_updates = None
+            if updates == self._last_js_updates and not updates.get("web_shoot_trigger"):
+                return
+            self._last_js_updates = dict(updates)
             import json
             js_code = f"if(window.updatePetStateDirect) window.updatePetStateDirect({json.dumps(updates)});"
             self.web_view.page().runJavaScript(js_code)
@@ -567,12 +689,19 @@ class VRMPetWindow(QMainWindow):
             pass
 
     def _update_wander_position(self):
+        if PET_STATE.get("open_chat_window"):
+            chat_ts = PET_STATE.get("chat_ts", 0)
+            if getattr(self, "_last_open_chat_ts", 0) != chat_ts:
+                self._last_open_chat_ts = chat_ts
+                PET_STATE["open_chat_window"] = False
+                self.open_chat_window()
+
         if getattr(self, '_is_shoot_busy', False):
             return  # Strict constraint: Zero vertical/diagonal movement during web shooting!
 
         if not self.is_wandering or self.is_dragging or self.control_panel.isVisible():
             if self._is_zip_active or self.width() != 160 or self.height() != 200:
-                self.setGeometry(int(self.char_x), int(self.char_y), 160, 200)
+                self.setGeometry(int(self.char_x), int(self.char_y), 180, 230)
                 self._is_zip_active = False
             self._sync_pet_state({
                 "motion_state": "IDLE",
@@ -595,7 +724,7 @@ class VRMPetWindow(QMainWindow):
                 rel_y = (self.char_y - self._zip_win_t) + 110
 
                 if self.pause_ticks == 0:
-                    self.setGeometry(int(self.char_x), int(self.char_y), 160, 200)
+                    self.setGeometry(int(self.char_x), int(self.char_y), 180, 230)
                     self._is_zip_active = False
                     rel_x = None
                     rel_y = None
@@ -647,8 +776,8 @@ class VRMPetWindow(QMainWindow):
             vec_y = dy / dist
 
             if abs(dy) < 5:  # Pure Horizontal patrol
-                if self._is_zip_active or self.width() != 160 or self.height() != 200:
-                    self.setGeometry(int(self.char_x), int(self.char_y), 160, 200)
+                if self._is_zip_active or self.width() != 180 or self.height() != 230:
+                    self.setGeometry(int(self.char_x), int(self.char_y), 180, 230)
                     self._is_zip_active = False
 
                 is_sprint = dist >= 220
@@ -750,6 +879,9 @@ class VRMPetWindow(QMainWindow):
         screen = QApplication.primaryScreen().availableGeometry()
         self.move(screen.x() + screen.width() - self.width() - 40,
                   screen.y() + screen.height() - self.height() - 40)
+
+    def open_chat_window(self):
+        self.chat_window.show_beside_pet()
 
     def show_context_menu(self, pos=None):
         """Legacy stub — now handled by native control panel."""

@@ -40,6 +40,18 @@ class KnowledgeGraph:
         """Initializes connection to native Neo4j Community Edition server if configured."""
         if HAS_NEO4J_SDK and config.NEO4J_ENABLED and config.NEO4J_PASSWORD:
             try:
+                import socket, urllib.parse
+                parsed = urllib.parse.urlparse(config.NEO4J_URI)
+                host = parsed.hostname or "localhost"
+                port = parsed.port or 7687
+                sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                sock.settimeout(0.15)
+                res = sock.connect_ex((host, port))
+                sock.close()
+                if res != 0:
+                    self.neo4j_driver = None
+                    return
+
                 driver = GraphDatabase.driver(
                     config.NEO4J_URI,
                     auth=(config.NEO4J_USER, config.NEO4J_PASSWORD)
@@ -218,14 +230,17 @@ class KnowledgeGraph:
             from src.llm_client import LLMClient
             llm = LLMClient()
             system_prompt = (
-                "You are an expert OCR vision model. Analyze the application window screenshot "
-                "(WhatsApp, Slack, Teams, Email, Discord, or Browser). Locate the active chat, message thread, contact header, "
-                "or recipient name anywhere in the window (header bar, active conversation header, or highlighted chat sidebar)."
+                "You are a specialized OCR Vision & Contact Identifier. "
+                "Analyze the application window screenshot (WhatsApp, Slack, Teams, Email, Discord, or Browser). "
+                "Locate the active chat recipient, contact name, or group chat header bar.\n\n"
+                "STRICT CONSTRAINTS:\n"
+                "- Output ONLY the clean contact/person/group name (e.g., 'Mom', 'Mohil', 'Alex').\n"
+                "- DO NOT output browser titles, application names, domain names, or keywords like 'WhatsApp', 'Chrome', 'Teams', 'Slack', 'Inbox', 'Google Chrome', 'New Tab'.\n"
+                "- If no specific contact or person name is visible, output UNKNOWN."
             )
             user_prompt = (
-                "Identify and extract the active contact name, person name, group chat name, or recipient being communicated with in this window screenshot. "
-                "Output ONLY the plain contact name string (e.g. 'Mom', 'Mohil', 'Alex'). "
-                "If no person or group contact name can be identified anywhere, output UNKNOWN."
+                "Extract the active contact/recipient name from this application window capture. "
+                "Return ONLY the plain contact name string or UNKNOWN."
             )
             # Pass is_jpeg flag so generate_rewrite uses correct MIME type
             res = llm.generate_rewrite(system_prompt, user_prompt, image_path=compressed_path, image_mime="image/jpeg" if is_jpeg else "image/png")
@@ -260,18 +275,18 @@ class KnowledgeGraph:
             from src.llm_client import LLMClient
             llm = LLMClient()
             system_prompt = (
-                "You are an expert Knowledge Graph Information Extraction system. "
-                "Extract specific, high-value named entities from the text and context. "
-                "Categorize them strictly into: Person, Technology, Organization, Project, Topic. "
-                "DO NOT extract generic English filler words (e.g. 'Text', 'Refining', 'Take', 'Until', 'Greeting', 'Please', 'Using'). "
-                "Output ONLY a valid JSON object matching: "
+                "You are an expert Knowledge Graph Information Extraction system.\n"
+                "Extract specific, high-value named entities from the text and active window context.\n"
+                "Categorize them strictly into: Person, Technology, Organization, Project, Topic.\n"
+                "DO NOT extract generic English filler words, verbs, or common adjectives (e.g. 'Text', 'Refining', 'Greeting', 'Please', 'Using').\n"
+                "CRITICAL OUTPUT CONSTRAINT: Output ONLY valid JSON matching this exact structure with no conversational explanation:\n"
                 '{"Person": [], "Technology": [], "Organization": [], "Project": [], "Topic": []}'
             )
             user_prompt = (
-                f"Process: {process}\n"
+                f"Active Process: {process}\n"
                 f"Window Title: {title}\n"
-                f"Text: '{text[:1000]}'\n\n"
-                "Extract all specific categorized entities as JSON."
+                f"Input Text: '{text[:1000]}'\n\n"
+                "Extract categorized entities as pure JSON."
             )
             res = llm.generate_rewrite(system_prompt, user_prompt)
             if res.get("success"):
@@ -313,14 +328,17 @@ class KnowledgeGraph:
         try:
             from src.llm_client import LLMClient
             llm = LLMClient()
-            system_prompt = "You are a recipient extraction model. Extract the contact or recipient name from the message text."
+            system_prompt = (
+                "You are an NLP recipient extraction model. "
+                "Identify the person, contact name, or chat recipient being addressed or communicated with.\n"
+                "Output ONLY the plain contact name string (e.g. 'Mana', 'Mom', 'Mohil'). "
+                "If no recipient or person name can be identified, output UNKNOWN."
+            )
             user_prompt = (
                 f"App Process: {process}\n"
                 f"Window Title: {title}\n"
                 f"Message Text: '{text}'\n\n"
-                "Identify the person, contact name, or chat recipient being communicated with or addressed in this message. "
-                "Output ONLY the plain contact name string (e.g. 'Mana', 'Mom', 'Mohil'). "
-                "If no recipient or person name can be identified, output UNKNOWN."
+                "Extract recipient name or UNKNOWN."
             )
             res = llm.generate_rewrite(system_prompt, user_prompt)
             if res.get("success"):

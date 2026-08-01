@@ -13,21 +13,14 @@ from src.context_detector import (
 
 SYSTEM_CORE_RULES = """
 You are an intelligent, context-aware writing copilot embedded into the Windows operating system.
-Your mission is to understand WHAT the user is writing, WHERE they are writing it, and WHO they are writing to, then rewrite the selected text to optimize it for that specific scenario while preserving original intent.
+Your mission is to analyze the user's selected text along with their current application context, active window, recent activity history, and memory graph, then return an optimized, high-quality rewrite of the selected text.
 
-OUTPUT QUALITY & FORMATTING STANDARDS:
-- Produce clear, concise, and beautifully structured responses.
-- Use proper grammar, punctuation, and consistent Markdown formatting.
-- Structure information with headings, bullet points, or numbered lists where appropriate.
-- Avoid unnecessary filler words, fluff, or repetitions.
-- Ensure the tone is professional, accessible, and easy to digest.
-
-CRITICAL GUARDRAILS & RULES:
-1. PRESERVE FACTUAL INTENT: Never fabricate facts, invent features, or alter names, URLs, emails, phone numbers, code snippets, commands, API endpoints, version numbers, or filenames.
-2. OPTIMAL TEXT PRESERVATION: If the original text is already excellent and needs no rewrite, return it EXACTLY AS-IS without making unnecessary edits.
-3. OUTPUT ONLY THE REWRITTEN MESSAGE TEXT: Do NOT include scenario titles, section headers (e.g., "### Casual Greeting" or "### Refined Text"), meta-commentary, explanations, preambles (e.g., "Here is your rewritten text:"), or surrounding quotes unless they were in the original text.
-4. FORMATTING: Preserve original markdown formatting (lists, code blocks) ONLY if present in the user's original text. Do NOT add new headings or section titles.
-5. KNOWLEDGE GRAPH & TEMPORAL CONTINUITY: Actively leverage the provided Knowledge Graph Memory, Application Writing History, and Chronological Activity Timeline to maintain conversational continuity, reference past context/entities/recipients, and answer with full temporal awareness whenever the user's input references past events, previous prompts, or ongoing work.
+CRITICAL OUTPUT CONSTRAINTS & FORMATTING RULES:
+1. OUTPUT ONLY THE FINAL TEXT: Your output will directly replace the user's selected text in their active application. Do NOT include preambles (e.g. "Here is your rewritten text:"), conversational filler, postscripts, explanations, or surrounding quotation marks unless quotes were in the original text.
+2. PRESERVE FACTUAL INTENT & ENTITIES: Never alter names, URLs, email addresses, phone numbers, exact numbers, API keys, passwords, filenames, or technical version identifiers.
+3. OPTIMAL TEXT PRESERVATION: If the original text is already well-written and effective for the scenario, return it EXACTLY AS-IS without making unnecessary trivial edits.
+4. MARKDOWN & STRUCTURE: Preserve existing markdown formatting (code blocks, bullet points) if present in the original text. Only introduce section headers if specified by the scenario directive (e.g. GitHub Issue, Bug Report, AI Prompt).
+5. CONTEXT ISOLATION: Use the provided context metadata, knowledge graph memories, and activity timelines ONLY to understand background intent. NEVER output or repeat raw context fields, window titles, or memory tags in your response.
 """
 
 
@@ -53,7 +46,7 @@ class PromptBuilder:
         workspace_meta: Optional[Dict[str, Any]] = None
     ) -> tuple[str, str]:
         """
-        Returns (system_prompt, user_prompt) with Time-Aware Timeline, Multi-Domain Context, Adaptive Rules, and Workspace Metadata.
+        Returns (system_prompt, user_prompt) using XML-tagged context structures for optimal LLM parsing.
         """
         title = context.get("title", "Unknown")
         process = context.get("process", "Unknown")
@@ -64,43 +57,61 @@ class PromptBuilder:
         image_directive = ""
         if has_image:
             image_directive = """
-MULTIMODAL IMAGE VISION DIRECTIVE:
-- An image/screenshot is attached to this request.
-- Carefully examine the visual contents of the image (UI status, Neo4j Desktop status, code, logs, diagrams, error messages).
-- Explain what is shown in the image directly and provide actionable guidance.
-- Do NOT return generic templates asking for more context; analyze and explain the image content immediately.
+<vision_directive>
+MULTIMODAL IMAGE VISION ACTIVE:
+- An image/screenshot is attached.
+- Inspect the visual details (UI state, error logs, code snippet, active chat header).
+- Incorporate visual findings directly into the response optimization.
+</vision_directive>
 """
 
-        ws_section = ""
+        ws_meta_str = ""
         if workspace_meta:
             ws_name = workspace_meta.get("name", "Default Project")
             ws_cat = workspace_meta.get("category", "General")
             ws_prio = workspace_meta.get("priority", "NORMAL")
-            ws_section = f"\n- Active Workspace: {ws_name} [Category: {ws_cat} | Priority: {ws_prio}]"
+            ws_meta_str = f"\n  <active_workspace name=\"{ws_name}\" category=\"{ws_cat}\" priority=\"{ws_prio}\"/>"
 
-        timeline_section = ""
+        context_xml = f"""
+<context_metadata>
+  <active_window title="{title}" process="{process}"/>
+  <graph_domain code="{domain_code}" description="{domain_desc}"/>
+  <detected_scenario code="{scenario}" description="{scenario_desc}"/>{ws_meta_str}
+</context_metadata>
+"""
+
+        memories_xml = ""
+        if kg_memories or app_history:
+            memories_xml = "\n<knowledge_graph_memory>\n"
+            if kg_memories:
+                memories_xml += "  <retrieved_entities>\n" + "\n".join(f"    <entity>{m}</entity>" for m in kg_memories[:3]) + "\n  </retrieved_entities>\n"
+            if app_history:
+                memories_xml += "  <recent_app_history>\n"
+                for entry in app_history[-2:]:
+                    orig = entry.get("original_text", "")[:50]
+                    rew = entry.get("rewritten_text", "")[:50]
+                    memories_xml += f"    <history_item input=\"{orig}\" output=\"{rew}\"/>\n"
+                memories_xml += "  </recent_app_history>\n"
+            memories_xml += "</knowledge_graph_memory>"
+
+        timeline_xml = ""
         if chronological_timeline:
-            timeline_section = "\n\nRECENT CHRONOLOGICAL ACTIVITY TIMELINE (Time & Past Interactions):\n" + "\n".join(f"• {t}" for t in chronological_timeline) + "\n* Use the chronological timeline above to understand what the user was texting or working on previously, and automatically frame your response with full temporal awareness."
+            timeline_items = "\n".join(f"  <event>{t}</event>" for t in chronological_timeline[-3:])
+            timeline_xml = f"\n<chronological_activity_timeline>\n{timeline_items}\n</chronological_activity_timeline>"
 
-        pref_section = ""
+        prefs_xml = ""
         if preference_rules:
-            pref_section = "\n\nLEARNED USER BEHAVIOR & ADAPTATION RULES:\n" + "\n".join(f"• {r}" for r in preference_rules)
+            pref_items = "\n".join(f"  <rule>{r}</rule>" for r in preference_rules)
+            prefs_xml = f"\n<user_preferences>\n{pref_items}\n</user_preferences>"
 
-        memory_section = ""
-        if kg_memories:
-            memory_section += "\n- Relevant Knowledge Graph Memory:\n  " + "\n  ".join(f"• {m}" for m in kg_memories)
-        
-        if app_history:
-            history_snippets = []
-            for entry in app_history[-3:]:
-                orig = entry.get("original_text", "")
-                rew = entry.get("rewritten_text", "")
-                history_snippets.append(f"  • Past Input: '{orig[:60]}...' -> Past Output: '{rew[:60]}...'")
-            memory_section += "\n- Recent Application Writing History:\n" + "\n".join(history_snippets)
+        system_prompt = (
+            f"{SYSTEM_CORE_RULES}\n\n"
+            f"RUNTIME CONTEXT METADATA:\n"
+            f"{context_xml}{memories_xml}{timeline_xml}{prefs_xml}{image_directive}\n\n"
+            f"SCENARIO DIRECTIVES:\n{scenario_instructions}"
+        )
 
-        system_prompt = f"{SYSTEM_CORE_RULES}\n\nCURRENT CONTEXT:\n- Active Graph Domain: {domain_code} ({domain_desc}){ws_section}\n- Detected Scenario: {scenario_desc} ({scenario})\n- Active Window Title: {title}\n- Active Process: {process}{memory_section}{timeline_section}{pref_section}{image_directive}\n\nSCENARIO SPECIFIC DIRECTIVES:\n{scenario_instructions}"
-
-        user_prompt = f"Selected Text to Process:\n\"\"\"\n{text}\n\"\"\""
+        user_prompt = f"SELECTED TEXT TO REWRITE:\n\"\"\"\n{text}\n\"\"\""
 
         return system_prompt, user_prompt
 
@@ -108,84 +119,91 @@ MULTIMODAL IMAGE VISION DIRECTIVE:
     def _get_scenario_instructions(scenario: str) -> str:
         if scenario == SCENARIO_AI_PROMPT:
             return """
-MODE: AI PROMPT ENGINEERING MODE (Active AI Interface Detected)
-The user is writing a prompt intended to be executed by an AI system (e.g. Antigravity, ChatGPT, Claude, Cursor, Copilot).
-Your goal is to transform their raw input into an expert-level, highly effective AI prompt.
-- Improve clarity, remove ambiguity, and structure requirements logically.
-- Separate core task goals, background context, and constraints.
-- Make expected outputs deterministic and precise.
-- Expand vague prompts into clear, actionable instructions without inventing unauthorized features.
-- Include acceptance criteria or relevant edge cases if helpful.
-- Keep output concise and formatted nicely in Markdown for an LLM to execute seamlessly.
+MODE: AI PROMPT REFINEMENT MODE (Active AI / IDE Interface Detected)
+The user is writing a prompt intended to be executed by an AI system (Antigravity, ChatGPT, Claude, Cursor, Copilot).
+Your goal is to refine and polish their prompt so it is clear, effective, and direct while remaining compact and token-efficient.
+
+RULES FOR PROMPT REFINEMENT:
+- COMPACT & DIRECT: Keep the refined prompt concise and ready to execute. DO NOT generate bloated section templates (like [Role], [Context], [Instructions]) or wordy boilerplate that wastes input tokens.
+- ENHANCE CLARITY: Remove ambiguity, fix typos/grammar, and state the objective clearly and precisely.
+- PRESERVE LENGTH REASONABLY: Improve the original prompt directly without ballooning token count. Expand only if essential details were missing.
+- RETURN ONLY THE REFINED PROMPT: Output ONLY the improved prompt text with zero introductory or closing commentary.
 """
 
         elif scenario == SCENARIO_PERSONAL_CHAT:
             return """
 MODE: PERSONAL MESSAGING (WhatsApp / Telegram / Discord / Chat)
-- Preserve personality, humor, and casual language.
-- DO NOT make the message sound corporate, robotic, or AI-written.
-- Improve clarity and correct major grammar errors while keeping it completely natural and conversational.
+- Refine the text so it is natural, friendly, and human.
+- Correct grammar and spelling errors without making the message sound robotic, stiff, or corporate.
+- Maintain original emotional tone, humor, casual slang, and abbreviations.
 
-MULTILINGUAL & ROMANIZED INDIAN LANGUAGE SUPPORT (CRITICAL):
-- The user may write in ROMANIZED INDIAN LANGUAGES — i.e., Gujarati, Hindi, Marathi, Bengali, Tamil, Telugu, etc. typed using English/Latin letters (e.g. "su kara chee tu, mana late thsa" is Romanized Gujarati meaning "what are you doing? I am going to be late").
-- DO NOT confuse romanized Indian language text with gibberish, typos, or a language barrier error.
-- Detect the romanized language from context and understanding of common phonetics and vocabulary.
-- Refine and fix ONLY within that same romanized language — correct spelling of romanized words, fix grammar for that language, and return in the same style (romanized, not native script).
-- NEVER translate romanized Indian language text into English unless the original text explicitly mixes both and would benefit from it.
-- Preserve the casual, informal tone and any abbreviations/slang commonly used in that language.
+MULTILINGUAL & ROMANIZED INDIAN LANGUAGE DIRECTIVE (CRITICAL):
+- The user may type in ROMANIZED INDIAN LANGUAGES (e.g., Gujarati, Hindi, Hinglish, Marathi, Bengali, Tamil, Telugu written with Latin/English letters).
+- Example: "kem cho tame, tame late thya kal" (Romanized Gujarati) or "mai kal aunga, wait karna" (Romanized Hindi).
+- DO NOT treat Romanized Indian languages as typos or gibberish.
+- Detect the Romanized language and refine spelling, phonetics, and grammar strictly WITHIN that same Romanized language.
+- DO NOT translate Romanized text into English unless the user explicitly requested translation.
+- Preserve casual phonetic spellings and colloquial phrasing.
 """
 
         elif scenario == SCENARIO_PROFESSIONAL_CHAT:
             return """
 MODE: WORKPLACE CHAT (Slack / Microsoft Teams / Mattermost)
-- Keep messages concise, direct, professional, yet conversational.
-- Eliminate unnecessary filler words and fluff.
-- Make key points easy to read at a glance.
+- Produce concise, clear, and professional workplace communication.
+- Remove filler words and wordy preambles.
+- Make key action items or updates easy to scan at a glance.
+- Keep the tone polite, professional, and efficient.
 """
 
         elif scenario == SCENARIO_EMAIL:
             return """
 MODE: BUSINESS EMAIL (Outlook / Gmail / Webmail)
-- Produce polished, professional business writing.
-- Improve structure, readability, and paragraph flow.
-- Add or improve appropriate professional greetings/closings only if natural.
+- Produce polished, professional business email text with smooth paragraph transitions.
+- Ensure appropriate greetings and sign-offs if the text represents a complete email draft.
+- Enhance clarity, tone, and professional courtesy while preserving core decisions and call-to-actions.
 """
 
         elif scenario == SCENARIO_GITHUB_ISSUE:
             return """
-MODE: GITHUB ISSUE / BUG REPORT / PR
-- Transform rough notes into a clean, structured bug report or issue description.
-- Use clear Markdown sections: ### Summary, ### Expected Behavior, ### Actual Behavior, ### Steps to Reproduce (if relevant).
+MODE: GITHUB ISSUE / BUG REPORT / PR DESCRIPTION
+- Format rough notes into a clean, structured GitHub Issue or PR description using Markdown.
+- Organize logically into standard headers:
+  ### Summary
+  ### Expected Behavior
+  ### Actual Behavior
+  ### Steps to Reproduce (or Implementation Details)
+- Keep descriptions precise, technical, and actionable for developers.
 """
 
         elif scenario == SCENARIO_LINKEDIN:
             return """
 MODE: LINKEDIN / SOCIAL MEDIA
-- Write in a polished, engaging, professional style.
-- Ensure excellent readability and strong paragraph flow.
-- Avoid generic AI buzzwords, corporate jargon overload, or cringey hype.
+- Craft an engaging, professional social media post with strong paragraph readability.
+- Maintain an authoritative yet authentic voice. Avoid cringey hype, excessive emojis, or generic AI buzzwords.
+- Use clean line breaks for comfortable mobile scanning.
 """
 
         elif scenario == SCENARIO_SOURCE_CODE:
             return """
 MODE: SOURCE CODE & DOCUMENTATION (IDE Active)
-- CRITICAL: NEVER REWRITE OR ALTER THE EXECUTABLE SOURCE CODE SYNTAX!
-- Only improve comments, docstrings, function headers, and inline documentation.
-- Maintain exact code formatting, variable names, and language syntax.
+- If the user selected code comments or docstrings, refine them for clarity, accuracy, and proper formatting.
+- If the user selected executable source code, improve code quality, fix bugs, or format code syntax cleanly while preserving existing variable names, functional logic, and language conventions.
+- Return valid code/documentation without surrounding explanations.
 """
 
         elif scenario == SCENARIO_TECH_DOCS:
             return """
 MODE: TECHNICAL DOCUMENTATION
-- Improve clarity, structure, and technical readability.
-- Retain exact technical terminology and code identifiers.
-- Preserve all Markdown elements (headings, tables, bullet points, code blocks).
+- Enhance technical clarity, precision, and structural flow.
+- Maintain accurate terminology, code blocks, parameter names, and API specifications.
+- Use clear bullet points and bold highlights for readability.
 """
 
         else: # SCENARIO_GENERAL
             return """
 MODE: GENERAL CONTEXT-AWARE WRITING
-- Intelligently refine the text for clarity, tone, and correct grammar.
-- Adapt length and vocabulary dynamically to fit the context.
-- Keep the writing natural and human.
+- Refine text for clarity, conciseness, proper grammar, and natural flow.
+- Adapt tone and vocabulary dynamically based on the context.
+- Keep the output natural, direct, and human.
 """
+

@@ -160,6 +160,10 @@ class PetBridgeRequestHandler(BaseHTTPRequestHandler):
             self._set_headers(200)
             self.wfile.write(json.dumps({"status": "url_opened", "url": target_url}).encode("utf-8"))
 
+        elif self.path.startswith("/api/chat/open"):
+            update_pet_state({"open_chat_window": True, "chat_ts": time.time()})
+            self._set_headers(200)
+            self.wfile.write(json.dumps({"status": "chat_window_opened"}).encode("utf-8"))
         elif self.path.startswith("/api/expand_window"):
             import urllib.parse
             parsed = urllib.parse.urlparse(self.path)
@@ -232,6 +236,59 @@ class PetBridgeRequestHandler(BaseHTTPRequestHandler):
             except Exception as e:
                 self._set_headers(400)
                 self.wfile.write(json.dumps({"error": str(e)}).encode("utf-8"))
+        elif self.path.startswith("/api/copilot"):
+            content_length = int(self.headers.get("Content-Length", 0))
+            body = self.rfile.read(content_length).decode("utf-8")
+            try:
+                data = json.loads(body)
+                update_pet_state({
+                    "speech_text": "✨ Processing Copilot Query...",
+                    "speech_duration": 4.0,
+                    "speech_timestamp": time.time(),
+                    "pet_mode": "THINKING",
+                    "mood_expression": "thinking"
+                })
+                from src.main import process_request
+                result = process_request(data)
+                if result.get("success"):
+                    scenario_desc = result.get("scenario_description", "Completed")
+                    update_pet_state({
+                        "speech_text": f"✅ Done! ({scenario_desc})",
+                        "speech_duration": 3.0,
+                        "speech_timestamp": time.time(),
+                        "pet_mode": "TALKING",
+                        "mood_expression": "aa"
+                    })
+                else:
+                    err_msg = result.get("error", "Error")
+                    update_pet_state({
+                        "speech_text": f"❌ {err_msg}",
+                        "speech_duration": 3.0,
+                        "speech_timestamp": time.time(),
+                        "pet_mode": "IDLE",
+                        "mood_expression": "blink"
+                    })
+                self._set_headers(200)
+                self.wfile.write(json.dumps(result, ensure_ascii=False).encode("utf-8"))
+            except Exception as e:
+                logger.error(f"Error executing /api/copilot: {e}", exc_info=True)
+                self._set_headers(500)
+                self.wfile.write(json.dumps({"success": False, "error": str(e)}).encode("utf-8"))
+        elif self.path.startswith("/api/chat/unified"):
+            content_length = int(self.headers.get("Content-Length", 0))
+            body = self.rfile.read(content_length).decode("utf-8")
+            try:
+                data = json.loads(body)
+                msg = data.get("message", "")
+                ctx = data.get("context", {})
+                from src.chat_engine import AutonomousChatEngine
+                res = AutonomousChatEngine.process_unified_chat(msg, ctx)
+                self._set_headers(200)
+                self.wfile.write(json.dumps(res, ensure_ascii=False).encode("utf-8"))
+            except Exception as e:
+                logger.error(f"Error executing /api/chat/unified: {e}", exc_info=True)
+                self._set_headers(500)
+                self.wfile.write(json.dumps({"success": False, "reply": f"Error: {str(e)}"}).encode("utf-8"))
         else:
             self._set_headers(404)
             self.wfile.write(json.dumps({"error": "Not Found"}).encode("utf-8"))

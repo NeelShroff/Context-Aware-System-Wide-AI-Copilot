@@ -119,3 +119,28 @@ class ContextDetector:
         
         match_count = sum(1 for pat in code_patterns if re.search(pat, text))
         return match_count >= 1
+
+    @staticmethod
+    def classify_response_intent(scenario: str, changed: bool, text: str = "", rewritten_text: str = "") -> Tuple[str, str]:
+        """
+        Classifies response output intent and returns (intent_type, bubble_summary).
+        - intent_type: "ACTIONABLE_REWRITE" | "NO_CHANGE" | "CONVERSATIONAL"
+        - bubble_summary: Clean, executive status one-liner (no emojis) for 3D Spider speech bubble.
+        """
+        if not changed or text.strip() == rewritten_text.strip():
+            return ("NO_CHANGE", "Text already optimal")
+
+        scenario_bubble_map = {
+            SCENARIO_AI_PROMPT: "Prompt enhanced",
+            SCENARIO_PERSONAL_CHAT: "Tone refined",
+            SCENARIO_PROFESSIONAL_CHAT: "Workplace message polished",
+            SCENARIO_EMAIL: "Email refined",
+            SCENARIO_GITHUB_ISSUE: "Issue report structured",
+            SCENARIO_LINKEDIN: "Post polished",
+            SCENARIO_SOURCE_CODE: "Code optimized",
+            SCENARIO_TECH_DOCS: "Documentation updated",
+            SCENARIO_GENERAL: "Text enhanced"
+        }
+
+        bubble_msg = scenario_bubble_map.get(scenario, "Text enhanced")
+        return ("ACTIONABLE_REWRITE", bubble_msg)

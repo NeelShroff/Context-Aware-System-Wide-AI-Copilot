@@ -45,8 +45,8 @@ Tray.Add("💬 Personal & Casual", (*) => SetDomain("PERSONAL", "PERSONAL & CASU
 Tray.Add("💻 Development & Engineering", (*) => SetDomain("DEVELOPMENT", "DEVELOPMENT"))
 Tray.Add("⚡ AI Prompt Engineering", (*) => SetDomain("PROMPT_ENGINEERING", "AI PROMPT ENG"))
 Tray.Add()
-Tray.Add("📊 View Knowledge Graph", (*) => Run('"' A_ScriptDir '\scripts\show_graph.cmd"'))
-Tray.Add("🌐 Open Web Dashboard", (*) => Run('"' A_ScriptDir '\scripts\launch_web_dashboard.cmd"'))
+Tray.Add("💬 Open AI Chatbot (Ctrl+Alt+C)", OpenChatWindow)
+Tray.Add("📊 View Knowledge Graph (Neo4j)", (*) => Run("http://localhost:7474"))
 Tray.Add("🕶️ Launch 3D AI Companion", PromptLaunchPet)
 Tray.Add()
 Tray.Add("🦊 Switch Pet: Anime Neko Cat", (*) => SetPetCharacter("NEKO", "Anime Neko Cat"))
@@ -55,8 +55,25 @@ Tray.Add("🤖 Switch Pet: Cyber Drone Core", (*) => SetPetCharacter("DRONE", "C
 Tray.Add("📺 Switch Pet: Cyberpunk Droid", (*) => SetPetCharacter("CYBER_BOT", "Cyberpunk Droid"))
 Tray.Add("🔮 Switch Pet: Magical Flame Spirit", (*) => SetPetCharacter("MAGICAL_SPIRIT", "Magical Flame Spirit"))
 Tray.Add()
+Tray.Add("🚀 Auto-Start on Laptop Boot", ToggleAutoStart)
+Tray.Add()
 Tray.Add("❌ Exit Copilot", (*) => ExitApp())
 Tray.Check("🌐 Auto-Detect Domain (Smart)")
+
+; Check current startup state on launch
+try {
+    ret := RunWait('"' A_ScriptDir '\vevn\Scripts\python.exe" "' A_ScriptDir '\scripts\manage_startup.py" --status', A_ScriptDir, "Hide")
+    ; if stdout check needed or simple check
+}
+
+ToggleAutoStart(*) {
+    try {
+        RunWait('"' A_ScriptDir '\vevn\Scripts\python.exe" "' A_ScriptDir '\scripts\manage_startup.py" --toggle', A_ScriptDir, "Hide")
+        ShowStatusToast("🚀 Auto-Start Setting Updated", 2500)
+    } catch {
+        ShowStatusToast("❌ Failed to update Auto-Start", 2500)
+    }
+}
 
 PromptLaunchPet(*) {
     Run('"' A_ScriptDir '\vevn\Scripts\python.exe" -m src.pet.vrm_pet_gui', A_ScriptDir, "Hide")
@@ -160,6 +177,20 @@ Browser_Forward:: {
     TriggerCopilot()
 }
 
+; 5. Hotkey: Ctrl + Alt + C (Open AI Chatbot)
+^!c:: {
+    OpenChatWindow()
+}
+
+OpenChatWindow(*) {
+    try {
+        whr := ComObject("WinHttp.WinHttpRequest.5.1")
+        whr.Open("GET", "http://127.0.0.1:8799/api/chat/open", true)
+        whr.Send()
+    } catch {
+    }
+}
+
 TriggerCopilot() {
     global isProcessing, currentDomain, currentProject, currentCategory, currentPriority
     
@@ -175,8 +206,10 @@ TriggerCopilot() {
 
     isProcessing := true
 
-    ; Step 1: Show initial status
-    ShowStatusToast("✨ Understanding Context...", 0)
+    ; Step 1: Show initial status quip
+    quips := ["Analyzing context...", "Reading active window...", "Processing request...", "Enhancing text..."]
+    quip := quips[Random(1, quips.Length)]
+    ShowStatusToast(quip, 0)
 
     ; Step 2: Backup clipboard and capture text (Smart Auto-Select with Page Safety Limit)
     savedClipboard := ClipboardAll()
@@ -196,14 +229,14 @@ TriggerCopilot() {
     if (StrLen(selectedText) > 4000) {
         LogMsg("Safety warning: Selected text exceeds 4,000 char webpage safety limit (len: " StrLen(selectedText) ")")
         SendInput("{Right}") ; Deselect web page selection
-        ShowStatusToast("⚠️ Text selection too large", 2500)
+        ShowStatusToast("Text selection too large", 2500)
         A_Clipboard := savedClipboard
         isProcessing := false
         return
     }
 
     if (StrLen(Trim(selectedText)) == 0) {
-        ShowStatusToast("⚠️ Select text or input box", 2000)
+        ShowStatusToast("Select text or input box", 2000)
         A_Clipboard := savedClipboard
         isProcessing := false
         return
@@ -231,31 +264,11 @@ TriggerCopilot() {
         activeClass := "Unknown"
     }
 
-    ; Step 3b: Extract Browser URL from Address Bar (Chrome, Edge, Firefox)
+    ; Step 3b: Extract Browser URL from Title (0ms cost, zero subprocesses)
     activeBrowserUrl := ""
-    try {
-        browserProcs := ["chrome.exe", "msedge.exe", "firefox.exe", "brave.exe", "opera.exe"]
-        isBrowser := false
-        lowerProc := StrLower(activeProcess)
-        for proc in browserProcs {
-            if (InStr(lowerProc, proc)) {
-                isBrowser := true
-                break
-            }
-        }
-        if (isBrowser && targetHwnd) {
-            ; Try to read URL from Chrome/Edge address bar via UIA Automation
-            psUrlCmd := Format('powershell -NoProfile -Command "$w = Get-Process -Id (Get-Process | Where-Object {{$_.MainWindowHandle -eq {1}}}).Id -ErrorAction SilentlyContinue; Add-Type -AssemblyName UIAutomationClient; $root = [System.Windows.Automation.AutomationElement]::FromHandle([IntPtr]{1}); $cond = New-Object System.Windows.Automation.PropertyCondition([System.Windows.Automation.AutomationElement]::ControlTypeProperty, [System.Windows.Automation.ControlType]::Edit); $edit = $root.FindFirst([System.Windows.Automation.TreeScope]::Descendants, $cond); if ($edit) {{ $p = $edit.GetCurrentPropertyValue([System.Windows.Automation.AutomationElement]::NameProperty); $v = $edit.GetCurrentPropertyValue([System.Windows.Automation.ValuePattern]::ValueProperty); Write-Output $v }} else {{ Write-Output \"\" }}"', targetHwnd)
-            shell2 := ComObject("WScript.Shell")
-            exec2 := shell2.Exec(psUrlCmd)
-            activeBrowserUrl := Trim(exec2.StdOut.ReadAll())
-            ; Only keep if it looks like a URL
-            if (!RegExMatch(activeBrowserUrl, "^https?://")) {
-                activeBrowserUrl := ""
-            }
-        }
-    } catch {
-        activeBrowserUrl := ""
+    lowerProc := StrLower(activeProcess)
+    if (InStr(lowerProc, "chrome") || InStr(lowerProc, "msedge") || InStr(lowerProc, "firefox") || InStr(lowerProc, "brave") || InStr(lowerProc, "opera")) {
+        activeBrowserUrl := activeTitle
     }
 
     ; Step 4: Write Payload to Unique Temporary JSON File
@@ -267,14 +280,9 @@ TriggerCopilot() {
     try FileDelete(resPath)
     try FileDelete(imgPath)
 
-    ; Check if clipboard contains an image / screenshot
-    hasImage := false
-    try {
-        psCmd := Format('powershell -NoProfile -ExecutionPolicy Bypass -File "{1}\scripts\save_clipboard_image.ps1" "{2}"', A_ScriptDir, imgPath)
-        RunWait(psCmd, A_ScriptDir, "Hide")
-        if (FileExist(imgPath))
-            hasImage := true
-    }
+    ; Check if clipboard contains an image format (CF_BITMAP=2, CF_DIB=8) natively without spawning PowerShell
+    ; Native clipboard image check — CF_BITMAP=2, CF_DIB=8 (0ms, zero processes)
+    hasImage := (DllCall("IsClipboardFormatAvailable", "UInt", 2) || DllCall("IsClipboardFormatAvailable", "UInt", 8)) ? true : false
 
     ; === Silent Native Window Screenshot (for vision context extraction — 100% native GDI, no AMSI block) ===
     screenshotPath := A_Temp "\ai_copilot_ss_" A_TickCount ".png"
@@ -299,39 +307,52 @@ TriggerCopilot() {
     )
 
     jsonStr := JSON_Serialize(payload)
-    FileAppend(jsonStr, reqPath, "UTF-8-RAW")
-    LogMsg("Request written to " reqPath " (len: " StrLen(selectedText) ", domain: " currentDomain ", project: '" currentProject "', screenshot: " (hasScreenshot ? "YES" : "NO") ")")
-    LogMsg("Window context: process='" activeProcess "' title='" activeTitle "' url='" activeBrowserUrl "'")
+    ; NOTE: FileAppend to reqPath happens only inside the fallback block below (not needed for fast-path HTTP)
+    LogMsg("Payload ready (len: " StrLen(selectedText) ", domain: " currentDomain ", project: '" currentProject "', screenshot: " (hasScreenshot ? "YES" : "NO") ")")
 
     ; Step 5: Update Status UI to Improving
-    UpdateStatusToast("✨ Copilot Improving Text...")
+    UpdateStatusToast("Processing context...")
 
-    ; Step 6: Invoke Python Engine via helper batch file
-    runnerBat := A_ScriptDir "\scripts\run_python.bat"
-    cmdLine := Format('"{1}" "{2}" "{3}"', runnerBat, reqPath, resPath)
-    LogMsg("Executing runner: " cmdLine)
-    
-    exitCode := RunWait(cmdLine, A_ScriptDir, "Hide")
-    LogMsg("Runner finished with exitCode: " exitCode)
+    resultMap := ""
+    resJson := ""
 
-    ; Step 7: Process Result
-    if (!FileExist(resPath)) {
-        LogMsg("ERROR: Response file " resPath " was not created!")
-        ShowStatusToast("❌ Error: Python execution failed", 3000)
-        A_Clipboard := savedClipboard
-        try FileDelete(reqPath)
-        try FileDelete(resPath)
-        try FileDelete(imgPath)
-        isProcessing := false
-        return
+    ; Fast-Path: Direct HTTP Request to in-memory Python Engine (0ms process creation)
+    try {
+        whr := ComObject("WinHttp.WinHttpRequest.5.1")
+        whr.Open("POST", "http://127.0.0.1:8799/api/copilot", false) ; Synchronous mode
+        whr.SetRequestHeader("Content-Type", "application/json; charset=utf-8")
+        whr.Send(jsonStr)
+        if (whr.Status == 200) {
+            resJson := whr.ResponseText
+            resultMap := JSON_Deserialize(resJson)
+            LogMsg("Fast-path HTTP response received successfully")
+        }
+    } catch as err {
+        LogMsg("Fast-path HTTP request unavailable: " err.Message)
     }
 
-    resJson := FileRead(resPath, "UTF-8-RAW")
-    resultMap := JSON_Deserialize(resJson)
-
+    ; Fallback: Direct headless pythonw.exe execution (Zero conhost / cmd window allocated)
     if (!resultMap) {
-        LogMsg("ERROR: Failed to parse JSON response: " resJson)
-        ShowStatusToast("❌ Error: Invalid response format", 3000)
+        pyExe := A_ScriptDir "\vevn\Scripts\pythonw.exe"
+        if (!FileExist(pyExe))
+            pyExe := "pythonw.exe"
+
+        ; Write request JSON to disk only for the fallback path (fast-path uses in-memory HTTP)
+        FileAppend(jsonStr, reqPath, "UTF-8-RAW")
+        cmdLine := pyExe ' "' A_ScriptDir '\src\main.py" "' reqPath '" "' resPath '"'
+        LogMsg("Executing fallback silent runner: " cmdLine)
+        RunWait(cmdLine, A_ScriptDir, "Hide")
+
+        if (FileExist(resPath)) {
+            resJson := FileRead(resPath, "UTF-8-RAW")
+            resultMap := JSON_Deserialize(resJson)
+        }
+    }
+
+    ; Step 7: Process Result
+    if (!resultMap) {
+        LogMsg("ERROR: Response was not generated!")
+        ShowStatusToast("Copilot execution failed", 3000)
         A_Clipboard := savedClipboard
         try FileDelete(reqPath)
         try FileDelete(resPath)
@@ -343,7 +364,7 @@ TriggerCopilot() {
     if (!resultMap["success"]) {
         errMsg := resultMap.Has("error") ? resultMap["error"] : "Unknown error"
         LogMsg("ERROR: LLM returned failure: " errMsg)
-        ShowStatusToast("❌ " errMsg, 3500)
+        ShowStatusToast(errMsg, 3500)
         A_Clipboard := savedClipboard
         try FileDelete(reqPath)
         try FileDelete(resPath)
@@ -368,18 +389,29 @@ TriggerCopilot() {
         ClipWait(0.5)
         
         SendInput("^v")
-        Sleep(150)
         
-        UpdateStatusToast("✅ Done (" scenarioDesc ")")
+        ; Allow target application (Word / Office / RichEdit) to finish reading clipboard OLE object
+        if (InStr(lowerProc, "winword") || InStr(lowerProc, "excel") || InStr(lowerProc, "powerpnt") || InStr(lowerProc, "outlook")) {
+            Sleep(450)
+        } else {
+            Sleep(250)
+        }
+        
+        bubbleMsg := resultMap.Has("bubble_message") ? resultMap["bubble_message"] : "Text enhanced"
+        UpdateStatusToast(bubbleMsg)
         SetTimer(HideStatusToast, -2000)
     } else {
-        UpdateStatusToast("✅ Text optimal (no changes needed)")
+        UpdateStatusToast("Text already optimal")
         SetTimer(HideStatusToast, -2000)
     }
 
-    ; Step 9: Restore Original Clipboard & Clean Up Temp Files
-    Sleep(100)
-    A_Clipboard := savedClipboard
+    ; Step 9: Restore Original Clipboard safely
+    if (savedClipboard != "") {
+        try {
+            A_Clipboard := savedClipboard
+        } catch {
+        }
+    }
     try FileDelete(reqPath)
     try FileDelete(resPath)
     try FileDelete(imgPath)
@@ -392,13 +424,16 @@ TriggerCopilot() {
 
 ShowStatusToast(msg, durationMs := 0) {
     ; Route status notification directly to 3D AI Companion speech bubble
+    ; Fire-and-forget async with short timeout so it never blocks the main flow
     try {
         whr := ComObject("WinHttp.WinHttpRequest.5.1")
-        whr.Open("POST", "http://127.0.0.1:8799/api/speech", true)
+        whr.Open("POST", "http://127.0.0.1:8799/api/speech", true) ; async
+        whr.SetTimeouts(500, 500, 500, 500) ; 500ms resolve/connect/send/receive — fail fast
         whr.SetRequestHeader("Content-Type", "application/json")
         dur := (durationMs > 0 ? durationMs / 1000 : 4.0)
         body := '{"text":"' . StrReplace(msg, '"', '\"') . '","duration":' . dur . ',"mode":"TALKING"}'
         whr.Send(body)
+        ; Do NOT call WaitForResponse — fire-and-forget intentional
     } catch {
     }
 }
@@ -462,49 +497,59 @@ JSON_Serialize(obj) {
 }
 
 JSON_Deserialize(str) {
-    try {
-        psCmd := Format('powershell -NoProfile -Command "$Input | ConvertFrom-Json | ConvertTo-Json -Depth 10"')
-        shell := ComObject("WScript.Shell")
-        exec := shell.Exec(psCmd)
-        exec.StdIn.Write(str)
-        exec.StdIn.Close()
-        outJson := exec.StdOut.ReadAll()
-        return ParseParsedJson(outJson)
-    } catch {
-        return Map("success", false, "error", "JSON Parse Error")
-    }
+    return ParseParsedJson(str)
 }
 
 ParseParsedJson(jsonStr) {
     resMap := Map()
-    if (RegExMatch(jsonStr, 'i)"success"\s*:\s*true'))
-        resMap["success"] := true
-    else
-        resMap["success"] := false
+    resMap["success"] := (InStr(jsonStr, '"success": true') || InStr(jsonStr, '"success":true')) ? true : false
+    resMap["changed"] := (InStr(jsonStr, '"changed": true') || InStr(jsonStr, '"changed":true')) ? true : false
 
-    if (RegExMatch(jsonStr, 'i)"changed"\s*:\s*true'))
-        resMap["changed"] := true
-    else
-        resMap["changed"] := false
+    rewrittenText := ExtractJsonString(jsonStr, "rewritten_text")
+    if (rewrittenText != "")
+        resMap["rewritten_text"] := rewrittenText
 
-    if (RegExMatch(jsonStr, 's)"rewritten_text"\s*:\s*"(.*?)"(?:\s*,\s*"|\s*})', &match)) {
-        val := match[1]
-        val := StrReplace(val, '\"', '"')
-        val := StrReplace(val, '\n', "`n")
-        val := StrReplace(val, '\\', "\")
-        val := DecodeUnicodeEscapes(val)  ; Fix \u0027 → ' etc
-        resMap["rewritten_text"] := val
-    }
+    scenDesc := ExtractJsonString(jsonStr, "scenario_description")
+    if (scenDesc != "")
+        resMap["scenario_description"] := scenDesc
 
-    if (RegExMatch(jsonStr, 's)"scenario_description"\s*:\s*"(.*?)"(?:\s*,\s*"|\s*})', &matchScen)) {
-        resMap["scenario_description"] := matchScen[1]
-    }
+    bubMsg := ExtractJsonString(jsonStr, "bubble_message")
+    if (bubMsg != "")
+        resMap["bubble_message"] := bubMsg
 
-    if (RegExMatch(jsonStr, 's)"error"\s*:\s*"(.*?)"(?:\s*,\s*"|\s*})', &matchErr)) {
-        resMap["error"] := matchErr[1]
-    }
+    errMsg := ExtractJsonString(jsonStr, "error")
+    if (errMsg != "")
+        resMap["error"] := errMsg
 
     return resMap
+}
+
+ExtractJsonString(jsonStr, key) {
+    pos := InStr(jsonStr, '"' key '"')
+    if (pos == 0)
+        return ""
+    valPos := InStr(jsonStr, ':', false, pos)
+    if (valPos == 0)
+        return ""
+    quoteStart := InStr(jsonStr, '"', false, valPos)
+    if (quoteStart == 0)
+        return ""
+    
+    idx := quoteStart + 1
+    len := StrLen(jsonStr)
+    while (idx <= len) {
+        ch := SubStr(jsonStr, idx, 1)
+        if (ch == '"' && SubStr(jsonStr, idx - 1, 1) != "\") {
+            break
+        }
+        idx++
+    }
+    rawVal := SubStr(jsonStr, quoteStart + 1, idx - quoteStart - 1)
+    val := StrReplace(rawVal, '\"', '"')
+    val := StrReplace(val, '\n', "`n")
+    val := StrReplace(val, '\r', "")
+    val := StrReplace(val, '\\', "\")
+    return DecodeUnicodeEscapes(val)
 }
 
 Join(sep, arr) {
@@ -543,12 +588,10 @@ CaptureWindowScreenshot(outputPath, hwnd := 0) {
         w := A_ScreenWidth
         h := A_ScreenHeight
 
-        ; Initialize GDI+ locally for this call
-        localToken := 0
-        si := Buffer(24, 0)
-        NumPut("UInt", 1, si, 0)
-        if (DllCall("gdiplus\GdiplusStartup", "Ptr*", &localToken, "Ptr", si, "Ptr", 0) != 0) {
-            LogMsg("CaptureWindowScreenshot: GdiplusStartup FAILED")
+        ; Reuse global GDI+ token initialized at startup — avoids per-call GdiplusStartup overhead
+        global gdiplusToken
+        if (gdiplusToken == 0) {
+            LogMsg("CaptureWindowScreenshot: global GDI+ token not initialized")
             return false
         }
 
@@ -567,7 +610,6 @@ CaptureWindowScreenshot(outputPath, hwnd := 0) {
             DllCall("gdi32\DeleteObject", "Ptr", hbm)
             DllCall("gdi32\DeleteDC", "Ptr", hdcMem)
             DllCall("user32\ReleaseDC", "Ptr", 0, "Ptr", hdcScreen)
-            DllCall("gdiplus\GdiplusShutdown", "Ptr", localToken)
             return false
         }
 
@@ -592,7 +634,7 @@ CaptureWindowScreenshot(outputPath, hwnd := 0) {
         DllCall("gdi32\DeleteObject", "Ptr", hbm)
         DllCall("gdi32\DeleteDC", "Ptr", hdcMem)
         DllCall("user32\ReleaseDC", "Ptr", 0, "Ptr", hdcScreen)
-        DllCall("gdiplus\GdiplusShutdown", "Ptr", localToken)
+        ; No GdiplusShutdown here — global token stays alive for the process lifetime
 
         ok := (status == 0 && FileExist(outputPath))
         LogMsg("CaptureWindowScreenshot: status=" status " file=" outputPath " exists=" (FileExist(outputPath) ? "YES" : "NO"))

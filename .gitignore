@@ -1,7 +1,54 @@
-# Environment & Secrets
+# ==========================================
+# Environment Variables & Secret API Keys
+# ==========================================
 .env
 .env.local
 .env.*.local
+*.env
+
+# ==========================================
+# User Private Data & Knowledge Graph Store
+# ==========================================
+data/history/
+data/knowledge_graph.json
+data/pet_config.json
+data/*.json
+!data/.gitkeep
+!data/README.md
+
+# ==========================================
+# Temporary IPC & Processing Files
+# ==========================================
+temp_req.json
+temp_out.json
+test_req.json
+input.json
+output.json
+*.tmp
+*.temp
+copilot_chat_ss.png
+copilot_ss.png
+
+# ==========================================
+# Application Logs & Diagnostics
+# ==========================================
+*.log
+copilot.log
+copilot_python.log
+logs/
+
+# ==========================================
+# Python Bytecode, Caches & Environments
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
 
 # Virtual Environments
 vevn/
@@ -10,29 +57,27 @@ venv/
 env/
 ENV/
 
-# Python Bytecode & Cache
-__pycache__/
-*.py[cod]
-*$py.class
-.pytest_cache/
-.coverage
-htmlcov/
-
-# Logs
-*.log
-copilot.log
-
-# IDE & Editor files
+# ==========================================
+# IDEs & Editor Configuration
+# ==========================================
 .vscode/
 .idea/
 *.swp
 *.swo
+.antigravity/
 
-# OS Generated Files
+# ==========================================
+# Operating System & System Cache Files
+# ==========================================
 Thumbs.db
 Thumbs.db:encryptable
 ehthumbs.db
 ehthumbs_vista.db
 [Dd]esktop.ini
 $RECYCLE.BIN/
+.DS_Store
+
+# ==========================================
+# Large Assets & Game Sprite Directories
+# ==========================================
 PC _ Computer - Marvel Cosmic Invasion - Playable Characters - Spider-Man/

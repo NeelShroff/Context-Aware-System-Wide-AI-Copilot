@@ -44,7 +44,7 @@ class LLMClient:
         headers = {
             "Content-Type": "application/json",
             "Authorization": f"Bearer {self.api_key}",
-            "User-Agent": "System-Wide-AI-Copilot/1.0 (Windows)"
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) System-Wide-AI-Copilot/1.0"
         }
 
         # Handle Image Input for Multimodal Vision
@@ -56,8 +56,12 @@ class LLMClient:
                 with open(image_path, "rb") as img_file:
                     b64_data = base64.b64encode(img_file.read()).decode("utf-8")
                 
-                # Use Groq Multimodal Vision Model (qwen/qwen3.6-27b)
-                selected_model = "qwen/qwen3.6-27b"
+                image_mime = "image/png"
+                if image_path.lower().endswith(".jpg") or image_path.lower().endswith(".jpeg"):
+                    image_mime = "image/jpeg"
+
+                # Use configured model (qwen/qwen3.6-27b) for multimodal vision queries
+                selected_model = self.model
 
                 user_content = [
                     {"type": "text", "text": user_prompt},
@@ -108,7 +112,10 @@ class LLMClient:
             except urllib.error.HTTPError as e:
                 err_body = e.read().decode("utf-8") if e.fp else str(e)
                 error_msg = f"HTTP Error {e.code}: {e.reason}"
-                if e.code == 404 and "model" in err_body.lower():
+                if e.code == 429 and attempt < self.max_retries:
+                    time.sleep(2.5)
+                    continue
+                if e.code in (400, 404) and "model" in err_body.lower():
                     # Fallback to fast standard model if specified model fails
                     if selected_model != "llama-3.3-70b-versatile":
                         selected_model = "llama-3.3-70b-versatile"
@@ -119,7 +126,7 @@ class LLMClient:
                     error_msg += f" (Model '{selected_model}' not found on Groq)"
                 
                 if attempt < self.max_retries:
-                    time.sleep(0.3)
+                    time.sleep(0.5)
                     continue
                 return {"success": False, "rewritten_text": "", "error": error_msg}
 
@@ -143,15 +150,29 @@ class LLMClient:
         text = text.strip()
         # Strip Qwen / DeepSeek reasoning think blocks
         text = re.sub(r'<think>.*?</think>', '', text, flags=re.DOTALL).strip()
-        # Strip markdown code fences if present
-        if text.startswith("```") and text.endswith("```"):
-            lines = text.splitlines()
-            if len(lines) >= 2:
-                text = "\n".join(lines[1:-1]).strip()
-        # Strip LLM-generated scenario section headers like "### Casual Greeting" or "### Refined Text"
-        text = re.sub(r'^(#+\s+[^\n]+\n+)', '', text).strip()
 
-        # Decode raw unicode escape sequences: \u0027 → ', \u2019 → ', etc.
+        # Strip common meta preambles and introductory commentary
+        meta_preambles = [
+            r'^(Here is (the|your) (rewritten|refined|optimized|enhanced) (text|message|prompt|email|code)[:\s]*)',
+            r'^(Here is a (rewritten|refined|optimized|enhanced) version[:\s]*)',
+            r'^(Rewritten (text|message|prompt|email)[:\s]*)',
+            r'^(Refined (text|message|prompt|email)[:\s]*)',
+            r'^(#+\s+(Refined|Rewritten|Optimized|Result|Output)\s*(Text|Message|Prompt|Code)?[:\s]*\n+)'
+        ]
+        for pat in meta_preambles:
+            text = re.sub(pat, '', text, flags=re.IGNORECASE).strip()
+
+        # Strip markdown code fences ONLY if the entire output was wrapped in ``` without specific code context
+        if text.startswith("```") and text.endswith("```") and text.count("```") == 2:
+            lines = text.splitlines()
+            if len(lines) >= 2 and not lines[0].strip().startswith("```"):
+                text = "\n".join(lines[1:-1]).strip()
+
+        # Strip leading/trailing surrounding quotes if present
+        if len(text) >= 2 and text[0] in ('"', "'") and text[-1] == text[0]:
+            text = text[1:-1].strip()
+
+        # Decode raw unicode escape sequences: \u0027 -> ', \u2019 -> ', etc.
         text = re.sub(
             r'\\u([0-9a-fA-F]{4})',
             lambda m: chr(int(m.group(1), 16)),

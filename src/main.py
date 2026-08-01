@@ -1,5 +1,12 @@
 import sys
 import os
+
+# Handle windowless pythonw.exe execution where stdout/stderr are None
+if sys.stdout is None:
+    sys.stdout = open(os.devnull, "w", encoding="utf-8")
+if sys.stderr is None:
+    sys.stderr = open(os.devnull, "w", encoding="utf-8")
+
 import json
 import argparse
 from pathlib import Path
@@ -58,17 +65,8 @@ def process_request(input_data: Dict[str, Any]) -> Dict[str, Any]:
     screenshot_path = input_data.get("screenshot_path")
     has_screenshot = bool(screenshot_path and os.path.exists(screenshot_path))
 
-    # Pre-extract recipient from screenshot ONCE here to avoid 2x vision API calls
-    # (query_context and update_graph would both call extract_recipient_from_screenshot otherwise)
-    cached_recipient: Optional[str] = None
-    if has_screenshot:
-        cached_recipient = kg_engine.extract_recipient_from_screenshot(screenshot_path)
-        if cached_recipient:
-            kg_engine._cached_recipient = cached_recipient  # store for reuse
-        else:
-            kg_engine._cached_recipient = None
-    else:
-        kg_engine._cached_recipient = None
+    # Skip synchronous recipient extraction to avoid double LLM API calls on fast Groq path
+    kg_engine._cached_recipient = None
 
     app_history = history_mgr.get_app_history(process_name, limit=3)
     chronological_timeline = history_mgr.get_chronological_timeline(limit=5)
@@ -114,12 +112,17 @@ def process_request(input_data: Dict[str, Any]) -> Dict[str, Any]:
     rewritten_text = llm_result["rewritten_text"]
     changed = (rewritten_text != text)
 
-    # Post to 3D VRM Desktop Pet server if active
+    # Classify intent & generate concise speech bubble message (NEVER post raw rewritten_text to 3D bubble)
+    intent_type, bubble_message = ContextDetector.classify_response_intent(
+        scenario, changed, text=text, rewritten_text=rewritten_text
+    )
+
+    # Post concise status one-liner to 3D VRM Desktop Pet server if active
     try:
         import urllib.request
         speech_payload = json.dumps({
-            "text": f"✨ Rewritten ({scenario_desc}): {rewritten_text}",
-            "duration": 8.0,
+            "text": bubble_message,
+            "duration": 4.0,
             "mode": "TALKING"
         }).encode("utf-8")
         req = urllib.request.Request(
@@ -161,6 +164,8 @@ def process_request(input_data: Dict[str, Any]) -> Dict[str, Any]:
         "success": True,
         "scenario": scenario,
         "scenario_description": scenario_desc,
+        "bubble_message": bubble_message,
+        "intent_type": intent_type,
         "original_text": text,
         "rewritten_text": rewritten_text,
         "changed": changed,
@@ -174,6 +179,7 @@ def main():
 
     parser = argparse.ArgumentParser(description="Context-Aware System-Wide AI Writing Copilot Backend")
     parser.add_argument("input_file", nargs="?", help="Path to input JSON file from AutoHotkey")
+    parser.add_argument("output_file", nargs="?", help="Path to output JSON file to write results")
     parser.add_argument("--stdin", action="store_true", help="Read input JSON from standard input")
 
     args = parser.parse_args()
@@ -188,11 +194,17 @@ def main():
             input_data = json.load(f)
     else:
         # Fallback if invoked without arguments
-        sys.stderr.write("Usage: python main.py <input_file.json> OR python main.py --stdin\n")
+        sys.stderr.write("Usage: python main.py <input_file.json> [output_file.json] OR python main.py --stdin\n")
         sys.exit(1)
 
     result = process_request(input_data)
-    print(json.dumps(result, ensure_ascii=False, indent=2))
+    json_out = json.dumps(result, ensure_ascii=False, indent=2)
+
+    if args.output_file:
+        with open(args.output_file, "w", encoding="utf-8") as f:
+            f.write(json_out)
+    else:
+        print(json_out)
 
 
 if __name__ == "__main__":
