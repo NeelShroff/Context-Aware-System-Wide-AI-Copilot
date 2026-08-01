@@ -369,10 +369,14 @@ class ContextMonitorThread(threading.Thread):
                     new_updates["speech_timestamp"] = time.time()
                 elif idle_sec >= 120:
                     new_updates["pet_mode"] = "SLEEP"
+                    new_updates["motion_state"] = "SLEEP"
                     new_updates["speech_text"] = "Zzz... Web-sleeping..."
                     new_updates["speech_duration"] = 5.0
                     new_updates["speech_timestamp"] = time.time()
-                elif current_mode not in ("THINKING", "TALKING"):
+                elif current_mode == "SLEEP" and idle_sec < 3:
+                    new_updates["pet_mode"] = "IDLE"
+                    new_updates["motion_state"] = "IDLE"
+                elif current_mode not in ("THINKING", "TALKING", "SLEEP"):
                     if is_coding:
                         new_updates["pet_mode"] = "CODING"
                         new_updates["mood_expression"] = "focused"

@@ -43,7 +43,8 @@ class PromptBuilder:
         chronological_timeline: Optional[List[str]] = None,
         domain_info: tuple[str, str] = ("GENERAL", "General Domain"),
         preference_rules: Optional[List[str]] = None,
-        workspace_meta: Optional[Dict[str, Any]] = None
+        workspace_meta: Optional[Dict[str, Any]] = None,
+        is_voice: bool = False
     ) -> tuple[str, str]:
         """
         Returns (system_prompt, user_prompt) using XML-tagged context structures for optimal LLM parsing.
@@ -64,6 +65,26 @@ MULTIMODAL IMAGE VISION ACTIVE:
 - Incorporate visual findings directly into the response optimization.
 </vision_directive>
 """
+
+        voice_directive = ""
+        if is_voice:
+            voice_directive = f"""
+<voice_command_and_vision_directive>
+SPOKEN VOICE COMMAND & SCREEN VISION MODE ACTIVE:
+- The user spoke a live voice instruction or query via microphone.
+- The active application window metadata and desktop screen capture image are attached to provide visual context.
+
+INTELLIGENT DUAL-MODE RESOLUTION:
+1. ASSISTIVE RESPONSE / SCREEN QUERY (e.g., "What should I reply?", "How do I fix this error?", "Summarize what's on screen", "What am I looking at?"):
+   - Inspect the attached screen capture (messages, email thread, code error, browser document) and active window metadata.
+   - Formulate a helpful answer or draft an appropriate, high-quality response for {scenario_desc}.
+
+2. DIRECT DICTATION / COMMAND (e.g., "Tell him I'll be late", "Reply agreeing to tomorrow at 3pm", "Add docstring for this function"):
+   - Generate a polished text response suited for {scenario_desc} to be inserted directly into the user's active application text box.
+   - Clean up speech stutters, false starts, filler words ("um", "uh", "like", "you know"), and unintentional repetitions.
+</voice_command_and_vision_directive>
+"""
+
 
         ws_meta_str = ""
         if workspace_meta:
@@ -107,13 +128,14 @@ MULTIMODAL IMAGE VISION ACTIVE:
         system_prompt = (
             f"{SYSTEM_CORE_RULES}\n\n"
             f"RUNTIME CONTEXT METADATA:\n"
-            f"{context_xml}{memories_xml}{timeline_xml}{prefs_xml}{image_directive}\n\n"
+            f"{context_xml}{memories_xml}{timeline_xml}{prefs_xml}{image_directive}{voice_directive}\n\n"
             f"SCENARIO DIRECTIVES:\n{scenario_instructions}"
         )
 
-        user_prompt = f"SELECTED TEXT TO REWRITE:\n\"\"\"\n{text}\n\"\"\""
+        user_prompt = f"SELECTED TEXT TO REWRITE:\n\"\"\"\n{text}\n\"\"\"" if not is_voice else f"SPOKEN TRANSCRIPTION TO POLISH & INSERT:\n\"\"\"\n{text}\n\"\"\""
 
         return system_prompt, user_prompt
+
 
     @staticmethod
     def _get_scenario_instructions(scenario: str) -> str:

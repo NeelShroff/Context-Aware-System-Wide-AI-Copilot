@@ -84,6 +84,15 @@
         let animFrameIndex = 0;
         let lastFrameTime = 0;
 
+        const ATTACK_SETS = ["Attack1", "Attack2", "Attack3", "Attack4"];
+        let activeAttackAnimKey = "Attack1";
+        let attackSeqIndex = 0;
+
+        function selectNextAttackAnim() {
+            activeAttackAnimKey = ATTACK_SETS[attackSeqIndex % ATTACK_SETS.length];
+            attackSeqIndex++;
+        }
+
         function resizeCanvas() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
@@ -101,40 +110,168 @@
         const AudioCtx = window.AudioContext || window.webkitAudioContext;
         let audioCtx = null;
 
-        function playThwipSound() {
+        function playCustomSound(cfg) {
             try {
                 if (!audioCtx) audioCtx = new AudioCtx();
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(120, audioCtx.currentTime + 0.15);
+                osc.type = cfg ? cfg.type || 'sine' : 'sine';
+                const startF = cfg ? cfg.startFreq || 800 : 800;
+                const endF = cfg ? cfg.endFreq || 120 : 120;
+                osc.frequency.setValueAtTime(startF, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(Math.max(10, endF), audioCtx.currentTime + 0.18);
                 gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.18);
                 osc.connect(gain);
                 gain.connect(audioCtx.destination);
                 osc.start();
-                osc.stop(audioCtx.currentTime + 0.15);
+                osc.stop(audioCtx.currentTime + 0.18);
             } catch(e) {}
         }
 
+        function playThwipSound() {
+            playCustomSound({ startFreq: 800, endFreq: 120, type: 'sine' });
+        }
+
         let activeWebProjectiles = [];
+        let lastActionIdx = -1;
+
+        const CLICK_ACTIONS = [
+            {
+                name: "WEB_SHOT",
+                animKey: "Attack1",
+                duration: 55,
+                sound: { startFreq: 950, endFreq: 120, type: 'sine' },
+                quotes: ["🕸️ Thwip!", "🕸️ Web Blast!", "🕸️ Gotcha!", "🕸️ Web Shot!"],
+                execute: (charX, charY, dir) => {
+                    triggerInteractiveWebShoot();
+                }
+            },
+            {
+                name: "ACROBATIC_DODGE",
+                animKey: "Dodge",
+                duration: 60,
+                sound: { startFreq: 350, endFreq: 850, type: 'triangle' },
+                quotes: ["🤸 Cartwheel Dodge!", "💨 Too slow!", "✨ Acrobatic Flip!", "⚡ Missed me!"],
+                execute: (charX, charY, dir) => {}
+            },
+            {
+                name: "WEB_CYCLONE",
+                animKey: "Special",
+                duration: 65,
+                sound: { startFreq: 750, endFreq: 250, type: 'sawtooth' },
+                quotes: ["🌀 Web Cyclone!", "🕸️ Cyclone Spin!", "⚡ Spin Blast!", "🌀 Whoosh!"],
+                execute: (charX, charY, dir) => {
+                    const startX = charX + dir * 22;
+                    const startY = charY + 2;
+                    activeWebProjectiles.push({
+                        startX: startX, startY: startY, x: startX, y: startY,
+                        targetX: startX - 600, targetY: startY - 20, dir: -1, speed: 18, life: 0, maxLife: 80,
+                        impact: false, impactLife: 0, activeSprite: "PowerProjectileActive_00.png", deathSprite: "SpecialProjectileDeath_02.png"
+                    });
+                    activeWebProjectiles.push({
+                        startX: startX, startY: startY, x: startX, y: startY,
+                        targetX: startX + 600, targetY: startY - 20, dir: 1, speed: 18, life: 0, maxLife: 80,
+                        impact: false, impactLife: 0, activeSprite: "SpecialProjectileActive_00.png", deathSprite: "PowerProjectileDeath_07.png"
+                    });
+                }
+            },
+            {
+                name: "SUPERHERO_LANDING",
+                animKey: "Land",
+                duration: 50,
+                sound: { startFreq: 180, endFreq: 35, type: 'sine' },
+                quotes: ["🦸 Superhero Landing!", "💥 Ground Slam!", "⚡ Boom!", "🦸 Superhero Stance!"],
+                execute: (charX, charY, dir) => {}
+            },
+            {
+                name: "POWER_PUNCH",
+                animKey: "Attack2",
+                duration: 55,
+                sound: { startFreq: 650, endFreq: 180, type: 'square' },
+                quotes: ["👊 Power Strike!", "💥 Spider Strength!", "⚡ Knockout!", "👊 Web Combo!"],
+                execute: (charX, charY, dir) => {
+                    const startX = charX + dir * 30;
+                    const startY = charY - 8;
+                    activeWebProjectiles.push({
+                        startX: startX, startY: startY, x: startX + dir * 40, y: startY,
+                        targetX: startX + dir * 50, targetY: startY, dir: dir, speed: 20, life: 0, maxLife: 10,
+                        impact: true, impactLife: 0, activeSprite: "PowerProjectileActive_00.png", deathSprite: "PowerProjectileDeath_07.png"
+                    });
+                }
+            },
+            {
+                name: "WEB_SWING",
+                animKey: "Attackswinging",
+                duration: 55,
+                sound: { startFreq: 1050, endFreq: 320, type: 'sine' },
+                quotes: ["🏙️ Web Swing!", "🕸️ Swinging in!", "⚡ Yahoo!", "🏙️ City Glider!"],
+                execute: (charX, charY, dir) => {
+                    webAnchorXDesktop = charX + dir * 180;
+                    webAnchorYDesktop = -50;
+                    setTimeout(() => { webAnchorXDesktop = null; webAnchorYDesktop = null; }, 1200);
+                }
+            },
+            {
+                name: "SPIDER_ATTACK_3",
+                animKey: "Attack3",
+                duration: 60,
+                sound: { startFreq: 800, endFreq: 200, type: 'triangle' },
+                quotes: ["💥 Triple Web Hit!", "🕸️ Web Flurry!", "⚡ Combo Attack!", "💥 Thwip Thwip!"],
+                execute: (charX, charY, dir) => {
+                    triggerInteractiveWebShoot(charX + dir * 700, charY - 80);
+                }
+            },
+            {
+                name: "HERO_PERCH",
+                animKey: "Selectscreen",
+                duration: 60,
+                sound: { startFreq: 540, endFreq: 820, type: 'sine' },
+                quotes: ["👑 Friendly Neighborhood!", "🕸️ Just hanging out!", "😎 Looking good!", "👑 Hero Perch!"],
+                execute: (charX, charY, dir) => {}
+            },
+            {
+                name: "AIR_LEAP",
+                animKey: "Attack4",
+                duration: 65,
+                sound: { startFreq: 900, endFreq: 400, type: 'sawtooth' },
+                quotes: ["🦘 High-Flying Combo!", "💥 Air Strike!", "⚡ Flying Kick!", "🦘 Aerial Attack!"],
+                execute: (charX, charY, dir) => {
+                    triggerInteractiveWebShoot(charX + dir * 650, charY + 50);
+                }
+            }
+        ];
+
+        function handleInteractiveClick(e) {
+            if (petMode === "SLEEP" || motionStateDesktop === "SLEEP") {
+                petMode = "IDLE";
+                motionStateDesktop = "IDLE";
+            }
+            const charX = (charRelXDesktop !== null && charRelXDesktop !== undefined) ? charRelXDesktop : centerX;
+            const charY = (charRelYDesktop !== null && charRelYDesktop !== undefined) ? charRelYDesktop : centerY;
+            const dir = mouseX < -0.15 ? -1 : 1;
+
+            let nextIdx;
+            do {
+                nextIdx = Math.floor(Math.random() * CLICK_ACTIONS.length);
+            } while (nextIdx === lastActionIdx && CLICK_ACTIONS.length > 1);
+            lastActionIdx = nextIdx;
+            const action = CLICK_ACTIONS[nextIdx];
+
+            headPatTimer = action.duration;
+            activeAttackAnimKey = action.animKey;
+            playCustomSound(action.sound);
+
+            const quote = action.quotes[Math.floor(Math.random() * action.quotes.length)];
+            triggerSpeech(quote, 2.2);
+
+            if (action.execute) action.execute(charX, charY, dir);
+        }
 
         canvas.addEventListener('click', (e) => {
             const cx = e.clientX, cy = e.clientY;
             if (Math.abs(cx - centerX) < 60 && Math.abs(cy - centerY) < 70) {
-                headPatTimer = 45;
-                playThwipSound();
-                triggerSpeech("🕸️ Thwip!", 2.0);
-
-                const dir = mouseX < -0.15 ? -1 : 1;
-                activeWebProjectiles.push({
-                    x: centerX + dir * 30,
-                    y: centerY - 8,
-                    vx: dir * 18,
-                    dir: dir,
-                    life: 0
-                });
+                handleInteractiveClick(e);
             }
         });
 
@@ -143,7 +280,7 @@
             const t = document.getElementById('bubble-text');
             if (t) t.innerText = text;
             b.classList.add('active');
-            playThwipSound();
+            playCustomSound({ startFreq: 850, endFreq: 150, type: 'sine' });
             setTimeout(() => b.classList.remove('active'), dur * 1000);
         }
 
@@ -178,6 +315,7 @@
                 "Dodge_00.png", "Dodge_01.png", "Dodge_02.png", "Dodge_03.png", "Dodge_04.png", "Dodge_05.png",
                 "Dodge_06.png", "Dodge_07.png", "Dodge_08.png", "Dodge_09.png", "Dodge_10.png", "Dodge_11.png"
             ],
+            Sleep: ["Downbounce_00.png", "Downbounce_01.png", "Downbounce_02.png", "Downbounce_03.png", "Downbounce_04.png", "Down.png"],
             Downbounce: ["Downbounce_00.png", "Downbounce_01.png", "Downbounce_02.png", "Downbounce_03.png", "Downbounce_04.png"],
             Downgetup: ["Downgetup_00.png", "Downgetup_01.png", "Downgetup_02.png", "Downgetup_03.png", "Downgetup_04.png", "Downgetup_05.png"],
             Jumpapex: ["Jumpapex_00.png", "Jumpapex_01.png", "Jumpapex_02.png", "Jumpapex_03.png", "Jumpapex_04.png"],
@@ -223,6 +361,9 @@
         let charRelYDesktop = null;
         let currentAnimKey = "Idle";
         let lastValidImg = null;
+        let smoothDrawX = null;
+        let smoothDrawY = null;
+        let lastDirectIpcTime = 0;
 
         // Preload All Sprite Sets to prevent loading flicker on state changes
         function preloadAllSprites(suit) {
@@ -248,8 +389,10 @@
             const currentSuit = characterStyle || "01 [Default]";
             let animKey = "Idle";
 
-            // Priority 1: Movement Action Animations
-            if (motionStateDesktop === "SPRINT") {
+            // Priority 1: Contextual Sleep Lock & Movement Action Animations
+            if (petMode === "SLEEP" || motionStateDesktop === "SLEEP") {
+                animKey = "Sleep";            // Lying ground sleep pose (Down.png to Downbounce_04.png)
+            } else if (motionStateDesktop === "SPRINT") {
                 animKey = "Sprint";
             } else if (motionStateDesktop === "WALK") {
                 animKey = "Walk";
@@ -264,13 +407,11 @@
             } else {
                 // Priority 2: Contextual AI Companion Stances
                 if (headPatTimer > 0) {
-                    animKey = "Power1";       // Web thwip shooting stance
+                    animKey = activeAttackAnimKey || "Attack1";       // Dynamic Web attack stance (Attack1, Attack2, Attack3, Attack4)
                 } else if (petMode === "THINKING") {
                     animKey = "Dodge";        // Acrobatic cartwheel dodge
                 } else if (petMode === "CODING" || petMode === "TALKING") {
                     animKey = "Special";      // 360-degree web cyclone blast (Special_00 - Special_11)
-                } else if (petMode === "SLEEP") {
-                    animKey = "Downbounce";   // Lying ground rest stance (Downbounce_00 - Downbounce_04)
                 } else if (petMode === "CHAT") {
                     animKey = "Selectscreen"; // Perched upside-down web hang while chatting
                 } else {
@@ -287,9 +428,17 @@
 
             const frames = ANIM_SETS[animKey] || ANIM_SETS.Idle;
             const isSprint = animKey === "Sprint";
-            if (t - lastFrameTime > (isSprint ? 70 : 110)) {
-                animFrameIndex = (animFrameIndex + 1) % frames.length;
-                lastFrameTime = t;
+            const isSleep = animKey === "Sleep";
+            const frameDuration = isSprint ? 65 : (animKey === "Walk" ? 85 : (isSleep ? 120 : 100));
+            const dt = t - lastFrameTime;
+            if (dt >= frameDuration) {
+                const steps = Math.floor(dt / frameDuration);
+                if (isSleep) {
+                    animFrameIndex = Math.min(animFrameIndex + steps, frames.length - 1);
+                } else {
+                    animFrameIndex = (animFrameIndex + steps) % frames.length;
+                }
+                lastFrameTime = t - (dt % frameDuration);
             }
 
             const currentFile = frames[animFrameIndex % frames.length];
@@ -301,11 +450,26 @@
             }
 
             const scale = userScale * 1.6;
-            // Relative Canvas Positioning with GPU Integer Snapping
-            const drawXPos = Math.round((charRelXDesktop !== null && charRelXDesktop !== undefined) ? charRelXDesktop : centerX);
+            // Smooth Relative Position LERP to Eliminate Instant Position Snapping / Jumping
+            const targetXPos = (charRelXDesktop !== null && charRelXDesktop !== undefined) ? charRelXDesktop : centerX;
             const isWebMotion = motionStateDesktop === "WEB_UP" || motionStateDesktop === "WEB_DOWN" || motionStateDesktop === "WEB_DIAGONAL";
             const baseCenterY = (charRelYDesktop !== null && charRelYDesktop !== undefined) ? charRelYDesktop : centerY;
-            const drawY = Math.round(baseCenterY + (isWebMotion || animKey === "Attackswinging" ? -22 + Math.sin(t * 0.005) * 8 : 0));
+            const targetYPos = baseCenterY + (isWebMotion || animKey === "Attackswinging" ? -22 + Math.sin(t * 0.005) * 8 : 0);
+
+            if (smoothDrawX === null || Math.abs(smoothDrawX - targetXPos) > 350) {
+                smoothDrawX = targetXPos;
+            } else {
+                smoothDrawX += (targetXPos - smoothDrawX) * 0.35;
+            }
+
+            if (smoothDrawY === null || Math.abs(smoothDrawY - targetYPos) > 350) {
+                smoothDrawY = targetYPos;
+            } else {
+                smoothDrawY += (targetYPos - smoothDrawY) * 0.35;
+            }
+
+            const drawXPos = Math.round(smoothDrawX);
+            const drawY = Math.round(smoothDrawY);
 
             // Render Web Tether Line when moving vertically or diagonally
             if (isWebMotion) {
@@ -363,6 +527,23 @@
                     if (senseImg.complete && senseImg.naturalWidth > 0) {
                         ctx.drawImage(senseImg, Math.round(drawXPos - 20), Math.round(posY - 28), Math.round(senseImg.naturalWidth * scale * 1.2), Math.round(senseImg.naturalHeight * scale * 1.2));
                     }
+                } else if (petMode === "SLEEP" || animKey === "Sleep") {
+                    // Render floating glowing Zzz sleep particles above Spider-Man during SLEEP mode
+                    ctx.save();
+                    ctx.fillStyle = "rgba(56, 189, 248, 0.88)";
+                    ctx.shadowColor = "#38bdf8";
+                    ctx.shadowBlur = 8;
+                    for (let i = 0; i < 3; i++) {
+                        const phase = (t * 0.0015 + i * 0.7) % 2.2;
+                        const zx = Math.round(drawXPos + (isFlipped ? -28 : 28) + Math.sin(phase * 2.5 + i) * 6);
+                        const zy = Math.round(posY + 20 - phase * 18);
+                        const alpha = Math.max(0, 1 - phase / 2.2);
+                        const fontSize = Math.round(10 + i * 2.5);
+                        ctx.globalAlpha = alpha;
+                        ctx.font = `bold ${fontSize}px Orbitron, Rajdhani, sans-serif`;
+                        ctx.fillText("Zzz...", zx, zy);
+                    }
+                    ctx.restore();
                 }
                 ctx.restore();
             }
@@ -389,8 +570,8 @@
 
                     const px = Math.round(p.x);
                     const py = Math.round(p.y);
-                    const sx = Math.round(p.startX);
-                    const sy = Math.round(p.startY);
+                    const sx = Math.round(drawXPos + (p.dir || headingDirDesktop) * 22);
+                    const sy = Math.round(drawY + 2);
 
                     // Trailing web beam from Spider-Man's wrist to traveling web bullet
                     ctx.beginPath();
@@ -451,17 +632,26 @@
         let lastShootTs = 0;
 
         function triggerInteractiveWebShoot(targetXInput, targetYInput) {
+            selectNextAttackAnim();
             const now = Date.now();
             if (now - lastShootTs < 400) return; // Strict single-pulse debounce guard
             lastShootTs = now;
 
             const charX = (charRelXDesktop !== null && charRelXDesktop !== undefined) ? charRelXDesktop : centerX;
             const charY = (charRelYDesktop !== null && charRelYDesktop !== undefined) ? charRelYDesktop : centerY;
-            const startX = charX + headingDirDesktop * 22;
+            const dir = headingDirDesktop || 1;
+            const startX = charX + dir * 22;
             const startY = charY + 2; // Exact wrist hand position in web thwip pose
 
-            const targetX = (targetXInput !== undefined && targetXInput !== null) ? targetXInput : ((webAnchorXDesktop !== null && webAnchorXDesktop !== undefined) ? webAnchorXDesktop : (startX + headingDirDesktop * 800));
-            const targetY = (targetYInput !== undefined && targetYInput !== null) ? targetYInput : ((webAnchorYDesktop !== null && webAnchorYDesktop !== undefined) ? webAnchorYDesktop : (startY - 40));
+            let targetX = (targetXInput !== undefined && targetXInput !== null) ? targetXInput : (startX + dir * 800);
+            let targetY = (targetYInput !== undefined && targetYInput !== null) ? targetYInput : (startY - 40);
+
+            // Strict Outward Trajectory Constraint: Web MUST shoot outward away from Spider-Man
+            if (dir > 0 && targetX <= startX + 50) {
+                targetX = startX + 800;
+            } else if (dir < 0 && targetX >= startX - 50) {
+                targetX = startX - 800;
+            }
 
             const dist = Math.sqrt((targetX - startX)**2 + (targetY - startY)**2);
             const dynamicSpeed = Math.max(14, Math.min(24, dist / 35));
@@ -498,6 +688,7 @@
         // ============================================================
         window.updatePetStateDirect = function(data) {
             if (!data) return;
+            lastDirectIpcTime = Date.now();
             petMode = data.pet_mode || petMode;
             motionStateDesktop = data.motion_state || motionStateDesktop;
             if (data.heading_dir) headingDirDesktop = data.heading_dir;
@@ -506,6 +697,11 @@
             webAnchorYDesktop = data.web_anchor_y !== undefined ? data.web_anchor_y : null;
             charRelXDesktop = data.char_rel_x !== undefined ? data.char_rel_x : null;
             charRelYDesktop = data.char_rel_y !== undefined ? data.char_rel_y : null;
+
+            if (petMode === "SLEEP" || motionStateDesktop === "SLEEP") {
+                charRelXDesktop = null;
+                charRelYDesktop = null;
+            }
 
             if (data.web_shoot_trigger && !lastWebShootState) {
                 triggerInteractiveWebShoot(webAnchorXDesktop, webAnchorYDesktop);
@@ -520,6 +716,8 @@
 
         async function pollPetState() {
             try {
+                // If direct IPC (runJavaScript) is active, skip HTTP polling position overrides to prevent stutter
+                if (Date.now() - lastDirectIpcTime < 2500) return;
                 const res = await fetch('http://127.0.0.1:8799/api/status');
                 if (res.ok) {
                     const data = await res.json();

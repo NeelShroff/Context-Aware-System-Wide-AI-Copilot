@@ -45,6 +45,7 @@ Tray.Add("💬 Personal & Casual", (*) => SetDomain("PERSONAL", "PERSONAL & CASU
 Tray.Add("💻 Development & Engineering", (*) => SetDomain("DEVELOPMENT", "DEVELOPMENT"))
 Tray.Add("⚡ AI Prompt Engineering", (*) => SetDomain("PROMPT_ENGINEERING", "AI PROMPT ENG"))
 Tray.Add()
+Tray.Add("🎙️ Voice Dictation (Ctrl+Shift+V)", (*) => TriggerVoiceDictation())
 Tray.Add("💬 Open AI Chatbot (Ctrl+Alt+C)", OpenChatWindow)
 Tray.Add("📊 View Knowledge Graph (Neo4j)", (*) => Run("http://localhost:7474"))
 Tray.Add("🕶️ Launch 3D AI Companion", PromptLaunchPet)
@@ -58,6 +59,7 @@ Tray.Add()
 Tray.Add("🚀 Auto-Start on Laptop Boot", ToggleAutoStart)
 Tray.Add()
 Tray.Add("❌ Exit Copilot", (*) => ExitApp())
+
 Tray.Check("🌐 Auto-Detect Domain (Smart)")
 
 ; Check current startup state on launch
@@ -182,6 +184,11 @@ Browser_Forward:: {
     OpenChatWindow()
 }
 
+; 6. Hotkey: Ctrl + Shift + V (Voice Dictation)
+^+v:: {
+    TriggerVoiceDictation()
+}
+
 OpenChatWindow(*) {
     try {
         whr := ComObject("WinHttp.WinHttpRequest.5.1")
@@ -190,6 +197,174 @@ OpenChatWindow(*) {
     } catch {
     }
 }
+
+TriggerVoiceDictation(*) {
+    global isProcessing, currentDomain, currentProject, currentCategory, currentPriority
+    
+    targetHwnd := WinActive("A")
+    if (!targetHwnd)
+        targetHwnd := WinExist("A")
+
+    if (isProcessing) {
+        ShowStatusToast("⏳ Request already in progress...", 1500)
+        return
+    }
+
+    isProcessing := true
+    ShowStatusToast("🎙️ Listening... (Speak into mic)", 0)
+
+    activeTitle := "Unknown"
+    activeProcess := "Unknown"
+    activePath := "Unknown"
+    activeClass := "Unknown"
+
+    try {
+        if (targetHwnd) {
+            activeTitle := WinGetTitle(targetHwnd)
+            activeProcess := WinGetProcessName(targetHwnd)
+            activePath := WinGetProcessPath(targetHwnd)
+            activeClass := WinGetClass(targetHwnd)
+        }
+    } catch {
+        activeTitle := "Unknown"
+        activeProcess := "Unknown"
+        activePath := "Unknown"
+        activeClass := "Unknown"
+    }
+
+    activeBrowserUrl := ""
+    lowerProc := StrLower(activeProcess)
+    if (InStr(lowerProc, "chrome") || InStr(lowerProc, "msedge") || InStr(lowerProc, "firefox") || InStr(lowerProc, "brave") || InStr(lowerProc, "opera")) {
+        activeBrowserUrl := activeTitle
+    }
+
+    reqPath := A_Temp "\ai_copilot_voice_req_" A_TickCount ".json"
+    resPath := A_Temp "\ai_copilot_voice_res_" A_TickCount ".json"
+
+    try FileDelete(reqPath)
+    try FileDelete(resPath)
+
+    screenshotPath := A_Temp "\ai_copilot_voice_ss_" A_TickCount ".png"
+    hasScreenshot := CaptureWindowScreenshot(screenshotPath, targetHwnd)
+    LogMsg("Voice screenshot captured: " (hasScreenshot ? "YES (" screenshotPath ")" : "NO"))
+
+    payload := Map(
+        "is_voice", true,
+        "text", "",
+        "max_seconds", 12.0,
+        "domain_override", currentDomain,
+        "project_name", currentProject,
+        "category", currentCategory,
+        "priority", currentPriority,
+        "screenshot_path", hasScreenshot ? screenshotPath : "",
+        "context", Map(
+            "title", activeTitle,
+            "process", activeProcess,
+            "path", activePath,
+            "class", activeClass,
+            "url", activeBrowserUrl
+        )
+    )
+
+
+    jsonStr := JSON_Serialize(payload)
+    resultMap := ""
+
+    ; Fast-Path HTTP Request to in-memory Python Engine
+    try {
+        whr := ComObject("WinHttp.WinHttpRequest.5.1")
+        whr.Open("POST", "http://127.0.0.1:8799/api/copilot", false)
+        whr.SetRequestHeader("Content-Type", "application/json; charset=utf-8")
+        whr.Send(jsonStr)
+        if (whr.Status == 200) {
+            resJson := whr.ResponseText
+            resultMap := JSON_Deserialize(resJson)
+        }
+    } catch as err {
+    }
+
+    ; Fallback headless python execution
+    if (!resultMap) {
+        pyExe := A_ScriptDir "\vevn\Scripts\pythonw.exe"
+        if (!FileExist(pyExe))
+            pyExe := "pythonw.exe"
+
+        FileAppend(jsonStr, reqPath, "UTF-8-RAW")
+        cmdLine := pyExe ' "' A_ScriptDir '\src\main.py" "' reqPath '" "' resPath '"'
+        RunWait(cmdLine, A_ScriptDir, "Hide")
+
+        if (FileExist(resPath)) {
+            resJson := FileRead(resPath, "UTF-8-RAW")
+            resultMap := JSON_Deserialize(resJson)
+        }
+    }
+
+    if (!resultMap || !resultMap.Has("success") || !resultMap["success"]) {
+        errMsg := (resultMap && resultMap.Has("error")) ? resultMap["error"] : "Voice dictation failed"
+        ShowStatusToast("❌ " errMsg, 3500)
+        try FileDelete(reqPath)
+        try FileDelete(resPath)
+        isProcessing := false
+        return
+    }
+
+    scenario := resultMap.Has("scenario") ? resultMap["scenario"] : ""
+    bubbleMsg := resultMap.Has("bubble_message") ? resultMap["bubble_message"] : ""
+    rewrittenText := resultMap.Has("rewritten_text") ? resultMap["rewritten_text"] : ""
+    lowerRewritten := StrLower(rewrittenText)
+
+    isAction := (scenario == "MUSIC_CONTROL" || scenario == "REMINDER_SET" || scenario == "MEMORY_FACT_SAVED"
+        || InStr(lowerRewritten, "now playing:")
+        || InStr(lowerRewritten, "music stopped")
+        || InStr(lowerRewritten, "music paused")
+        || InStr(lowerRewritten, "music resumed")
+        || InStr(lowerRewritten, "reminder set")
+        || InStr(lowerRewritten, "saved fact")
+        || InStr(lowerRewritten, "saved memory"))
+
+    if (isAction) {
+        toastMsg := (StrLen(Trim(bubbleMsg)) > 0) ? bubbleMsg : rewrittenText
+        ShowStatusToast("✨ " . toastMsg, 3500)
+        try FileDelete(reqPath)
+        try FileDelete(resPath)
+        isProcessing := false
+        return
+    }
+
+
+    rewrittenText := resultMap.Has("rewritten_text") ? resultMap["rewritten_text"] : ""
+    if (StrLen(Trim(rewrittenText)) > 0) {
+        savedClipboard := ClipboardAll()
+        A_Clipboard := rewrittenText
+        ClipWait(0.5)
+        
+        SendInput("^v")
+
+        
+        if (InStr(lowerProc, "winword") || InStr(lowerProc, "excel") || InStr(lowerProc, "powerpnt") || InStr(lowerProc, "outlook")) {
+            Sleep(450)
+        } else {
+            Sleep(250)
+        }
+
+        UpdateStatusToast("🎙️ Voice Dictation Pasted!")
+        SetTimer(HideStatusToast, -2000)
+
+        if (savedClipboard != "") {
+            try {
+                A_Clipboard := savedClipboard
+            } catch {
+            }
+        }
+    } else {
+        ShowStatusToast("❌ No speech recognized", 2500)
+    }
+
+    try FileDelete(reqPath)
+    try FileDelete(resPath)
+    isProcessing := false
+}
+
 
 TriggerCopilot() {
     global isProcessing, currentDomain, currentProject, currentCategory, currentPriority

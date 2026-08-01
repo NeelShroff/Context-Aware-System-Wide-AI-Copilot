@@ -112,9 +112,23 @@ class LLMClient:
             except urllib.error.HTTPError as e:
                 err_body = e.read().decode("utf-8") if e.fp else str(e)
                 error_msg = f"HTTP Error {e.code}: {e.reason}"
-                if e.code == 429 and attempt < self.max_retries:
-                    time.sleep(2.5)
-                    continue
+                
+                # Handle 429 Rate Limit: If multimodal image was attached, strip image and fallback to pure text model
+                if e.code == 429:
+                    error_msg = "Rate limit reached (429). Retrying..."
+                    if isinstance(payload.get("messages", [{}])[-1].get("content"), list):
+                        # Strip base64 image and retry with pure text prompt on fast text model
+                        payload["messages"][-1]["content"] = user_prompt
+                        payload["model"] = "llama-3.3-70b-versatile"
+                        data_bytes = json.dumps(payload).encode("utf-8")
+                        time.sleep(1.0)
+                        continue
+                    elif attempt < self.max_retries:
+                        time.sleep(2.0)
+                        continue
+                    else:
+                        return {"success": False, "rewritten_text": "", "error": "Groq API rate limit exceeded (429). Please wait a few seconds."}
+
                 if e.code in (400, 404) and "model" in err_body.lower():
                     # Fallback to fast standard model if specified model fails
                     if selected_model != "llama-3.3-70b-versatile":
@@ -129,6 +143,7 @@ class LLMClient:
                     time.sleep(0.5)
                     continue
                 return {"success": False, "rewritten_text": "", "error": error_msg}
+
 
             except urllib.error.URLError as e:
                 error_msg = f"Network Error: {e.reason}"

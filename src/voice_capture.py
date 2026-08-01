@@ -1,4 +1,4 @@
-﻿"""
+"""
 Voice Capture Module — Groq Whisper Transcription
 Records microphone audio via sounddevice and transcribes using Groq whisper-large-v3-turbo.
 """
@@ -30,7 +30,7 @@ def _to_wav_bytes(frames, sample_rate: int) -> bytes:
     return buf.getvalue()
 
 
-def record_until_silence(max_seconds: float = MAX_RECORD_SECONDS, silence_threshold: float = 0.015, silence_gap: float = 1.5) -> bytes | None:
+def record_until_silence(max_seconds: float = MAX_RECORD_SECONDS, silence_threshold: float = 0.003, silence_gap: float = 1.2) -> bytes | None:
     """Record mic until silence for silence_gap seconds or max_seconds reached."""
     if not HAS_SOUNDDEVICE:
         return None
@@ -48,16 +48,25 @@ def record_until_silence(max_seconds: float = MAX_RECORD_SECONDS, silence_thresh
                 rms = float(np.sqrt(np.mean(chunk.astype(np.float32) ** 2))) / 32768.0
                 if rms < silence_threshold:
                     silent_chunks += 1
-                    if silent_chunks >= silence_chunks_needed and len(all_frames) > 10:
+                    # Ensure at least 1.5 seconds recorded before silence termination
+                    if silent_chunks >= silence_chunks_needed and len(all_frames) > 15:
                         break
                 else:
                     silent_chunks = 0
         if len(all_frames) < 3:
             return None
         audio_data = np.concatenate(all_frames, axis=0)
+
+        # Audio Gain Normalization: Boost audio volume if recording is quiet
+        max_val = float(np.max(np.abs(audio_data)))
+        if 0 < max_val < 15000:
+            scale = 20000.0 / max_val
+            audio_data = np.clip(audio_data.astype(np.float32) * scale, -32768, 32767).astype(np.int16)
+
         return _to_wav_bytes(audio_data, SAMPLE_RATE)
     except Exception:
         return None
+
 
 
 def transcribe_audio(wav_bytes: bytes) -> dict:
@@ -100,7 +109,14 @@ def transcribe_audio(wav_bytes: bytes) -> dict:
 
 
 def dictate_to_text(max_seconds: float = 12.0) -> dict:
-    """Record until silence and transcribe via Groq Whisper. Main entry point."""
+    """Record mic audio until silence and transcribe via Groq Whisper. Main entry point."""
     wav = record_until_silence(max_seconds=max_seconds)
-    return transcribe_audio(wav)
+    if not wav:
+        return {"success": False, "text": "", "error": "No speech or audio recorded from microphone."}
+    
+    res = transcribe_audio(wav)
+    if res.get("success"):
+        res["wav_bytes_count"] = len(wav)
+    return res
+
 

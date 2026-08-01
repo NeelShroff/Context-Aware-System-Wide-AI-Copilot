@@ -81,3 +81,13 @@ $RECYCLE.BIN/
 # Large Assets & Game Sprite Directories
 # ==========================================
 PC _ Computer - Marvel Cosmic Invasion - Playable Characters - Spider-Man/
+
+# ==========================================
+# Binary Executables & Databases
+# ==========================================
+*.exe
+ffmpeg.exe
+ffplay.exe
+ffplay_voice.exe
+*.db
+data/*.db

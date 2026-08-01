@@ -240,7 +240,7 @@ class CopilotControlPanel(QWidget):
         section("ACTION TRIGGERS")
         card("Shoot Web Blast", lambda: self._speech("Web Shoot"))
         card("Spider-Sense Alert", lambda: update_pet_state({"pet_mode": "THINKING"}))
-        card("Rest / Sleep Stance", lambda: update_pet_state({"pet_mode": "SLEEP"}))
+        card("Rest / Sleep Stance", lambda: self._trigger_sleep_mode())
 
         # Startup & Launch Controls
         section("STARTUP & LAUNCH SETTINGS")
@@ -537,6 +537,22 @@ class VRMPetWindow(QMainWindow):
             return True  # Swallow Chromium context menu completely
         return super().eventFilter(source, event)
 
+    def _trigger_sleep_mode(self):
+        """Immediately trigger SLEEP mode, lock motion, and push direct state to companion."""
+        import time
+        self._sync_pet_state({
+            "pet_mode": "SLEEP",
+            "motion_state": "SLEEP",
+            "is_moving": False,
+            "web_anchor_x": None,
+            "web_anchor_y": None,
+            "char_rel_x": None,
+            "char_rel_y": None,
+            "speech_text": "Zzz... Web-sleeping...",
+            "speech_duration": 6.0,
+            "speech_timestamp": time.time()
+        })
+
     def trigger_interactive_web_shoot(self):
         """Dynamic full-screen web trajectory with strict mutual exclusion constraint against web zipping."""
         if getattr(self, '_is_zip_active', False) or getattr(self, '_is_shoot_busy', False):
@@ -699,6 +715,20 @@ class VRMPetWindow(QMainWindow):
         if getattr(self, '_is_shoot_busy', False):
             return  # Strict constraint: Zero vertical/diagonal movement during web shooting!
 
+        if PET_STATE.get("pet_mode") == "SLEEP":
+            if self._is_zip_active:
+                self.setGeometry(int(self.char_x), int(self.char_y), 180, 230)
+                self._is_zip_active = False
+            self._sync_pet_state({
+                "motion_state": "SLEEP",
+                "is_moving": False,
+                "web_anchor_x": None,
+                "web_anchor_y": None,
+                "char_rel_x": None,
+                "char_rel_y": None
+            })
+            return
+
         if not self.is_wandering or self.is_dragging or self.control_panel.isVisible():
             if self._is_zip_active or self.width() != 160 or self.height() != 200:
                 self.setGeometry(int(self.char_x), int(self.char_y), 180, 230)
@@ -776,7 +806,7 @@ class VRMPetWindow(QMainWindow):
             vec_y = dy / dist
 
             if abs(dy) < 5:  # Pure Horizontal patrol
-                if self._is_zip_active or self.width() != 180 or self.height() != 230:
+                if self._is_zip_active:
                     self.setGeometry(int(self.char_x), int(self.char_y), 180, 230)
                     self._is_zip_active = False
 

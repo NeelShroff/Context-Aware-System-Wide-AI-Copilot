@@ -663,11 +663,17 @@ class KnowledgeGraph:
             if entry not in matched_memories:
                 matched_memories.append(entry)
 
-        # B. Retrieve Learned User Preferences
+        # B. Retrieve Learned User Preferences & Spoken User Facts
         for node_name, meta in nodes.items():
-            if meta.get("type") == "USER_PREFERENCE" or node_name.startswith("Preference:"):
+            ntype = meta.get("type")
+            if ntype == "USER_PREFERENCE" or node_name.startswith("Preference:"):
                 pref_name = node_name.replace("Preference:", "")
                 entry = f"Learned User Style Preference: '{pref_name}'"
+                if entry not in matched_memories:
+                    matched_memories.append(entry)
+            elif ntype == "USER_FACT" or node_name.startswith("UserFact:"):
+                fact_val = meta.get("fact", node_name.replace("UserFact:", ""))
+                entry = f"Remembered User Fact: '{fact_val}'"
                 if entry not in matched_memories:
                     matched_memories.append(entry)
 
@@ -689,3 +695,49 @@ class KnowledgeGraph:
                         matched_memories.append(entry_str)
 
         return matched_memories
+
+    def save_user_fact(self, fact_text: str) -> Dict[str, Any]:
+        """Saves a spoken or typed long-term user fact/memory into the Knowledge Graph."""
+        fact_clean = fact_text.strip()
+        if not fact_clean:
+            return {"success": False, "message": "Fact text cannot be empty."}
+
+        # Remove common preamble prefixes like 'remember that', 'remember', 'save fact'
+        fact_clean = re.sub(r'^(remember\s+that\s+|remember\s+|save\s+fact\s+|note\s+that\s+)', '', fact_clean, flags=re.IGNORECASE).strip()
+
+        node_id = f"UserFact:{fact_clean[:60]}"
+        now_str = datetime.now().isoformat()
+
+        graph = self._read_local_graph()
+        nodes = graph.get("nodes", {})
+        nodes[node_id] = {
+            "type": "USER_FACT",
+            "fact": fact_clean,
+            "frequency": nodes.get(node_id, {}).get("frequency", 0) + 1,
+            "last_seen": now_str
+        }
+        graph["nodes"] = nodes
+        self._write_local_graph(graph)
+
+        if self.neo4j_driver:
+            try:
+                with self.neo4j_driver.session() as session:
+                    session.run(
+                        """
+                        MERGE (n:UserFact {name: $node_id})
+                        SET n.type = 'USER_FACT', n.fact = $fact, n.last_seen = datetime()
+                        """,
+                        node_id=node_id, fact=fact_clean
+                    )
+            except Exception:
+                pass
+
+        from src.tts_engine import announce_memory_saved
+        announce_memory_saved(fact_clean)
+
+        return {
+            "success": True,
+            "fact": fact_clean,
+            "message": f"Saved fact memory: '{fact_clean}'"
+        }
+

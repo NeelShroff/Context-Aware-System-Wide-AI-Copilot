@@ -7,10 +7,12 @@ if sys.stdout is None:
 if sys.stderr is None:
     sys.stderr = open(os.devnull, "w", encoding="utf-8")
 
+import re
 import json
 import argparse
 from pathlib import Path
 from typing import Dict, Any, Optional
+
 
 # Ensure project root is in sys.path
 project_root = Path(__file__).resolve().parent.parent
@@ -30,11 +32,52 @@ from src.adaptive_engine import AdaptiveEngine
 
 
 def process_request(input_data: Dict[str, Any]) -> Dict[str, Any]:
+    is_voice = bool(input_data.get("is_voice", False))
     text = input_data.get("text", "")
     context = input_data.get("context", {})
     user_domain_override = input_data.get("domain_override")
 
-    if not text or len(text.strip()) == 0:
+    if is_voice:
+        try:
+            import urllib.request
+            speech_payload = json.dumps({
+                "text": "🎙️ Listening... (Speak into mic)",
+                "duration": 5.0,
+                "mode": "THINKING"
+            }).encode("utf-8")
+            req = urllib.request.Request("http://127.0.0.1:8799/api/speech", data=speech_payload, headers={"Content-Type": "application/json"}, method="POST")
+            urllib.request.urlopen(req, timeout=0.5)
+        except Exception:
+            pass
+
+        from src.voice_capture import dictate_to_text
+        max_sec = float(input_data.get("max_seconds", 12.0))
+        voice_res = dictate_to_text(max_seconds=max_sec)
+
+        if not voice_res.get("success"):
+            return {
+                "success": False,
+                "scenario": "VOICE_DICTATION",
+                "scenario_description": "Voice Dictation Failed",
+                "original_text": "",
+                "rewritten_text": "",
+                "changed": False,
+                "error": voice_res.get("error", "No speech detected.")
+            }
+
+        text = voice_res.get("text", "").strip()
+        if not text:
+            return {
+                "success": False,
+                "scenario": "VOICE_DICTATION",
+                "scenario_description": "Empty Transcription",
+                "original_text": "",
+                "rewritten_text": "",
+                "changed": False,
+                "error": "No clear speech recognized."
+            }
+
+    elif not text or len(text.strip()) == 0:
         return {
             "success": False,
             "scenario": "UNKNOWN",
@@ -47,6 +90,14 @@ def process_request(input_data: Dict[str, Any]) -> Dict[str, Any]:
 
     process_name = str(context.get("process", "unknown.exe"))
     title = str(context.get("title", ""))
+    text_lower = text.lower().strip()
+
+    # --- Autonomous LLM Agent Intent Tool Router ---
+    from src.agent_router import AgentIntentRouter
+    agent_action_result = AgentIntentRouter.classify_and_route(text, context, is_voice=is_voice)
+    if agent_action_result is not None:
+        return agent_action_result
+
 
     # 1. Resolve Active Graph Domain, Scenario & Context Workspace Metadata
     domain_info = GraphSwitcher.resolve_domain(context, user_override=user_domain_override)
@@ -65,6 +116,11 @@ def process_request(input_data: Dict[str, Any]) -> Dict[str, Any]:
     screenshot_path = input_data.get("screenshot_path")
     has_screenshot = bool(screenshot_path and os.path.exists(screenshot_path))
 
+    # Apply Spatial Grid Overlay if requested for spatial vision
+    if has_screenshot and ("grid" in text_lower or "spatial" in text_lower or "region" in text_lower or "where" in text_lower):
+        from src.screen_vision import ScreenVisionEngine
+        ScreenVisionEngine.add_spatial_grid_overlay(screenshot_path)
+
     # Skip synchronous recipient extraction to avoid double LLM API calls on fast Groq path
     kg_engine._cached_recipient = None
 
@@ -76,6 +132,8 @@ def process_request(input_data: Dict[str, Any]) -> Dict[str, Any]:
     recent_summary, resolved_text = AdaptiveEngine.resolve_ambiguity(text, chronological_timeline, context)
 
     image_path = input_data.get("image_path")
+    if not image_path and has_screenshot:
+        image_path = screenshot_path
     has_image = bool(image_path and os.path.exists(image_path))
 
     # Extract active preference rules for style adaptation
@@ -91,8 +149,18 @@ def process_request(input_data: Dict[str, Any]) -> Dict[str, Any]:
         chronological_timeline=chronological_timeline,
         domain_info=domain_info,
         preference_rules=preference_rules,
-        workspace_meta=workspace_meta
+        workspace_meta=workspace_meta,
+        is_voice=is_voice
     )
+
+    # --- INTENT ROUTER 4: Web Search Context Injection ---
+    if "search the web" in text_lower or "search for" in text_lower or "look up" in text_lower or "weather" in text_lower:
+        from src.web_search_engine import WebSearchEngine
+        web_context = WebSearchEngine.format_search_context(text)
+        if web_context:
+            system_prompt += f"\n\n{web_context}"
+
+
 
     # 4. Call LLM (with Multimodal Image Support)
     llm = LLMClient()
@@ -181,11 +249,14 @@ def main():
     parser.add_argument("input_file", nargs="?", help="Path to input JSON file from AutoHotkey")
     parser.add_argument("output_file", nargs="?", help="Path to output JSON file to write results")
     parser.add_argument("--stdin", action="store_true", help="Read input JSON from standard input")
+    parser.add_argument("--voice", action="store_true", help="Trigger voice dictation mode directly")
 
     args = parser.parse_args()
 
     input_data = {}
-    if args.stdin:
+    if args.voice:
+        input_data["is_voice"] = True
+    elif args.stdin:
         raw_in = sys.stdin.read()
         if raw_in.strip():
             input_data = json.loads(raw_in)
@@ -194,8 +265,9 @@ def main():
             input_data = json.load(f)
     else:
         # Fallback if invoked without arguments
-        sys.stderr.write("Usage: python main.py <input_file.json> [output_file.json] OR python main.py --stdin\n")
+        sys.stderr.write("Usage: python main.py <input_file.json> [output_file.json] OR python main.py --stdin OR python main.py --voice\n")
         sys.exit(1)
+
 
     result = process_request(input_data)
     json_out = json.dumps(result, ensure_ascii=False, indent=2)
