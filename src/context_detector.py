@@ -51,7 +51,13 @@ class ContextDetector:
 
         # 2. Check Personal Chat
         personal_chat_procs = ["whatsapp.exe", "telegram.exe", "signal.exe", "discord.exe"]
-        personal_chat_kw = ["web.whatsapp.com", "t.me", "telegram", "discord.com", "web.signal.org"]
+        # Include plain name keywords so Chrome window title like "(4) WhatsApp - Google Chrome" also matches
+        personal_chat_kw = [
+            "web.whatsapp.com", "whatsapp",       # WhatsApp Web & desktop
+            "t.me", "telegram",                    # Telegram
+            "discord.com", "discord",              # Discord
+            "web.signal.org", "signal",            # Signal
+        ]
         if any(p in process for p in personal_chat_procs) or any(kw in combined_meta for kw in personal_chat_kw):
             return (SCENARIO_PERSONAL_CHAT, "Personal Messaging (WhatsApp / Telegram / Discord)")
 

@@ -1,0 +1,2042 @@
+{
+  "process": "Antigravity IDE.exe",
+  "total_count": 105,
+  "entries": [
+    {
+      "id": "ccacbdb8-4b7c-44aa-a3c8-f6da4dc92a37",
+      "timestamp": "2026-07-23T11:48:08.189250",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Groq",
+        "AutoHotkey",
+        "IDE",
+        "Objective\nDevelop",
+        "Antigravity",
+        "Python",
+        "Copilot",
+        "System-Wide"
+      ]
+    },
+    {
+      "id": "194a848e-8dcb-4a65-8afd-c1df14ceb3e3",
+      "timestamp": "2026-07-23T11:48:08.252781",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Groq",
+        "AutoHotkey",
+        "IDE",
+        "Objective\nDevelop",
+        "Antigravity",
+        "Python",
+        "Copilot",
+        "System-Wide"
+      ]
+    },
+    {
+      "id": "32248780-e7cb-43da-8cf3-363b59979b96",
+      "timestamp": "2026-07-23T12:18:20.523748",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "System-Wide",
+        "Groq",
+        "Objective\nDevelop",
+        "AutoHotkey",
+        "Antigravity",
+        "Copilot",
+        "Python",
+        "IDE"
+      ]
+    },
+    {
+      "id": "57029459-2ae1-42f8-a736-50999f0bde95",
+      "timestamp": "2026-07-23T12:18:20.558788",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "System-Wide",
+        "Groq",
+        "Objective\nDevelop",
+        "AutoHotkey",
+        "Antigravity",
+        "Copilot",
+        "Python",
+        "IDE"
+      ]
+    },
+    {
+      "id": "3d7344b2-0e73-4189-9cf3-1a43d2702d74",
+      "timestamp": "2026-07-23T12:25:25.827132",
+      "title": "System-Wide AI Copilot - Antigravity IDE - .env",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "what i have to do do i have to download something",
+      "rewritten_text": "**Prompt**\n\nProvide a concise, step‑by‑step checklist of everything I need to do, clearly indicating any software, libraries, or files I must download (including URLs and version numbers) to complete the task. Include any required configuration or installation commands.",
+      "entities": [
+        "Prompt",
+        "IDE",
+        "Provide",
+        "Include",
+        "Copilot",
+        "Antigravity",
+        "System-Wide"
+      ]
+    },
+    {
+      "id": "2f99379f-1d41-4075-b9d6-65f3fc11830d",
+      "timestamp": "2026-07-23T12:35:01.820587",
+      "title": "System-Wide AI Copilot - Antigravity IDE - .env",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "how much time it can take",
+      "rewritten_text": "**Prompt**\n\nEstimate the total time required to complete the described task, including any setup, execution, and verification phases. Provide the estimate in hours (or appropriate time units) and note any assumptions made.",
+      "entities": [
+        "Prompt",
+        "System-Wide",
+        "Estimate",
+        "Antigravity",
+        "Copilot",
+        "Provide",
+        "IDE"
+      ]
+    },
+    {
+      "id": "6a0bd75a-fdc9-439d-aa8c-bb62c7588777",
+      "timestamp": "2026-07-23T12:38:50.563095",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "IDE",
+        "System-Wide",
+        "Objective\nDevelop",
+        "Python",
+        "Copilot",
+        "Groq",
+        "AutoHotkey",
+        "Antigravity"
+      ]
+    },
+    {
+      "id": "0881042c-4962-4aca-ba8d-abbae7f343bf",
+      "timestamp": "2026-07-23T12:38:52.618780",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "IDE",
+        "System-Wide",
+        "Objective\nDevelop",
+        "Python",
+        "Copilot",
+        "Groq",
+        "AutoHotkey",
+        "Antigravity"
+      ]
+    },
+    {
+      "id": "4badf49d-04f6-4110-a4f5-20427b3937b2",
+      "timestamp": "2026-07-23T12:43:42.622602",
+      "title": "System-Wide AI Copilot - Antigravity IDE - file:///d:/Important%20Projects/System-Wide%20AI%20Copilot/.env (Agent) (.env)",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "what next i have to do here ",
+      "rewritten_text": "### Next Steps\nTo proceed, please provide more context or specify the task you are trying to accomplish. \n\n1. **Define the objective**: Clearly outline what you want to achieve.\n2. **Provide background information**: Share any relevant details or previous steps taken.\n3. **Outline constraints**: Specify any limitations, deadlines, or requirements that need to be considered.\n\nOnce this information is provided, a more detailed and actionable plan can be developed.",
+      "entities": [
+        "IDE",
+        "Clearly",
+        "Share",
+        "Specify",
+        "Once",
+        "Define",
+        "Agent",
+        "Outline",
+        "Next Steps\nTo",
+        "Important",
+        "Antigravity",
+        "Copilot",
+        "Provide",
+        "System-Wide"
+      ]
+    },
+    {
+      "id": "986ca5a4-8034-4fd1-98c0-dab1253c7605",
+      "timestamp": "2026-07-23T12:45:29.481118",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "IDE",
+        "Python",
+        "Objective\nDevelop",
+        "Groq",
+        "Copilot",
+        "System-Wide",
+        "AutoHotkey",
+        "Antigravity"
+      ]
+    },
+    {
+      "id": "aad3f296-dd9c-45bb-89b3-a96cfd8595c2",
+      "timestamp": "2026-07-23T12:45:31.530703",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "IDE",
+        "Python",
+        "Objective\nDevelop",
+        "Groq",
+        "Copilot",
+        "System-Wide",
+        "AutoHotkey",
+        "Antigravity"
+      ]
+    },
+    {
+      "id": "07ea469c-df5a-4f33-a91b-d0a762928e4d",
+      "timestamp": "2026-07-23T12:48:05.112705",
+      "title": "System-Wide AI Copilot - Antigravity IDE - file:///d:/Important%20Projects/System-Wide%20AI%20Copilot/.env (Agent) (.env)",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "i dont see any node",
+      "rewritten_text": "### Issue Description\nNo node is visible.\n\n### Expected Outcome\nIdentify the cause of the missing node and provide a solution to display it.\n\n### Possible Causes\n* Node might be hidden or not properly configured.\n* Insufficient permissions to view the node.\n* Node might be deleted or removed.\n\n### Requested Action\nInvestigate the node's status and provide steps to resolve the issue, including:\n1. Checking node configuration and visibility settings.\n2. Verifying user permissions and access rights.\n3. Searching for any error messages or logs related to the node.",
+      "entities": [
+        "Agent",
+        "IDE",
+        "Requested Action\nInvestigate",
+        "Possible Causes",
+        "Copilot",
+        "Checking",
+        "Important",
+        "System-Wide",
+        "Expected Outcome\nIdentify",
+        "Verifying",
+        "Antigravity",
+        "Insufficient",
+        "Node",
+        "Searching",
+        "Issue Description\nNo"
+      ]
+    },
+    {
+      "id": "751ce026-6977-4d4e-9f5a-6e0f883a71dc",
+      "timestamp": "2026-07-23T12:52:11.868700",
+      "title": "System-Wide AI Copilot - Antigravity IDE - .env",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "see now i have doubt that what knowledge graph we are making i want kg for my conversation with each apps and all not whatwe have ithik right now pls look",
+      "rewritten_text": "### Clarification Request\nThe current knowledge graph appears to be insufficient for the desired application. \n\n### Objective\nCreate a knowledge graph (KG) that facilitates effective conversations with various apps, differing from the existing KG.\n\n### Requirements\n- The new KG should be designed to support conversations with multiple applications.\n- It should capture the context and requirements of interactions between the user and each app.\n- The KG should enable the AI system to understand the user's intent and provide relevant responses.\n\n### Expected Outcome\nA tailored knowledge graph that enhances conversation capabilities with various apps, addressing the user's current doubts and needs.\n\n### Acceptance Criteria\n- The new KG should demonstrate improved performance in understanding user queries related to app interactions.\n- It should provide accurate and contextually relevant responses to user inputs.\n- The KG should be adaptable to learn from user interactions and update its knowledge base accordingly.",
+      "entities": [
+        "Antigravity",
+        "IDE",
+        "Copilot",
+        "Objective\nCreate",
+        "Expected Outcome",
+        "Clarification Request\nThe",
+        "System-Wide",
+        "Acceptance Criteria",
+        "Requirements"
+      ]
+    },
+    {
+      "id": "2d873c57-dd64-4535-aa67-7e8672c7e374",
+      "timestamp": "2026-07-23T12:53:44.187248",
+      "title": "System-Wide AI Copilot - Antigravity IDE - Implementation Plan",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "see in that too i want something like if i want to chnage the context remove that and make a new in that we have to do somefor that ",
+      "rewritten_text": "### Request for Context Modification\nTo modify the existing context, the following steps are required:\n1. **Remove the current context**: Delete the existing context to prepare for the new one.\n2. **Create a new context**: Establish a new context that meets the updated requirements.\n3. **Perform necessary adjustments**: Make the necessary adjustments to ensure a seamless transition to the new context.\n\n### Expected Outcome\nThe outcome should be a new context that replaces the old one, with all necessary modifications and adjustments made to ensure its proper functioning.\n\n### Acceptance Criteria\n* The old context is completely removed.\n* A new context is successfully created.\n* All necessary adjustments are made to the new context.\n* The new context functions as expected.",
+      "entities": [
+        "Make",
+        "Implementation",
+        "Perform",
+        "Establish",
+        "Copilot",
+        "Expected Outcome\nThe",
+        "Acceptance Criteria",
+        "IDE",
+        "Request",
+        "System-Wide",
+        "Delete",
+        "Create",
+        "Context Modification\nTo",
+        "Plan",
+        "Antigravity",
+        "Remove"
+      ]
+    },
+    {
+      "id": "efa20481-fc29-49ef-9c9f-7cff2cbad138",
+      "timestamp": "2026-07-23T12:55:17.478262",
+      "title": "System-Wide AI Copilot - Antigravity IDE - Implementation Plan",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "see what i want i that i want to maintain diffent context some time it is needed at that movement i need someting to chose what conext graph to use in this something like that ",
+      "rewritten_text": "### Context Switching Requirement\nTo maintain different contexts, a mechanism is needed to switch between various context graphs. The requirement is to have a feature that allows selecting the appropriate context graph at the right moment.\n\n#### Desired Functionality\n* Ability to maintain multiple context graphs\n* Mechanism to switch between context graphs as needed\n* Option to select the relevant context graph at a specific moment\n\n#### Acceptance Criteria\n* The system can store and manage multiple context graphs\n* The user can switch between context graphs seamlessly\n* The system can determine the correct context graph to use based on the current moment or user input\n\n#### Edge Cases\n* What happens when a new context graph is added or removed?\n* How does the system handle conflicts between multiple context graphs?\n* What is the default context graph when the system is initialized?",
+      "entities": [
+        "IDE",
+        "Copilot",
+        "System-Wide",
+        "Antigravity",
+        "Desired Functionality",
+        "Ability",
+        "Acceptance Criteria",
+        "Implementation",
+        "Plan",
+        "What",
+        "Edge Cases",
+        "Mechanism",
+        "Option",
+        "Context Switching Requirement\nTo"
+      ]
+    },
+    {
+      "id": "ae5f1a2e-10da-49c5-96d9-c23d85c5ba01",
+      "timestamp": "2026-07-23T12:55:54.640703",
+      "title": "System-Wide AI Copilot - Antigravity IDE - Implementation Plan",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "### Context Switching Requirement\nTo maintain different contexts, a mechanism is needed to switch between various context graphs. The requirement is to have a feature that allows selecting the appropriate context graph at the right moment.\n\n#### Desired Functionality\n* Ability to maintain multiple context graphs\n* Mechanism to switch between context graphs as needed\n* Option to select the relevant context graph at a specific moment\n\n#### Acceptance Criteria\n* The system can store and manage multiple context graphs\n* The user can switch between context graphs seamlessly\n* The system can determine the correct context graph to use based on the current moment or user input\n\n#### Edge Cases\n* What happens when a new context graph is added or removed?\n* How does the system handle conflicts between multiple context graphs?\n* What is the default context graph when the system is initialized?\n\nin this add about diffent application should have this feature",
+      "rewritten_text": "### Context Switching Requirement\nTo maintain different contexts across various applications, a universal mechanism is needed to switch between multiple context graphs seamlessly. The requirement is to have a feature that allows selecting the appropriate context graph at the right moment, regardless of the application being used.\n\n#### Desired Functionality\n* Ability to maintain multiple context graphs across different applications\n* Mechanism to switch between context graphs as needed, with minimal disruption to the user experience\n* Option to select the relevant context graph at a specific moment, based on user input, application requirements, or environmental factors\n* Support for a wide range of applications, including but not limited to:\n\t+ Productivity software (e.g., word processors, spreadsheets, email clients)\n\t+ Development tools (e.g., IDEs, code editors, version control systems)\n\t+ Creative applications (e.g., graphic design, video editing, music production)\n\t+ Communication platforms (e.g., messaging apps, social media, video conferencing tools)\n\n#### Acceptance Criteria\n* The system can store and manage multiple context graphs for each supported application\n* The user can switch between context graphs seamlessly, without losing work or experiencing significant delays\n* The system can determine the correct context graph to use based on the current moment, user input, or application requirements\n* The feature is accessible and usable across different applications, with a consistent user interface and experience\n\n#### Edge Cases\n* What happens when a new context graph is added or removed for a specific application?\n* How does the system handle conflicts between multiple context graphs across different applications?\n* What is the default context graph when an application is initialized, and how can the user change it?\n* How does the system ensure data consistency and integrity when switching between context graphs, especially in applications with real-time collaboration or synchronization features?",
+      "entities": [
+        "Implementation",
+        "Edge Cases",
+        "Context Switching Requirement\nTo",
+        "Ability",
+        "IDE",
+        "Communication",
+        "What",
+        "Desired Functionality",
+        "Option",
+        "Support",
+        "Plan",
+        "Mechanism",
+        "Productivity",
+        "Development",
+        "Acceptance Criteria",
+        "Copilot",
+        "System-Wide",
+        "Creative",
+        "Antigravity"
+      ]
+    },
+    {
+      "id": "b918e10b-a458-42f8-8040-f5e5e217ff6e",
+      "timestamp": "2026-07-23T12:56:38.172538",
+      "title": "System-Wide AI Copilot - Antigravity IDE - Implementation Plan",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "and we also need ui for this right",
+      "rewritten_text": "### User Interface Requirement\nTo develop a user interface (UI) for the specified system, the following requirements should be considered:\n* Design a visually appealing and user-friendly interface\n* Ensure the UI is intuitive and easy to navigate\n* Include all necessary features and functionalities\n* Develop the UI with a focus on usability and accessibility\n* Define the acceptance criteria for the UI, such as:\n  + Correct rendering of all UI elements\n  + Proper functionality of all interactive components\n  + Consistent branding and styling throughout the interface\n* Identify potential edge cases, including:\n  + Handling of different screen sizes and resolutions\n  + Support for various browsers and devices\n  + Error handling and notification mechanisms",
+      "entities": [
+        "Consistent",
+        "Correct",
+        "Proper",
+        "Develop",
+        "Identify",
+        "Copilot",
+        "Implementation",
+        "Antigravity",
+        "Include",
+        "Handling",
+        "Design",
+        "Ensure",
+        "IDE",
+        "System-Wide",
+        "Support",
+        "Plan",
+        "Define",
+        "Error",
+        "User Interface Requirement\nTo"
+      ]
+    },
+    {
+      "id": "9b54cff3-7a2e-40d7-bac3-42e5bfd5536f",
+      "timestamp": "2026-07-23T13:01:03.545844",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "IDE",
+        "System-Wide",
+        "Objective\nDevelop",
+        "Python",
+        "Groq",
+        "Antigravity",
+        "AutoHotkey",
+        "Copilot"
+      ]
+    },
+    {
+      "id": "0c267bca-c390-41c3-817d-a0da3dee926b",
+      "timestamp": "2026-07-23T13:01:05.829379",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "IDE",
+        "System-Wide",
+        "Objective\nDevelop",
+        "Python",
+        "Groq",
+        "Antigravity",
+        "AutoHotkey",
+        "Copilot"
+      ]
+    },
+    {
+      "id": "3208485c-d3c5-494b-a650-b9d30be6ebde",
+      "timestamp": "2026-07-23T13:01:20.676214",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Groq",
+        "Antigravity",
+        "AutoHotkey",
+        "Copilot",
+        "Objective\nDevelop",
+        "Python",
+        "System-Wide",
+        "IDE"
+      ]
+    },
+    {
+      "id": "15be3003-7780-41fc-820e-dfa9089a5d7f",
+      "timestamp": "2026-07-23T13:01:22.843236",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Groq",
+        "Antigravity",
+        "AutoHotkey",
+        "Copilot",
+        "Objective\nDevelop",
+        "Python",
+        "System-Wide",
+        "IDE"
+      ]
+    },
+    {
+      "id": "18c33f26-f971-4106-85b5-9077bbec4915",
+      "timestamp": "2026-07-23T13:01:46.271938",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Groq",
+        "AutoHotkey",
+        "Objective\nDevelop",
+        "Antigravity",
+        "IDE",
+        "System-Wide",
+        "Python",
+        "Copilot"
+      ]
+    },
+    {
+      "id": "0a1d8d76-089f-4567-b5fd-5917155fdd61",
+      "timestamp": "2026-07-23T13:01:48.424962",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Groq",
+        "AutoHotkey",
+        "Objective\nDevelop",
+        "Antigravity",
+        "IDE",
+        "System-Wide",
+        "Python",
+        "Copilot"
+      ]
+    },
+    {
+      "id": "eedb64ca-3507-4cb0-9276-0fd0b2c866cb",
+      "timestamp": "2026-07-23T13:14:21.135427",
+      "title": "System-Wide AI Copilot - Antigravity IDE - Implementation Plan",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "it is not make the node correclty",
+      "rewritten_text": "### Issue Description\nThe current implementation is not correctly creating the node.\n\n### Expected Behavior\nThe node should be created with the correct properties and attributes.\n\n### Acceptance Criteria\n* The node is successfully created without errors.\n* The node has the expected properties and attributes.\n\n### Troubleshooting Steps\n1. Verify that the input data is correct and complete.\n2. Check the node creation logic for any syntax errors or logical flaws.\n3. Test the node creation process with sample data to identify any issues.\n\n### Example Use Case\nCreate a node with the following properties: `id`, `name`, and `type`. The node should be created successfully and have the expected attributes. \n\n```python\n# Example node creation code\nnode = {\n    'id': 1,\n    'name': 'Example Node',\n    'type': 'example'\n}\n```",
+      "entities": [
+        "Copilot",
+        "Antigravity",
+        "Plan",
+        "Acceptance Criteria",
+        "System-Wide",
+        "Example Use Case\nCreate",
+        "Example",
+        "Troubleshooting Steps",
+        "Issue Description\nThe",
+        "Expected Behavior\nThe",
+        "Check",
+        "Implementation",
+        "Python",
+        "Example Node",
+        "Test",
+        "Verify",
+        "IDE",
+        "Node"
+      ]
+    },
+    {
+      "id": "81ab90f0-91be-47ca-9fdf-2a817a2b2592",
+      "timestamp": "2026-07-23T13:16:41.253107",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "IDE",
+        "Copilot",
+        "System-Wide",
+        "Groq",
+        "Python",
+        "Antigravity",
+        "Objective\nDevelop",
+        "AutoHotkey"
+      ]
+    },
+    {
+      "id": "14f4271f-5674-4492-a462-868406d16c08",
+      "timestamp": "2026-07-23T13:16:43.560870",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "IDE",
+        "Copilot",
+        "System-Wide",
+        "Groq",
+        "Python",
+        "Antigravity",
+        "Objective\nDevelop",
+        "AutoHotkey"
+      ]
+    },
+    {
+      "id": "15d26981-fcf5-4590-bbb2-cbce9ec750fe",
+      "timestamp": "2026-07-23T13:18:50.471600",
+      "title": "System-Wide AI Copilot - Antigravity IDE - knowledge_graph.json",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "and what about what was the conversattion what user typed and what was it improved too that is the main thing right are u make a plan in detail regrading this we are making graph to make are system addapt my behaviousr and make it more better ",
+      "rewritten_text": "### Objective\nCreate a detailed plan to improve user input and track conversation history, enabling the system to adapt to user behavior and provide better responses.\n\n### Background Context\nThe system aims to learn from user interactions, including what the user typed and how the input was improved. This information will be used to create a graph that facilitates the system's adaptation to user behavior.\n\n### Requirements\n1. **Conversation History**: Develop a mechanism to store and track user conversations, including:\n\t* User input (original text)\n\t* Improved text (output after processing)\n2. **Graph Creation**: Design a graph data structure to represent user behavior and conversation history, allowing the system to:\n\t* Analyze user input patterns\n\t* Identify areas for improvement\n\t* Adapt to user behavior over time\n3. **Adaptation Mechanism**: Implement a mechanism for the system to adapt to user behavior, using the graph data structure to:\n\t* Refine its understanding of user preferences\n\t* Improve response accuracy and relevance\n\n### Acceptance Criteria\n1. The system can store and retrieve conversation history accurately.\n2. The graph data structure effectively represents user behavior and conversation history.\n3. The system adapts to user behavior, demonstrating improved response quality over time.\n\n### Edge Cases\n1. **Handling ambiguous user input**: Develop strategies to address unclear or ambiguous user input, ensuring the system can still provide relevant and accurate responses.\n2. **Managing conflicting user behavior**: Design a mechanism to handle situations where user behavior appears contradictory, allowing the system to reconcile and adapt to changing user preferences.",
+      "entities": [
+        "Analyze",
+        "User",
+        "Copilot",
+        "Antigravity",
+        "JSON",
+        "Implement",
+        "Adaptation Mechanism",
+        "Handling",
+        "Improved",
+        "Adapt",
+        "Edge Cases",
+        "Background Context\nThe",
+        "Objective\nCreate",
+        "Conversation History",
+        "IDE",
+        "System-Wide",
+        "Refine",
+        "Acceptance Criteria",
+        "Requirements",
+        "Managing",
+        "Graph Creation",
+        "Identify",
+        "Develop",
+        "Design",
+        "Improve"
+      ]
+    },
+    {
+      "id": "e1380916-401c-4aa1-b680-6b711869f374",
+      "timestamp": "2026-07-23T13:21:57.672672",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Groq",
+        "Objective\nDevelop",
+        "Copilot",
+        "System-Wide",
+        "AutoHotkey",
+        "Python",
+        "Antigravity",
+        "IDE"
+      ]
+    },
+    {
+      "id": "39fbafbc-d9fb-47b2-ae01-899272633f92",
+      "timestamp": "2026-07-23T13:21:59.863949",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Groq",
+        "Objective\nDevelop",
+        "Copilot",
+        "System-Wide",
+        "AutoHotkey",
+        "Python",
+        "Antigravity",
+        "IDE"
+      ]
+    },
+    {
+      "id": "4963bbb8-ecb7-41ac-b5cb-536d8e74f184",
+      "timestamp": "2026-07-23T13:29:16.423528",
+      "title": "main.py - Antigravity IDE",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "Refactor audio stream buffer latency",
+      "rewritten_text": "### Objective\nRefactor the audio stream buffer to minimize latency and optimize real-time audio processing.\n\n#### Requirements\n* Reduce audio stream buffer latency to less than 10ms\n* Ensure seamless audio playback and recording without interruptions or glitches\n* Maintain high-quality audio output with minimal distortion or artifacts\n\n#### Constraints\n* The refactored solution must be compatible with existing audio hardware and software configurations\n* The changes should not introduce any new dependencies or significantly increase the overall system complexity\n\n#### Expected Output\nA refactored audio stream buffer implementation that achieves the desired latency reduction while maintaining optimal audio quality and system compatibility.\n\n#### Acceptance Criteria\n* The refactored solution reduces audio stream buffer latency to less than 10ms\n* Audio playback and recording are uninterrupted and glitch-free\n* The output audio quality meets the required standards with minimal distortion or artifacts\n\n#### Edge Cases\n* Handle cases where the audio stream buffer is empty or underflowing\n* Ensure the refactored solution can handle varying audio sample rates and formats\n\n#### Implementation Notes\n* Consider using double buffering or other techniques to minimize latency\n* Optimize the audio stream buffer for real-time processing and low-latency requirements\n* Ensure the refactored solution is thoroughly tested and validated to meet the required standards.",
+      "entities": [
+        "Optimize",
+        "Audio",
+        "Antigravity",
+        "Maintain",
+        "Constraints",
+        "Consider",
+        "Expected Output",
+        "Acceptance Criteria",
+        "Objective\nRefactor",
+        "IDE",
+        "Handle",
+        "Reduce",
+        "Requirements",
+        "Implementation Notes",
+        "Ensure",
+        "Edge Cases"
+      ]
+    },
+    {
+      "id": "b5a3b3ea-8bb1-4356-a0fa-bb4818f682b4",
+      "timestamp": "2026-07-23T13:30:06.980130",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Groq",
+        "Antigravity",
+        "Copilot",
+        "System-Wide",
+        "Objective\nDevelop",
+        "Python",
+        "AutoHotkey",
+        "IDE"
+      ]
+    },
+    {
+      "id": "6ee11b6a-08f5-4cfd-bd68-db52e17ae9f7",
+      "timestamp": "2026-07-23T13:30:09.281756",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Groq",
+        "Antigravity",
+        "Copilot",
+        "System-Wide",
+        "Objective\nDevelop",
+        "Python",
+        "AutoHotkey",
+        "IDE"
+      ]
+    },
+    {
+      "id": "3084598b-e53e-40b5-8413-9c55f56f13fa",
+      "timestamp": "2026-07-23T13:37:36.140397",
+      "title": "knowledge_graph.py - Antigravity IDE",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "Refactor audio stream buffer latency",
+      "rewritten_text": "### Objective\nRefactor the audio stream buffer to minimize latency and optimize real-time audio processing.\n\n### Requirements\n* Reduce audio stream buffer latency to less than 10ms\n* Ensure seamless audio playback and recording without interruptions or glitches\n* Maintain high-quality audio output with minimal distortion or artifacts\n\n### Constraints\n* The refactored audio stream buffer must be compatible with existing audio processing pipelines and frameworks\n* The solution should be efficient in terms of computational resources and memory usage\n\n### Acceptance Criteria\n* The refactored audio stream buffer achieves a latency of less than 10ms\n* Audio playback and recording are stable and free of interruptions or glitches\n* The solution does not introduce any significant degradation in audio quality\n\n### Edge Cases\n* Handle cases where the audio stream buffer is empty or underflowing\n* Ensure the refactored buffer can handle varying audio sample rates and formats\n\n### Expected Output\nA refactored audio stream buffer implementation that meets the requirements and constraints, with example code and configuration settings for optimal performance.",
+      "entities": [
+        "Requirements",
+        "Handle",
+        "Audio",
+        "Antigravity",
+        "Ensure",
+        "Acceptance Criteria",
+        "Maintain",
+        "Constraints",
+        "Expected Output",
+        "Edge Cases",
+        "Objective\nRefactor",
+        "IDE",
+        "Reduce"
+      ]
+    },
+    {
+      "id": "ea8494dd-632f-4188-b095-0e664da82f0a",
+      "timestamp": "2026-07-23T13:39:19.693324",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "AutoHotkey",
+        "System-Wide",
+        "Objective\nDevelop",
+        "Groq",
+        "Antigravity",
+        "Copilot",
+        "IDE",
+        "Python"
+      ]
+    },
+    {
+      "id": "cc95f805-3735-4179-a39c-f8beed4021d0",
+      "timestamp": "2026-07-23T13:39:23.755670",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "AutoHotkey",
+        "System-Wide",
+        "Objective\nDevelop",
+        "Groq",
+        "Antigravity",
+        "Copilot",
+        "IDE",
+        "Python"
+      ]
+    },
+    {
+      "id": "3f7384d2-50d7-4ac6-a7e6-46b87b9d8459",
+      "timestamp": "2026-07-23T13:42:37.593324",
+      "title": "System-Wide AI Copilot - Antigravity IDE - .env",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "see delete the whole kg and make it from start",
+      "rewritten_text": "### Objective\nRecreate the knowledge graph (KG) from scratch, discarding the existing one.\n\n### Constraints\n- Delete the entire current knowledge graph.\n- Re-initialize the knowledge graph, starting from a blank state.\n\n### Expected Output\nA newly created, empty knowledge graph, ready for population with new data. \n\n### Acceptance Criteria\n- The existing knowledge graph is completely deleted.\n- A new, empty knowledge graph is successfully created.\n- The system is ready to accept new data for the recreated knowledge graph.",
+      "entities": [
+        "Constraints",
+        "System-Wide",
+        "Delete",
+        "Acceptance Criteria",
+        "Copilot",
+        "Expected Output",
+        "IDE",
+        "Objective\nRecreate",
+        "Antigravity"
+      ]
+    },
+    {
+      "id": "870bc120-6b8e-42ea-a16a-483e7bd245c5",
+      "timestamp": "2026-07-23T13:46:48.273026",
+      "title": "System-Wide AI Copilot - Antigravity IDE - .env",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "see now can u tell me how can i chagen the context make a proper ui for that like we have and what ever we have is also not good make it better tooo",
+      "rewritten_text": "### Objective\nRedesign and enhance the existing user interface (UI) for context management, incorporating improvements and new features to create a more intuitive and user-friendly experience.\n\n### Background Context\nThe current UI for context management has limitations and areas for improvement. The goal is to revamp the interface to make it more efficient, effective, and easy to use.\n\n### Requirements\n1. **Context Management UI**: Design a new UI that allows users to easily manage contexts, including creating, editing, and deleting contexts.\n2. **Improvement of Existing Features**: Enhance the existing features to make them more intuitive and user-friendly.\n3. **New Features**: Introduce new features that improve the overall user experience, such as:\n\t* Context switching: Allow users to easily switch between different contexts.\n\t* Context organization: Provide a way to organize contexts into categories or folders.\n\t* Context search: Implement a search function to quickly find specific contexts.\n4. **User Experience**: Ensure the new UI is responsive, accessible, and provides a seamless user experience across different devices and platforms.\n\n### Acceptance Criteria\n1. The new UI is easy to navigate and understand.\n2. Context management features are intuitive and efficient.\n3. The UI is responsive and accessible on different devices and platforms.\n4. The new features improve the overall user experience and productivity.\n\n### Edge Cases\n1. **Context Overlap**: Handle cases where multiple contexts have similar or overlapping information.\n2. **Context Priority**: Allow users to prioritize contexts based on importance or urgency.\n3. **Context Sharing**: Consider implementing a feature to share contexts with other users or teams.",
+      "entities": [
+        "Provide",
+        "Existing Features",
+        "Edge Cases",
+        "Context Management",
+        "Implement",
+        "Ensure",
+        "Antigravity",
+        "Context",
+        "Consider",
+        "Design",
+        "Background Context\nThe",
+        "Objective\nRedesign",
+        "Context Overlap",
+        "Enhance",
+        "Introduce",
+        "IDE",
+        "Context Priority",
+        "System-Wide",
+        "Improvement",
+        "New Features",
+        "Requirements",
+        "Allow",
+        "Acceptance Criteria",
+        "Handle",
+        "Copilot",
+        "User Experience",
+        "Context Sharing"
+      ]
+    },
+    {
+      "id": "5d444bca-a98f-42f4-91ba-f8cabc7e8956",
+      "timestamp": "2026-07-23T13:47:06.080618",
+      "title": "System-Wide AI Copilot - Antigravity IDE - .env",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "### Objective\nRedesign and enhance the existing user interface (UI) for context management, incorporating improvements and new features to create a more intuitive and user-friendly experience.\n\n### Background Context\nThe current UI for context management has limitations and areas for improvement. The goal is to revamp the interface to make it more efficient, effective, and easy to use.\n\n### Requirements\n1. **Context Management UI**: Design a new UI that allows users to easily manage contexts, including creating, editing, and deleting contexts.\n2. **Improvement of Existing Features**: Enhance the existing features to make them more intuitive and user-friendly.\n3. **New Features**: Introduce new features that improve the overall user experience, such as:\n\\t* Context switching: Allow users to easily switch between different contexts.\n\\t* Context organization: Provide a way to organize contexts into categories or folders.\n\\t* Context search: Implement a search function to quickly find specific contexts.\n4. **User Experience**: Ensure the new UI is responsive, accessible, and provides a seamless user experience across different devices and platforms.\n\n### Acceptance Criteria\n1. The new UI is easy to navigate and understand.\n2. Context management features are intuitive and efficient.\n3. The UI is responsive and accessible on different devices and platforms.\n4. The new features improve the overall user experience and productivity.\n\n### Edge Cases\n1. **Context Overlap**: Handle cases where multiple contexts have similar or overlapping information.\n2. **Context Priority**: Allow users to prioritize contexts based on importance or urgency.\n3. **Context Sharing**: Consider implementing a feature to share contexts with other users or teams.",
+      "rewritten_text": "### Objective\nRedesign and enhance the existing user interface (UI) for context management to create an intuitive, user-friendly, and efficient experience, incorporating improvements to existing features and introducing new functionalities.\n\n### Background Context\nThe current context management UI has limitations, necessitating a revamp to improve efficiency, effectiveness, and usability.\n\n### Requirements\n1. **Context Management UI**: Design a new UI for easy context creation, editing, and deletion.\n2. **Existing Feature Enhancement**: Improve existing features for intuitiveness and user-friendliness.\n3. **New Features**:\n\t* **Context Switching**: Enable easy switching between contexts.\n\t* **Context Organization**: Provide categorization or folder organization for contexts.\n\t* **Context Search**: Implement a search function for quick context retrieval.\n4. **User Experience**: Ensure the new UI is responsive, accessible, and provides a seamless experience across devices and platforms.\n\n### Acceptance Criteria\n1. The new UI must be easy to navigate and understand.\n2. Context management features must be intuitive and efficient.\n3. The UI must be responsive and accessible on various devices and platforms.\n4. New features must enhance user experience and productivity.\n\n### Edge Cases\n1. **Context Overlap**: Develop a strategy to handle overlapping context information.\n2. **Context Priority**: Allow users to prioritize contexts by importance or urgency.\n3. **Context Sharing**: Explore implementing context sharing with other users or teams, considering access control and collaboration features.\n\n### Implementation Guidelines\n- Utilize user-centered design principles to ensure the UI meets user needs.\n- Conduct usability testing to validate the UI's effectiveness.\n- Ensure the new UI is compatible with existing systems and infrastructure.\n- Develop a rollout plan to minimize disruption to existing users.",
+      "entities": [
+        "Ensure",
+        "Improve",
+        "Conduct",
+        "Requirements",
+        "Implement",
+        "Background Context\nThe",
+        "Context Overlap",
+        "Existing Feature Enhancement",
+        "Context Search",
+        "System-Wide",
+        "New Features",
+        "Design",
+        "Allow",
+        "Enable",
+        "User Experience",
+        "IDE",
+        "Context Switching",
+        "Context",
+        "Context Sharing",
+        "Utilize",
+        "Acceptance Criteria",
+        "Context Management",
+        "Context Priority",
+        "Objective\nRedesign",
+        "Develop",
+        "Antigravity",
+        "Copilot",
+        "Provide",
+        "Context Organization",
+        "Implementation Guidelines",
+        "Explore",
+        "Edge Cases"
+      ]
+    },
+    {
+      "id": "067fdde1-4414-4d0c-8e9a-34ae78d46bd7",
+      "timestamp": "2026-07-23T13:47:32.439517",
+      "title": "System-Wide AI Copilot - Antigravity IDE - .env",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "### Objective\nRedesign and enhance the existing user interface (UI) for context management to create an intuitive, user-friendly, and efficient experience, incorporating improvements to existing features and introducing new functionalities.\n\n### Background Context\nThe current context management UI has limitations, necessitating a revamp to improve efficiency, effectiveness, and usability.\n\n### Requirements\n1. **Context Management UI**: Design a new UI for easy context creation, editing, and deletion.\n2. **Existing Feature Enhancement**: Improve existing features for intuitiveness and user-friendliness.\n3. **New Features**:\n\\t* **Context Switching**: Enable easy switching between contexts.\n\\t* **Context Organization**: Provide categorization or folder organization for contexts.\n\\t* **Context Search**: Implement a search function for quick context retrieval.\n4. **User Experience**: Ensure the new UI is responsive, accessible, and provides a seamless experience across devices and platforms.\n\n### Acceptance Criteria\n1. The new UI must be easy to navigate and understand.\n2. Context management features must be intuitive and efficient.\n3. The UI must be responsive and accessible on various devices and platforms.\n4. New features must enhance user experience and productivity.\n\n### Edge Cases\n1. **Context Overlap**: Develop a strategy to handle overlapping context information.\n2. **Context Priority**: Allow users to prioritize contexts by importance or urgency.\n3. **Context Sharing**: Explore implementing context sharing with other users or teams, considering access control and collaboration features.\n\n### Implementation Guidelines\n- Utilize user-centered design principles to ensure the UI meets user needs.\n- Conduct usability testing to validate the UI\\u0027s effectiveness.\n- Ensure the new UI is compatible with existing systems and infrastructure.\n- Develop a rollout plan to minimize disruption to existing users.\ni dont want the wed ui or some it should be like what we have currecnty",
+      "rewritten_text": "### Objective\nRefine the existing context management system, enhancing its functionality and user experience without introducing a new web UI, while incorporating improvements to existing features and introducing new functionalities.\n\n### Background Context\nThe current context management system has limitations, necessitating enhancements to improve efficiency, effectiveness, and usability, all within the existing UI framework.\n\n### Requirements\n1. **Context Management Enhancement**: Improve the existing context creation, editing, and deletion processes.\n2. **Existing Feature Refining**: Enhance existing features for better intuitiveness and user-friendliness.\n3. **New Functionalities**:\n\t* **Context Switching**: Implement easy switching between contexts.\n\t* **Context Organization**: Introduce categorization or folder organization for contexts.\n\t* **Context Search**: Develop a search function for quick context retrieval.\n4. **User Experience**: Ensure the refined system is responsive, accessible, and provides a seamless experience across devices and platforms, all within the constraints of the current UI.\n\n### Acceptance Criteria\n1. The refined context management system must be easy to navigate and understand.\n2. Context management features must be intuitive and efficient.\n3. The system must be responsive and accessible on various devices and platforms.\n4. New functionalities must enhance user experience and productivity without altering the fundamental UI.\n\n### Edge Cases\n1. **Context Overlap**: Develop a strategy to handle overlapping context information.\n2. **Context Priority**: Allow users to prioritize contexts by importance or urgency.\n3. **Context Sharing**: Explore implementing context sharing with other users or teams, considering access control and collaboration features.\n\n### Implementation Guidelines\n- Utilize user-centered design principles to ensure the enhancements meet user needs.\n- Conduct usability testing to validate the effectiveness of the refinements.\n- Ensure the enhancements are compatible with existing systems and infrastructure.\n- Develop a rollout plan to minimize disruption to existing users, focusing on incremental updates rather than a complete overhaul.",
+      "entities": [
+        "Context Organization",
+        "Ensure",
+        "Explore",
+        "Allow",
+        "Conduct",
+        "Context Sharing",
+        "Implementation Guidelines",
+        "Edge Cases",
+        "System-Wide",
+        "Requirements",
+        "Develop",
+        "User Experience",
+        "Context Priority",
+        "Background Context\nThe",
+        "Enhance",
+        "Context Management Enhancement",
+        "Context",
+        "Context Overlap",
+        "Utilize",
+        "IDE",
+        "Context Switching",
+        "Introduce",
+        "Acceptance Criteria",
+        "Objective\nRefine",
+        "Existing Feature Refining",
+        "Implement",
+        "Improve",
+        "Context Search",
+        "New Functionalities",
+        "Antigravity",
+        "Copilot"
+      ]
+    },
+    {
+      "id": "466eb63f-1c9a-43d0-8daf-8d76d66aa4d8",
+      "timestamp": "2026-07-23T13:51:26.751717",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Objective\nDevelop",
+        "System-Wide",
+        "Antigravity",
+        "Groq",
+        "Python",
+        "IDE",
+        "AutoHotkey",
+        "Copilot"
+      ]
+    },
+    {
+      "id": "a292c1b4-67bc-4ea3-b0b7-dd18f4e8048f",
+      "timestamp": "2026-07-23T13:51:29.289818",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Objective\nDevelop",
+        "System-Wide",
+        "Antigravity",
+        "Groq",
+        "Python",
+        "IDE",
+        "AutoHotkey",
+        "Copilot"
+      ]
+    },
+    {
+      "id": "aa4f4f8a-92ce-4ec1-bfd6-caf54c4f5ec7",
+      "timestamp": "2026-07-23T14:00:10.852209",
+      "title": "System-Wide AI Copilot - Antigravity IDE - Implementation Plan",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "see the side thi ssi not looking goos make it better",
+      "rewritten_text": "### Objective\nImprove the visual appearance of the side.\n\n### Constraints\n- The current design is not satisfactory.\n- The desired outcome is a better-looking side.\n\n### Expected Output\nA redesigned side with enhanced visual appeal. \n\n### Acceptance Criteria\n- The new design is aesthetically pleasing.\n- The improvements are noticeable and effective.",
+      "entities": [
+        "Objective\nImprove",
+        "Copilot",
+        "Antigravity",
+        "Implementation",
+        "Acceptance Criteria",
+        "Plan",
+        "Constraints",
+        "Expected Output",
+        "System-Wide",
+        "IDE"
+      ]
+    },
+    {
+      "id": "fbe75070-49ab-4d86-b553-356d15595bc2",
+      "timestamp": "2026-07-23T14:07:15.068510",
+      "title": "System-Wide AI Copilot - Antigravity IDE - image.png",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "what u did can u explain",
+      "rewritten_text": "### Request for Explanation\nPlease provide a detailed explanation of the actions you took. \n\n### Context\nClarify the specific steps or decisions made, including any relevant background information or constraints that influenced your approach.\n\n### Expected Output\nA clear, step-by-step breakdown of the actions taken, including any rationale or justifications for the choices made. \n\n### Acceptance Criteria\nThe explanation should be concise, easy to understand, and provide sufficient detail to replicate the actions or decisions made.",
+      "entities": [
+        "Acceptance Criteria\nThe",
+        "Expected Output",
+        "Antigravity",
+        "System-Wide",
+        "Context\nClarify",
+        "Explanation\nPlease",
+        "Copilot",
+        "Request",
+        "IDE"
+      ]
+    },
+    {
+      "id": "7c05eab4-762b-4086-88c7-33bf1d801b11",
+      "timestamp": "2026-07-23T14:07:22.259564",
+      "title": "System-Wide AI Copilot - Antigravity IDE - image.png",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "### Request for Explanation\nPlease provide a detailed explanation of the actions you took. \n\n### Context\nClarify the specific steps or decisions made, including any relevant background information or constraints that influenced your approach.\n\n### Expected Output\nA clear, step-by-step breakdown of the actions taken, including any rationale or justifications for the choices made. \n\n### Acceptance Criteria\nThe explanation should be concise, easy to understand, and provide sufficient detail to replicate the actions or decisions made.",
+      "rewritten_text": "### Request for Explanation\nPlease provide a detailed, step-by-step explanation of the actions taken, including the specific decisions made and the rationale behind them.\n\n### Context\nConsider the following factors that may have influenced your approach:\n* Relevant background information\n* Constraints or limitations that impacted your decisions\n* Any assumptions made during the process\n\n### Expected Output\nA clear, concise, and well-structured explanation that includes:\n1. A sequential breakdown of the actions taken\n2. Justifications for the choices made\n3. Sufficient detail to allow for replication of the actions or decisions\n\n### Acceptance Criteria\nThe explanation should:\n* Be easy to understand and free of ambiguity\n* Provide sufficient detail to enable replication of the actions or decisions\n* Be concise and to the point, avoiding unnecessary information\n* Include any relevant edge cases or considerations that may have arisen during the process",
+      "entities": [
+        "IDE",
+        "Relevant",
+        "Explanation\nPlease",
+        "System-Wide",
+        "Context\nConsider",
+        "Antigravity",
+        "Request",
+        "Justifications",
+        "Include",
+        "Constraints",
+        "Provide",
+        "Copilot",
+        "Acceptance Criteria\nThe",
+        "Expected Output",
+        "Sufficient"
+      ]
+    },
+    {
+      "id": "053f0331-71ee-4715-8a60-cb0dc31d9924",
+      "timestamp": "2026-07-23T14:11:38.776424",
+      "title": "System-Wide AI Copilot - Antigravity IDE - file:///d:/Important%20Projects/System-Wide%20AI%20Copilot/copilot.ahk (Agent) (copilot.ahk)",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "hi",
+      "rewritten_text": "### Greeting\nProvide a friendly and engaging response to a casual greeting. \n\n* Respond with a similar level of formality.\n* Include a statement to acknowledge the greeting.\n* Keep the tone polite and approachable. \n\nExample Response: \"Hello, how can I assist you today?\"",
+      "entities": [
+        "Respond",
+        "Antigravity",
+        "IDE",
+        "Keep",
+        "Example Response",
+        "Hello",
+        "Include",
+        "System-Wide",
+        "Copilot",
+        "Agent",
+        "Important",
+        "Greeting\nProvide"
+      ]
+    },
+    {
+      "id": "7771aa41-ad1c-4b71-bbe0-51cfe28663f6",
+      "timestamp": "2026-07-23T14:12:20.718854",
+      "title": "System-Wide AI Copilot - Antigravity IDE - file:///d:/Important%20Projects/System-Wide%20AI%20Copilot/copilot.ahk (Agent) (copilot.ahk)",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "this is too big and the text is going outof screent fix this",
+      "rewritten_text": "### Request for Adjustment\nAdjust the current display settings to ensure the text is fully visible within the screen boundaries.\n\n#### Constraints\n- The text should not exceed the screen width.\n- The font size should be adjusted to prevent text from going out of screen.\n\n#### Expected Output\nA visually adjusted display with the text fully contained within the screen, ensuring readability and usability. \n\n#### Acceptance Criteria\n- The text does not extend beyond the screen edges.\n- The font size is appropriate for the screen resolution, ensuring the text is clear and readable.",
+      "entities": [
+        "Acceptance Criteria",
+        "Copilot",
+        "Expected Output",
+        "Agent",
+        "IDE",
+        "System-Wide",
+        "Request",
+        "Adjustment\nAdjust",
+        "Antigravity",
+        "Constraints",
+        "Important"
+      ]
+    },
+    {
+      "id": "57c63708-68bf-44fe-8bc2-e96beceb6584",
+      "timestamp": "2026-07-23T14:14:57.806183",
+      "title": "System-Wide AI Copilot - Antigravity IDE - file:///d:/Important%20Projects/System-Wide%20AI%20Copilot/copilot.ahk (Agent) (copilot.ahk)",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "make it glassmorphic thing transpatent like thing ",
+      "rewritten_text": "### Design Request\nCreate a glassmorphic design element with the following characteristics:\n* **Transparency**: The element should have a transparent or semi-transparent background.\n* **Glassmorphic Effect**: Incorporate a glassmorphic effect, which typically includes a combination of blur, transparency, and subtle shadows to create a sense of depth.\n* **Visual Appearance**: The design should resemble glass or have a similar aesthetic, with a smooth and sleek appearance.\n* **Acceptance Criteria**:\n  + The element should be visible and legible when placed on top of other design elements.\n  + The glassmorphic effect should be subtle and not overpowering.\n  + The design should be consistent with modern design trends and principles.",
+      "entities": [
+        "Acceptance Criteria",
+        "Important",
+        "Agent",
+        "System-Wide",
+        "Visual Appearance",
+        "Glassmorphic Effect",
+        "Transparency",
+        "Design Request\nCreate",
+        "Copilot",
+        "Antigravity",
+        "IDE",
+        "Incorporate"
+      ]
+    },
+    {
+      "id": "402e6abc-b73d-4cd4-8682-ac6a1b7704a7",
+      "timestamp": "2026-07-23T14:18:11.240940",
+      "title": "System-Wide AI Copilot - Antigravity IDE - file:///d:/Important%20Projects/System-Wide%20AI%20Copilot/copilot.ahk (Agent) (copilot.ahk)",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "hi",
+      "rewritten_text": "### Greeting\nProvide a friendly and engaging response to a casual greeting. \n* Be concise and welcoming. \n* Set a positive tone for the conversation. \n* Include a brief introduction or acknowledgement of the user's presence. \n* Ensure the response is free of jargon and easily understandable. \n* Limit the response to 1-2 sentences.",
+      "entities": [
+        "Include",
+        "Antigravity",
+        "IDE",
+        "Important",
+        "Agent",
+        "Limit",
+        "Copilot",
+        "System-Wide",
+        "Greeting\nProvide",
+        "Ensure"
+      ]
+    },
+    {
+      "id": "838bea4b-5da7-45f6-9854-24813c44c7a5",
+      "timestamp": "2026-07-23T14:18:37.787452",
+      "title": "System-Wide AI Copilot - Antigravity IDE - file:///d:/Important%20Projects/System-Wide%20AI%20Copilot/copilot.ahk (Agent) (copilot.ahk)",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "gg",
+      "rewritten_text": "### Clarification Request\nPlease provide more context or information about what \"gg\" refers to, as it is unclear what action or task is being requested. \n\nIf \"gg\" is intended as a greeting, please provide more details about the desired response or outcome. \n\nIf \"gg\" refers to something else, please provide additional context or clarify the intended meaning. \n\n### Example Use Cases:\n* Greeting: Provide a friendly and engaging response to a casual greeting.\n* Game-related: Provide information or assistance related to a game, such as game stats or walkthroughs.\n* Other: Please specify the intended meaning or context of \"gg\". \n\n### Desired Outcome:\nPlease provide a clear and concise description of the desired outcome or response. This will help ensure that the prompt is executed correctly and efficiently.",
+      "entities": [
+        "Agent",
+        "IDE",
+        "Greeting",
+        "Game",
+        "Other",
+        "System-Wide",
+        "Antigravity",
+        "Clarification Request\nPlease",
+        "Important",
+        "Copilot",
+        "Desired Outcome",
+        "Example Use Cases",
+        "Provide",
+        "Please"
+      ]
+    },
+    {
+      "id": "5c6b41a0-dca0-43a5-acc8-98a19c16abfb",
+      "timestamp": "2026-07-23T14:21:19.218085",
+      "title": "System-Wide AI Copilot - Antigravity IDE - copilot.ahk",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "wegaw",
+      "rewritten_text": "### Clarification Request\nPlease provide more context or information about what \"wegaw\" refers to, as it is unclear what task or prompt you are trying to convey. \n\n* Is \"wegaw\" a specific term, acronym, or code snippet?\n* What is the desired outcome or goal related to \"wegaw\"?\n* Are there any specific constraints or requirements that need to be considered? \n\nWithout further context, it is challenging to provide a precise and effective prompt. Please provide additional details to help refine the request.",
+      "entities": [
+        "Antigravity",
+        "Clarification Request\nPlease",
+        "What",
+        "IDE",
+        "System-Wide",
+        "Copilot",
+        "Without",
+        "Please"
+      ]
+    },
+    {
+      "id": "c9bdada2-3b3b-4e2c-a00b-8ec5bd25303f",
+      "timestamp": "2026-07-23T14:38:53.691092",
+      "title": "System-Wide AI Copilot - Antigravity IDE - copilot.ahk",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "wxplain me what u did ",
+      "rewritten_text": "### Request for Explanation\nPlease provide a detailed and step-by-step explanation of the actions you took, including any relevant context or decisions made during the process. \n\n* Specify the goals or objectives you were trying to achieve\n* Outline the methods or approaches used to accomplish these goals\n* Describe any challenges or obstacles encountered and how they were addressed\n* Summarize the outcomes or results of your actions \n\nThis will help to ensure a clear understanding of what was done and why.",
+      "entities": [
+        "Outline",
+        "Request",
+        "Describe",
+        "Copilot",
+        "System-Wide",
+        "Explanation\nPlease",
+        "Summarize",
+        "Antigravity",
+        "IDE",
+        "Specify"
+      ]
+    },
+    {
+      "id": "a475a670-ab2e-4dbe-a677-83830a64c0cc",
+      "timestamp": "2026-07-23T14:41:03.528430",
+      "title": "System-Wide AI Copilot - Antigravity IDE - Review",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "what to do next",
+      "rewritten_text": "### Request for Guidance\nPlease provide a clear and step-by-step plan for the next course of action, considering the current context and previous interactions. \n\nTo facilitate a precise response, kindly provide more details about:\n* The current project or task at hand\n* Any relevant background information or constraints\n* The desired outcome or expected results\n\nThis will enable the formulation of a tailored and effective plan for the next steps.",
+      "entities": [
+        "Request",
+        "Review",
+        "System-Wide",
+        "Copilot",
+        "IDE",
+        "Antigravity",
+        "Guidance\nPlease"
+      ]
+    },
+    {
+      "id": "2ab1dbbd-3c2b-4909-a652-416b0a721294",
+      "timestamp": "2026-07-23T14:46:06.778047",
+      "title": "System-Wide AI Copilot - Antigravity IDE - copilot.ahk",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "now can u expail me th code",
+      "rewritten_text": "### Request for Code Explanation\nPlease provide a specific code snippet you would like me to explain, including:\n* The programming language used\n* The code itself\n* Any relevant context or requirements\n\nThis will enable me to provide a clear and concise explanation of the code.",
+      "entities": [
+        "Code Explanation\nPlease",
+        "Request",
+        "Copilot",
+        "IDE",
+        "Antigravity",
+        "System-Wide"
+      ]
+    },
+    {
+      "id": "31f39c44-9705-4b24-bd79-b0f50fe2214f",
+      "timestamp": "2026-07-23T14:59:51.868890",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "System-Wide",
+        "Copilot",
+        "Python",
+        "AutoHotkey",
+        "IDE",
+        "Groq",
+        "Antigravity",
+        "Objective\nDevelop"
+      ]
+    },
+    {
+      "id": "c7cd174b-34e2-4737-840e-4ced1e2456f5",
+      "timestamp": "2026-07-23T14:59:54.137370",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "System-Wide",
+        "Copilot",
+        "Python",
+        "AutoHotkey",
+        "IDE",
+        "Groq",
+        "Antigravity",
+        "Objective\nDevelop"
+      ]
+    },
+    {
+      "id": "307643c7-d0f6-43ff-a642-6446f349bfa4",
+      "timestamp": "2026-07-23T15:04:30.718653",
+      "title": "System-Wide AI Copilot - Antigravity IDE - Knowledge Graph Diagram (Today 2:53 PM)",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "some time it give this as output fi this bro",
+      "rewritten_text": "### Clarified Prompt\nSometimes, the AI model generates an output that includes the phrase \"fi this bro.\" \nPlease provide a clear and concise explanation for this behavior, including possible reasons and potential solutions to avoid such outputs in the future. \n\n### Expected Output\nA detailed analysis of the issue, including:\n* Possible causes for the AI model's behavior\n* Steps to reproduce the issue\n* Proposed solutions to prevent similar outputs\n* Relevant examples or code snippets (if applicable)",
+      "entities": [
+        "Today",
+        "IDE",
+        "Graph",
+        "Relevant",
+        "Please",
+        "Possible",
+        "Clarified Prompt\nSometimes",
+        "Expected Output",
+        "Proposed",
+        "Diagram",
+        "Steps",
+        "Copilot",
+        "Knowledge",
+        "Antigravity",
+        "System-Wide"
+      ]
+    },
+    {
+      "id": "e81e7560-ed6c-4285-8911-c57fe01e9331",
+      "timestamp": "2026-07-23T15:16:32.190931",
+      "title": "System-Wide AI Copilot - Antigravity IDE - file:///C:/Users/JITEN%20SHROFF/.gemini/antigravity-ide/brain/290b6279-8a49-4e7f-8924-0ac48b8525d8/scratch/make_chrome_shortcut.ps1 (Agent) (make_chrome_shortcut.ps1)",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "see search on web how to do tis we dont have to over enginer this thing so pl do tat ",
+      "rewritten_text": "### Simplified Task Request\nSearch the web for a straightforward solution to the task at hand, avoiding over-engineering. \n\n#### Requirements:\n- Find an existing, simple method or tutorial online.\n- The solution should be easy to implement and understand.\n- Avoid complex or overly complicated approaches.\n\n#### Expected Output:\nA concise, step-by-step guide or a link to a reliable resource that provides a straightforward solution to the task.",
+      "entities": [
+        "Expected Output",
+        "IDE",
+        "Simplified Task Request\nSearch",
+        "Users",
+        "Copilot",
+        "System-Wide",
+        "Find",
+        "Agent",
+        "Avoid",
+        "JITEN",
+        "Requirements",
+        "Antigravity"
+      ]
+    },
+    {
+      "id": "0cec11c6-70a7-4f50-bb0a-6728ac8ff174",
+      "timestamp": "2026-07-23T15:21:38.068513",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "IDE",
+        "Copilot",
+        "Python",
+        "System-Wide",
+        "Groq",
+        "Antigravity",
+        "Objective\nDevelop",
+        "AutoHotkey"
+      ]
+    },
+    {
+      "id": "e4ebd086-183a-4413-afc2-09e39e5316ff",
+      "timestamp": "2026-07-23T15:21:40.307218",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "IDE",
+        "Copilot",
+        "Python",
+        "System-Wide",
+        "Groq",
+        "Antigravity",
+        "Objective\nDevelop",
+        "AutoHotkey"
+      ]
+    },
+    {
+      "id": "395046c9-b1fe-4eb8-8c04-4ebd116baf9b",
+      "timestamp": "2026-07-23T15:23:54.905503",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "AutoHotkey",
+        "Python",
+        "Objective\nDevelop",
+        "Antigravity",
+        "System-Wide",
+        "Groq",
+        "Copilot",
+        "IDE"
+      ]
+    },
+    {
+      "id": "3c4baec3-71f2-4cf7-9349-b4edd60569da",
+      "timestamp": "2026-07-23T15:23:57.168688",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "AutoHotkey",
+        "Python",
+        "Objective\nDevelop",
+        "Antigravity",
+        "System-Wide",
+        "Groq",
+        "Copilot",
+        "IDE"
+      ]
+    },
+    {
+      "id": "d15705ba-b804-4027-86d0-a556da7bf450",
+      "timestamp": "2026-07-23T15:28:14.850836",
+      "title": "System-Wide AI Copilot - Antigravity IDE - file:///d:/Important%20Projects/System-Wide%20AI%20Copilot/src/knowledge_graph.py (Agent) (knowledge_graph.py)",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "it is still what sapp chat the screen shot thins is not worln",
+      "rewritten_text": "### Clarified Objective\nThe user is experiencing issues with a WhatsApp chat screenshot that is not working as expected. \n\n#### Provided Context\n- The issue is related to a WhatsApp chat screenshot.\n- The screenshot is not functioning properly.\n\n#### Desired Outcome\nThe user needs assistance in resolving the issue with the WhatsApp chat screenshot. \n\n#### Expected Resolution\nA step-by-step guide or troubleshooting instructions to fix the WhatsApp chat screenshot issue. \n\n#### Acceptance Criteria\n- The WhatsApp chat screenshot is visible and clear.\n- The screenshot can be shared or saved without any issues.\n- The user can view the screenshot without any errors or glitches.",
+      "entities": [
+        "IDE",
+        "Provided Context",
+        "Acceptance Criteria",
+        "Agent",
+        "Antigravity",
+        "Desired Outcome\nThe",
+        "Important",
+        "Expected Resolution",
+        "Copilot",
+        "WhatsApp",
+        "System-Wide",
+        "Clarified Objective\nThe"
+      ]
+    },
+    {
+      "id": "52580d67-a75b-407a-8f9c-8333497d0fea",
+      "timestamp": "2026-07-23T15:28:33.610064",
+      "title": "System-Wide AI Copilot - Antigravity IDE - file:///d:/Important%20Projects/System-Wide%20AI%20Copilot/src/knowledge_graph.py (Agent) (knowledge_graph.py)",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "it is still what sapp chat the screen shot thins is not worln",
+      "rewritten_text": "### Clarified Objective\nThe user is experiencing issues with a WhatsApp chat screenshot that is not working as expected. \n\n#### Task Requirements\n1. **Identify the issue**: Determine the cause of the problem with the WhatsApp chat screenshot.\n2. **Provide a solution**: Offer a step-by-step guide to resolve the issue, ensuring the screenshot is visible and functional.\n3. **Verify the fix**: Confirm that the proposed solution works and the screenshot is displayed correctly in the WhatsApp chat.\n\n#### Background Context\nThe user has been interacting with WhatsApp and has taken a screenshot, but it is not displaying properly in the chat.\n\n#### Constraints\n- The solution should be applicable to the current version of WhatsApp.\n- The fix should not require any additional software or plugins beyond what is already available on the user's device.\n\n#### Expected Output\nA clear, step-by-step guide on how to resolve the issue with the WhatsApp chat screenshot, including any necessary troubleshooting steps or workarounds.",
+      "entities": [
+        "Task Requirements",
+        "Copilot",
+        "Offer",
+        "Clarified Objective\nThe",
+        "Important",
+        "Agent",
+        "Provide",
+        "Confirm",
+        "Determine",
+        "Background Context\nThe",
+        "Constraints",
+        "Expected Output",
+        "System-Wide",
+        "Antigravity",
+        "Identify",
+        "Verify",
+        "IDE",
+        "WhatsApp"
+      ]
+    },
+    {
+      "id": "0c10f2a9-ed1e-4fb3-bf5e-8cd617b8b924",
+      "timestamp": "2026-07-23T15:40:13.032940",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Python",
+        "Groq",
+        "Objective\nDevelop",
+        "IDE",
+        "AutoHotkey",
+        "Copilot",
+        "Antigravity",
+        "System-Wide"
+      ]
+    },
+    {
+      "id": "af133432-ca6d-49a9-bbc8-31c0c57bfe7e",
+      "timestamp": "2026-07-23T15:40:15.186967",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Python",
+        "Groq",
+        "Objective\nDevelop",
+        "IDE",
+        "AutoHotkey",
+        "Copilot",
+        "Antigravity",
+        "System-Wide"
+      ]
+    },
+    {
+      "id": "5d50288d-8287-47d5-9fe1-af9fce75742f",
+      "timestamp": "2026-07-23T15:45:51.717659",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Python",
+        "IDE",
+        "Copilot",
+        "Objective\nDevelop",
+        "Antigravity",
+        "System-Wide",
+        "Groq",
+        "AutoHotkey"
+      ]
+    },
+    {
+      "id": "deb84f1e-c33d-46fe-aa78-2f985b52ae99",
+      "timestamp": "2026-07-23T15:45:53.919091",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Python",
+        "IDE",
+        "Copilot",
+        "Objective\nDevelop",
+        "Antigravity",
+        "System-Wide",
+        "Groq",
+        "AutoHotkey"
+      ]
+    },
+    {
+      "id": "60c51ac5-f2e4-4b97-81ba-950a9ad6b8c7",
+      "timestamp": "2026-07-23T16:23:33.743768",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Copilot",
+        "Antigravity",
+        "IDE",
+        "AutoHotkey",
+        "Groq",
+        "Python",
+        "Objective\nDevelop",
+        "System-Wide"
+      ]
+    },
+    {
+      "id": "e85b367e-3544-4a24-ac03-83bb66480550",
+      "timestamp": "2026-07-23T16:23:36.074586",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Copilot",
+        "Antigravity",
+        "IDE",
+        "AutoHotkey",
+        "Groq",
+        "Python",
+        "Objective\nDevelop",
+        "System-Wide"
+      ]
+    },
+    {
+      "id": "74114d9f-2e3a-41fd-8a6d-95da5425b6b7",
+      "timestamp": "2026-07-23T16:27:36.706176",
+      "title": "System-Wide AI Copilot - Antigravity IDE - file:///d:/Important%20Projects/System-Wide%20AI%20Copilot/src/run_python.bat (Agent) (run_python.bat)",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "see it is added ",
+      "rewritten_text": "### Confirmation of Addition\nVerify that the specified item has been successfully added. \n\nPlease provide more context or details about the item to be added, such as its nature, the system or list it is being added to, and any specific requirements or constraints that need to be considered. \n\nThis will enable the creation of a more precise and actionable instruction set for the task at hand.",
+      "entities": [
+        "System-Wide",
+        "IDE",
+        "Addition\nVerify",
+        "Please",
+        "Confirmation",
+        "Important",
+        "Antigravity",
+        "Copilot",
+        "Agent"
+      ]
+    },
+    {
+      "id": "6c2dda65-5955-44dd-a4c8-08c3ef9f9431",
+      "timestamp": "2026-07-23T16:29:02.136178",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Objective\nDevelop",
+        "Copilot",
+        "Groq",
+        "Antigravity",
+        "System-Wide",
+        "IDE",
+        "AutoHotkey",
+        "Python"
+      ]
+    },
+    {
+      "id": "bc38ffd7-7ff2-44f6-a292-e46a1594e2c5",
+      "timestamp": "2026-07-23T16:29:04.300870",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Objective\nDevelop",
+        "Copilot",
+        "Groq",
+        "Antigravity",
+        "System-Wide",
+        "IDE",
+        "AutoHotkey",
+        "Python"
+      ]
+    },
+    {
+      "id": "f7f42cdb-e7ba-4756-bb80-c72d9a451ad2",
+      "timestamp": "2026-07-23T16:29:39.946700",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Objective\nDevelop",
+        "AutoHotkey",
+        "System-Wide",
+        "Antigravity",
+        "Groq",
+        "IDE",
+        "Copilot",
+        "Python"
+      ]
+    },
+    {
+      "id": "6d70b68b-a808-4b1c-b83b-3eaac049c240",
+      "timestamp": "2026-07-23T16:29:42.137563",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Objective\nDevelop",
+        "AutoHotkey",
+        "System-Wide",
+        "Antigravity",
+        "Groq",
+        "IDE",
+        "Copilot",
+        "Python"
+      ]
+    },
+    {
+      "id": "63b1e8a3-436f-4110-a746-21b0f7486cef",
+      "timestamp": "2026-07-23T16:35:07.208891",
+      "title": "System-Wide AI Copilot - Antigravity IDE - file:///d:/Important%20Projects/System-Wide%20AI%20Copilot/src/llm_client.py (Agent) (llm_client.py)",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "we have to make a system general we cannot do for all again and agin it should catch automatically",
+      "rewritten_text": "Design a generalized system that can automatically adapt to various scenarios, eliminating the need for repetitive manual adjustments.\n\n### Requirements\n* Develop a flexible framework that can accommodate diverse inputs and situations\n* Implement an automated mechanism to detect and respond to different conditions\n* Ensure the system can learn from experience and improve its performance over time\n* Define clear acceptance criteria to validate the system's effectiveness and efficiency\n\n### Expected Outcomes\n* A scalable and robust system that can handle a wide range of scenarios without requiring frequent manual interventions\n* Automated detection and response to changing conditions, reducing the need for human intervention\n* Continuous improvement in system performance and accuracy through machine learning and adaptation\n\n### Constraints\n* The system must be able to handle unexpected or edge cases without compromising its overall performance\n* The automated mechanism should be able to detect and respond to changes in real-time, minimizing latency and ensuring timely responses\n* The system's design and implementation should prioritize simplicity, maintainability, and ease of use.",
+      "entities": [
+        "Define",
+        "Agent",
+        "Expected Outcomes",
+        "System-Wide",
+        "IDE",
+        "Antigravity",
+        "Design",
+        "Copilot",
+        "Ensure",
+        "Automated",
+        "Requirements",
+        "Continuous",
+        "Constraints",
+        "Important",
+        "Develop",
+        "Implement"
+      ]
+    },
+    {
+      "id": "0534ea41-e77d-4862-8611-21e324c3ec46",
+      "timestamp": "2026-07-23T16:38:06.742989",
+      "title": "System-Wide AI Copilot - Antigravity IDE - file:///d:/Important%20Projects/System-Wide%20AI%20Copilot/src/knowledge_graph.py (Agent) (knowledge_graph.py)",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "good now we have to work on entity node see they dont seams me good ,they are very general and not worth enought what can we do ther make a plan",
+      "rewritten_text": "To improve the entity nodes, we need to make them more specific and valuable. Here's a step-by-step plan:\n\n1. **Re-evaluate Entity Node Definitions**: Review the current entity node definitions and identify areas where they can be more specific and detailed.\n2. **Gather Requirements**: Collect requirements from stakeholders on what makes an entity node valuable and worthy.\n3. **Categorize Entity Nodes**: Categorize entity nodes into different types (e.g., person, organization, location) and define specific attributes for each type.\n4. **Develop a Hierarchical Structure**: Develop a hierarchical structure for entity nodes to allow for more granular and specific definitions.\n5. **Establish Clear Relationships**: Establish clear relationships between entity nodes to enable better connections and associations.\n6. **Define Acceptance Criteria**: Define acceptance criteria for entity nodes, including specificity, relevance, and value.\n\n### Key Considerations\n* Ensure entity nodes are concise, yet descriptive\n* Use standardized terminology and formatting\n* Make entity nodes easily searchable and accessible\n* Continuously review and refine entity nodes to ensure they remain relevant and valuable\n\n### Next Steps\n* Schedule a meeting with stakeholders to discuss and refine the entity node enhancement plan\n* Assign tasks and responsibilities to team members for implementing the plan\n* Establish a timeline for completion and review of the enhanced entity nodes",
+      "entities": [
+        "Node",
+        "System-Wide",
+        "Continuously",
+        "Define",
+        "Key Considerations",
+        "Collect",
+        "Make",
+        "Hierarchical Structure",
+        "Categorize",
+        "Schedule",
+        "Agent",
+        "Establish",
+        "Ensure",
+        "Gather Requirements",
+        "Establish Clear Relationships",
+        "Here",
+        "Entity Node Definitions",
+        "Next Steps",
+        "Define Acceptance Criteria",
+        "Develop",
+        "Assign",
+        "Antigravity",
+        "Copilot",
+        "Categorize Entity Nodes",
+        "IDE",
+        "Review",
+        "Important"
+      ]
+    },
+    {
+      "id": "a8a3f2d5-b1f5-40f1-9d63-a7f49f9e731b",
+      "timestamp": "2026-07-23T16:40:16.126601",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": []
+    },
+    {
+      "id": "8ea58a17-1122-4788-ab0c-d7a153cabbd1",
+      "timestamp": "2026-07-23T16:40:18.297867",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": []
+    },
+    {
+      "id": "1edf14c3-afc1-4a56-a8bb-3a37eeddaa02",
+      "timestamp": "2026-07-23T16:41:05.707847",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "AutoHotkey",
+        "Groq",
+        "Antigravity",
+        "Python"
+      ]
+    },
+    {
+      "id": "c2fa100a-860b-4380-a05a-90aa6ad732f5",
+      "timestamp": "2026-07-23T16:41:07.929496",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "AutoHotkey",
+        "Groq",
+        "Antigravity",
+        "Python"
+      ]
+    },
+    {
+      "id": "d65fdde4-cba9-4154-aeba-c633b51b9932",
+      "timestamp": "2026-07-23T19:29:51.727895",
+      "title": "System-Wide AI Copilot - Antigravity IDE - Implementation Plan",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "can u research on desktop pet what i wantis that what ver we have build should be with one pet so research on web related to desktop pet (some open source we can use and add the functionality on top)",
+      "rewritten_text": "Research and identify suitable open-source desktop pet projects that can be integrated with our existing build, focusing on a single pet implementation.\n\n### Requirements\n* Identify open-source desktop pet projects with permissive licenses\n* Evaluate projects based on ease of integration, customizability, and compatibility with our existing build\n* Research existing features and functionalities of identified projects\n* Determine potential areas for adding new functionalities on top of the selected project\n\n### Deliverables\n* A list of 3-5 open-source desktop pet projects with relevant information, including:\n\t+ Project name and repository link\n\t+ License and compatibility details\n\t+ Key features and functionalities\n\t+ Potential for customization and extension\n* A recommendation for the most suitable project to integrate with our existing build, based on the research findings\n\n### Acceptance Criteria\n* The selected project should have a permissive license, allowing for modification and distribution\n* The project should be compatible with our existing build, with minimal integration effort required\n* The project should have a clear and well-maintained codebase, with active community support\n* The project should provide a solid foundation for adding new functionalities and customizations on top of the existing features",
+      "entities": [
+        "AI Copilot",
+        "open-source desktop pet projects",
+        "Antigravity",
+        "Antigravity IDE"
+      ]
+    },
+    {
+      "id": "c3757691-e751-4841-9cfb-c8e635e9ee19",
+      "timestamp": "2026-07-23T19:34:24.422426",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Python",
+        "AutoHotkey",
+        "Antigravity",
+        "Groq"
+      ]
+    },
+    {
+      "id": "7fe7a0ee-a361-422e-8b62-d9b21f05d83a",
+      "timestamp": "2026-07-23T19:34:26.626006",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Python",
+        "AutoHotkey",
+        "Antigravity",
+        "Groq"
+      ]
+    },
+    {
+      "id": "191ed91e-e753-4a62-9a12-49a73d00b2e6",
+      "timestamp": "2026-07-23T19:41:41.611997",
+      "title": "System-Wide AI Copilot - Antigravity IDE - requirements.txt",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "see i want something unique look detailed one not basic",
+      "rewritten_text": "Create a unique and detailed concept, surpassing basic implementations.\n\n### Requirements\n- The concept should be distinctive and original.\n- It must include intricate details to elevate it beyond fundamental designs.\n\n### Constraints\n- Avoid simplistic or common approaches.\n- Incorporate complexity and depth to ensure the concept stands out.\n\n### Expected Output\nA comprehensive and innovative idea that showcases meticulous attention to detail and creativity, clearly distinguishing it from more straightforward or basic concepts.",
+      "entities": [
+        "AI",
+        "requirements",
+        "Antigravity",
+        "Antigravity IDE",
+        "creativity",
+        "concept",
+        "idea",
+        "design",
+        "constraints",
+        "Antigravity IDE.exe",
+        "innovation"
+      ]
+    },
+    {
+      "id": "8892754b-4fba-4348-8fc0-b883290968d4",
+      "timestamp": "2026-07-23T19:44:41.515983",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Groq",
+        "Python",
+        "Antigravity",
+        "AutoHotkey"
+      ]
+    },
+    {
+      "id": "1098f657-46c0-4011-bf0e-a635bd44db56",
+      "timestamp": "2026-07-23T19:44:43.616499",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Groq",
+        "Python",
+        "Antigravity",
+        "AutoHotkey"
+      ]
+    },
+    {
+      "id": "8bba596a-be26-4ee8-8358-e164d2d7d466",
+      "timestamp": "2026-07-23T19:47:29.827631",
+      "title": "System-Wide AI Copilot - Antigravity IDE - requirements.txt",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "i m not able to move it",
+      "rewritten_text": "Unable to move an object/item. \n\n### Expected Outcome\nProvide a solution or steps to resolve the issue and successfully move the object. \n\n### Constraints\nNone specified. \n\n### Additional Context\nPlease provide more details about the object and the environment in which you are trying to move it, such as the operating system, application, or physical space, to help identify the root cause of the issue.",
+      "entities": [
+        "operating system",
+        "application",
+        "artificial intelligence",
+        "Antigravity IDE.exe",
+        "object movement",
+        "Antigravity",
+        "Antigravity IDE"
+      ]
+    },
+    {
+      "id": "1f4eb5eb-eb9a-4c89-9076-c840feba8e9f",
+      "timestamp": "2026-07-23T19:52:58.281203",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Antigravity",
+        "Groq",
+        "AutoHotkey",
+        "Python"
+      ]
+    },
+    {
+      "id": "1f4c70a3-8645-4405-87e4-6688b499c7bb",
+      "timestamp": "2026-07-23T19:53:02.878731",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Antigravity",
+        "Groq",
+        "AutoHotkey",
+        "Python"
+      ]
+    },
+    {
+      "id": "d8e3becd-3661-4d76-8d33-5f67e82e412d",
+      "timestamp": "2026-07-23T20:42:40.130795",
+      "title": "System-Wide AI Copilot - Antigravity IDE - test_pet_bridge.py",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "see now tell me why terminal open when we start",
+      "rewritten_text": "To understand why the terminal opens when starting up, we need to consider several factors:\n* **System Configuration**: The terminal might be set as a startup application, either manually or by an installed package.\n* **Default Shell Settings**: The default shell configuration could be triggering the terminal to open on startup.\n* **Background Processes**: A background process or service might be launching the terminal.\n\n### Steps to Investigate\n1. **Check Startup Applications**: Review the list of startup applications to see if the terminal is included.\n2. **Inspect Shell Configuration**: Examine the shell configuration files (e.g., `~/.bashrc`, `~/.zshrc`) for any commands that might be launching the terminal.\n3. **Monitor System Logs**: Analyze system logs to identify any processes or services that could be causing the terminal to open on startup.\n\n### Expected Outcome\nDetermine the root cause of the terminal opening on startup and provide a clear explanation for this behavior. If necessary, provide steps to modify the system configuration to prevent the terminal from opening automatically.",
+      "entities": [
+        "Background Processes",
+        "Shell",
+        "System Configuration",
+        "Terminal",
+        "Startup Applications",
+        "System Logs",
+        "Antigravity",
+        "Antigravity IDE"
+      ]
+    },
+    {
+      "id": "a3a1f8dc-a1a5-4e88-b8e6-e43a28bff939",
+      "timestamp": "2026-07-23T21:39:56.229050",
+      "title": "System-Wide AI Copilot - Antigravity IDE - file:///d:/Important%20Projects/System-Wide%20AI%20Copilot/src/pet/pet_bridge.py (Agent) (pet_bridge.py)",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "same thing again",
+      "rewritten_text": "Please rephrase or provide more context for the prompt \"same thing again\" so that a clear and actionable instruction can be formulated for the AI system to execute. \n\nIf you're referring to a previous task, please provide the task details or specify what \"same thing\" entails. This will enable the creation of a precise and deterministic prompt for the AI to process.",
+      "entities": [
+        "Antigravity",
+        "System-Wide AI Copilot",
+        "Antigravity IDE",
+        "AI"
+      ]
+    },
+    {
+      "id": "21b2eb6f-5fab-412d-8cdd-31fd24955167",
+      "timestamp": "2026-07-23T21:59:04.662290",
+      "title": "System-Wide AI Copilot - Antigravity IDE - test_pet_bridge.py",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "there is glitch it get close at moment i clcik on it",
+      "rewritten_text": "There is a glitch that occurs when I click on an element: it gets close at the moment I click on it. \nTo reproduce and resolve this issue, please consider the following:\n* **Reproduction Steps:**\n  1. Navigate to the relevant page or section.\n  2. Locate the specific element that triggers the glitch.\n  3. Click on the element to observe the glitch.\n* **Expected Behavior:** The element should function as intended without closing or disappearing upon being clicked.\n* **Actual Behavior:** The element gets close or disappears at the moment it is clicked.\n* **Acceptance Criteria:** The glitch is resolved, and the element remains accessible and functional after being clicked.",
+      "entities": [
+        "Acceptance Criteria",
+        "Antigravity",
+        "AI",
+        "Expected Behavior",
+        "test_pet_bridge.py",
+        "Actual Behavior",
+        "Antigravity IDE",
+        "glitch",
+        "Reproduction Steps"
+      ]
+    },
+    {
+      "id": "6a6ecb80-536a-48d4-aacb-1f1d26339254",
+      "timestamp": "2026-07-23T22:16:16.843646",
+      "title": "System-Wide AI Copilot - Antigravity IDE - vrm_pet_gui.py",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "see now here it is not remebing the history what i chat previously fix that thing see the knowledge with time ad most important thing should go to ai for context this is the aim right then",
+      "rewritten_text": "To improve the AI's ability to recall previous conversations and utilize temporal context, the following adjustments can be made:\n* Implement a **conversation history** feature that stores and updates previous interactions.\n* Develop an **attention mechanism** that prioritizes the most relevant and recent information.\n* Integrate a **temporal awareness** component that considers the timing and sequence of events.\n* Ensure the AI is trained on a diverse range of datasets that include **context-dependent** examples.\n* Establish clear **evaluation metrics** to assess the AI's performance in recalling and utilizing conversation history.\nThe primary objective is to create an AI system that can effectively retain and apply knowledge from previous interactions, allowing it to provide more accurate and personalized responses over time.",
+      "entities": [
+        "attention mechanism",
+        "evaluation metrics",
+        "temporal awareness",
+        "context-dependent",
+        "Antigravity",
+        "conversation history",
+        "Antigravity IDE",
+        "AI"
+      ]
+    },
+    {
+      "id": "a61c6bf9-501e-4e83-b1bf-ee6a1187674e",
+      "timestamp": "2026-07-23T22:22:41.661481",
+      "title": "System-Wide AI Copilot - Antigravity IDE - vrm_pet_gui.py",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "To improve the AI's ability to recall previous conversations and utilize temporal context, the following adjustments can be made:\n* Implement a **conversation history** feature that stores and updates previous interactions.\n* Develop an **attention mechanism** that prioritizes the most relevant and recent information.\n* Integrate a **temporal awareness** component that considers the timing and sequence of events.\n* Ensure the AI is trained on a diverse range of datasets that include **context-dependent** examples.\n* Establish clear **evaluation metrics** to assess the AI's performance in recalling and utilizing conversation history.\nThe primary objective is to create an AI system that can effectively retain and apply knowledge from previous interactions, allowing it to provide more accurate and personalized responses over time.\n\n\nsee mention about knowledge graph more here ",
+      "rewritten_text": "To improve the AI's ability to recall previous conversations and utilize temporal context, the following adjustments can be made:\n\n#### Core Objectives\n1. **Implement Conversation History**: Develop a feature that stores and updates previous interactions to provide a comprehensive record of conversations.\n2. **Attention Mechanism**: Design an attention mechanism that prioritizes the most relevant and recent information to ensure the AI focuses on the most critical aspects of the conversation.\n3. **Temporal Awareness**: Integrate a temporal awareness component that considers the timing and sequence of events to provide a deeper understanding of the conversation's context.\n4. **Diverse Training Data**: Ensure the AI is trained on a diverse range of datasets that include context-dependent examples to enhance its ability to generalize and apply knowledge in various scenarios.\n5. **Evaluation Metrics**: Establish clear evaluation metrics to assess the AI's performance in recalling and utilizing conversation history, allowing for data-driven improvements.\n\n#### Additional Considerations\n* **Knowledge Graph Integration**: Explore the potential of integrating a knowledge graph to enhance the AI's understanding of entities, relationships, and concepts, as discussed [here](link to knowledge graph discussion).\n* **Context-Dependent Responses**: Train the AI to generate context-dependent responses that take into account the conversation history, temporal context, and user preferences.\n\n#### Expected Outcomes\nThe primary objective is to create an AI system that can effectively retain and apply knowledge from previous interactions, allowing it to provide more accurate and personalized responses over time. The desired outcomes include:\n\n* Improved conversation recall and understanding\n* Enhanced temporal context awareness\n* More accurate and personalized responses\n* Increased user satisfaction and engagement\n\nBy implementing these adjustments and considering the additional factors, the AI system can become more effective in utilizing temporal context and providing high-quality responses that meet user needs.",
+      "entities": [
+        "AI",
+        "Evaluation Metrics",
+        "Attention Mechanism",
+        "Conversation History",
+        "Temporal Awareness",
+        "Diverse Training Data",
+        "Antigravity IDE",
+        "Antigravity"
+      ]
+    },
+    {
+      "id": "e61a45d8-343e-4015-b651-64c131cbda16",
+      "timestamp": "2026-07-23T22:26:25.853041",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Groq",
+        "AutoHotkey",
+        "Antigravity",
+        "Python"
+      ]
+    },
+    {
+      "id": "c0d43d6d-a643-461b-b0fe-d3cc5c18211e",
+      "timestamp": "2026-07-23T22:26:30.044674",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Groq",
+        "AutoHotkey",
+        "Antigravity",
+        "Python"
+      ]
+    },
+    {
+      "id": "434bcb3b-678a-450e-8b80-289a06d940a5",
+      "timestamp": "2026-07-24T13:22:14.648586",
+      "title": "System-Wide AI Copilot - Antigravity IDE - vrm_pet_gui.py",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": " see currently code base is too massy can u clean that the folder structure and remove file that are not importatn",
+      "rewritten_text": "Refactor the current codebase to improve its organization and efficiency. \n\n#### Objectives:\n1. **Simplify Folder Structure**: Reorganize the folder hierarchy to make it more logical and easier to navigate.\n2. **Remove Unnecessary Files**: Identify and delete files that are no longer necessary or are redundant.\n\n#### Requirements:\n- Preserve all essential files and functionality.\n- Ensure the refactored codebase remains compatible with existing dependencies and integrations.\n- Document any significant changes made to the codebase.\n\n#### Acceptance Criteria:\n- The folder structure is simplified and easy to understand.\n- All unnecessary files have been removed without affecting the codebase's functionality.\n- The refactored codebase is well-documented and compatible with existing dependencies.",
+      "entities": [
+        "AI",
+        "Codebase Optimization",
+        "Refactoring",
+        "vrm_pet_gui.py",
+        "Antigravity IDE",
+        "Antigravity",
+        "Dependency Management",
+        "Folder Structure"
+      ]
+    },
+    {
+      "id": "92b70a99-6310-4603-8843-64a1c702afa6",
+      "timestamp": "2026-07-24T13:23:26.306821",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Antigravity",
+        "AutoHotkey",
+        "Groq",
+        "Python"
+      ]
+    },
+    {
+      "id": "d0c9dbd7-48c6-4f87-9427-d9b60a7b87a6",
+      "timestamp": "2026-07-24T13:23:30.481153",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Antigravity",
+        "AutoHotkey",
+        "Groq",
+        "Python"
+      ]
+    },
+    {
+      "id": "7f6040ee-dd43-4b33-843d-fc5b788c6651",
+      "timestamp": "2026-07-24T13:25:47.457228",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Python",
+        "Groq",
+        "AutoHotkey",
+        "Antigravity"
+      ]
+    },
+    {
+      "id": "b5ce2185-9bb8-4cd9-9e10-4fb57db74498",
+      "timestamp": "2026-07-24T13:25:51.585552",
+      "title": "Antigravity IDE - System-Wide AI Copilot",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "build a python script using autohotkey",
+      "rewritten_text": "### Objective\nDevelop a Python script using AutoHotkey and Groq.",
+      "entities": [
+        "Python",
+        "Groq",
+        "AutoHotkey",
+        "Antigravity"
+      ]
+    },
+    {
+      "id": "14ed920a-ec3c-4ae1-91d3-4f479323c04f",
+      "timestamp": "2026-07-24T16:03:52.908606",
+      "title": "System-Wide AI Copilot - Antigravity IDE - file:///d:/Important%20Projects/System-Wide%20AI%20Copilot/src/pet/pet_bridge.py (Agent) (pet_bridge.py)",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "what else can we do here sugest me ",
+      "rewritten_text": "what else can we explore or accomplish in this context? Please suggest some options or ideas for further development or investigation.",
+      "entities": [
+        "AI",
+        "Antigravity IDE",
+        "System-Wide AI Copilot",
+        "Antigravity"
+      ]
+    },
+    {
+      "id": "fbb9d274-b95e-4a2f-8546-e4d92d12a072",
+      "timestamp": "2026-07-25T13:02:28.618408",
+      "title": "System-Wide AI Copilot - Antigravity IDE - SpecialProjectileActive_00.png",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "see u are trying do patch work fix the root cause see the full code in deep",
+      "rewritten_text": "Instead of applying a patchwork fix, it's essential to identify and address the root cause of the issue. To achieve this, please provide the full code for an in-depth review. \n\n* **Objective:** Identify the underlying problem and develop a comprehensive solution.\n* **Requirements:**\n  1. Share the complete codebase for analysis.\n  2. Highlight the specific sections or functions related to the issue.\n  3. Describe the expected behavior and the current output or error messages.\n* **Expected Outcome:**\n  + A detailed analysis of the root cause.\n  + A well-structured, step-by-step solution to resolve the issue.\n  + Recommendations for preventing similar problems in the future.\n* **Acceptance Criteria:**\n  + The solution fully addresses the root cause of the problem.\n  + The code is well-documented, readable, and maintainable.\n  + The fix is thoroughly tested and validated to ensure it works as expected.",
+      "entities": [
+        "Antigravity",
+        "Code Review",
+        "Debugging",
+        "Problem Solving",
+        "Software Development",
+        "AI"
+      ]
+    },
+    {
+      "id": "100d7e08-5773-4edd-ae08-2dce6d4a9915",
+      "timestamp": "2026-07-25T13:05:46.717805",
+      "title": "System-Wide AI Copilot - Antigravity IDE - SpecialProjectileActive_00.png",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "still the issue is not solved",
+      "rewritten_text": "The issue remains unresolved, and a more thorough investigation or alternative solution is required to achieve a successful outcome.",
+      "entities": [
+        "Alternative Solution",
+        "Investigation",
+        "Antigravity IDE",
+        "Antigravity",
+        "AI"
+      ]
+    },
+    {
+      "id": "3fd0233a-db1f-42e0-8403-f5b308d0bfb5",
+      "timestamp": "2026-07-25T14:16:36.020904",
+      "title": "System-Wide AI Copilot - Antigravity IDE - Implementation Plan",
+      "scenario": "AI_PROMPT_ENGINEERING",
+      "original_text": "see that card should have ui like",
+      "rewritten_text": "The card's user interface should be designed with the following specifications:\n* Include a clear and concise layout\n* Ensure all essential elements are prominently displayed\n* Provide an intuitive user experience \n* Adhere to standard UI design principles for optimal usability and visual appeal.",
+      "entities": [
+        "UI design",
+        "usability",
+        "visual appeal",
+        "Antigravity",
+        "Antigravity IDE",
+        "Antigravity IDE.exe"
+      ]
+    }
+  ]
+}

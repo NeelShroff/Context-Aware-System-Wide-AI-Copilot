@@ -1,0 +1,438 @@
+{
+  "process": "msedge.exe",
+  "total_count": 28,
+  "entries": [
+    {
+      "id": "c0c4c419-de6b-4192-91a0-82823e0e59df",
+      "timestamp": "2026-07-23T11:48:07.895542",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": [
+        "Steps",
+        "GitHub",
+        "Reproduce",
+        "Open",
+        "Click",
+        "Summary\nClicking",
+        "Android",
+        "Issues"
+      ]
+    },
+    {
+      "id": "1e772af4-bd30-4acb-8f31-c6e28b3575dc",
+      "timestamp": "2026-07-23T12:18:20.352085",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": [
+        "Summary\nClicking",
+        "Reproduce",
+        "Open",
+        "Issues",
+        "Android",
+        "Steps",
+        "GitHub",
+        "Click"
+      ]
+    },
+    {
+      "id": "2f1d0389-e30b-4a02-927a-59540b11e2e8",
+      "timestamp": "2026-07-23T12:38:46.300274",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": [
+        "Android",
+        "Reproduce",
+        "Open",
+        "Click",
+        "Steps",
+        "GitHub",
+        "Issues",
+        "Summary\nClicking"
+      ]
+    },
+    {
+      "id": "2576e9fc-139a-42f9-97c4-38e40401e564",
+      "timestamp": "2026-07-23T12:45:25.209794",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": [
+        "Issues",
+        "Reproduce",
+        "Click",
+        "Open",
+        "Android",
+        "GitHub",
+        "Steps",
+        "Summary\nClicking"
+      ]
+    },
+    {
+      "id": "a6347dd8-a7dc-40bc-824c-0d6c79975f0e",
+      "timestamp": "2026-07-23T13:00:58.818909",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": [
+        "Android",
+        "Click",
+        "Steps",
+        "Reproduce",
+        "Summary\nClicking",
+        "Issues",
+        "Open",
+        "GitHub"
+      ]
+    },
+    {
+      "id": "53c78984-ae06-4f04-84ac-8e4a47223ea9",
+      "timestamp": "2026-07-23T13:01:16.166675",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": [
+        "GitHub",
+        "Steps",
+        "Open",
+        "Reproduce",
+        "Android",
+        "Click",
+        "Summary\nClicking",
+        "Issues"
+      ]
+    },
+    {
+      "id": "a0e1585d-8444-46a9-ac40-803ec5f855a5",
+      "timestamp": "2026-07-23T13:01:41.925154",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": [
+        "Android",
+        "Issues",
+        "Click",
+        "Open",
+        "Summary\nClicking",
+        "GitHub",
+        "Steps",
+        "Reproduce"
+      ]
+    },
+    {
+      "id": "947ae3e1-35a2-4157-b343-9c6b055ed3c9",
+      "timestamp": "2026-07-23T13:16:36.918698",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": [
+        "Click",
+        "Summary\nClicking",
+        "Issues",
+        "Open",
+        "Android",
+        "GitHub",
+        "Reproduce",
+        "Steps"
+      ]
+    },
+    {
+      "id": "547aaff7-339a-4a2c-a7ff-8045bc5917ab",
+      "timestamp": "2026-07-23T13:21:53.142875",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": [
+        "Click",
+        "Reproduce",
+        "Summary\nClicking",
+        "Open",
+        "Issues",
+        "Steps",
+        "Android",
+        "GitHub"
+      ]
+    },
+    {
+      "id": "52509d88-6341-4e90-8543-76842ec35d5b",
+      "timestamp": "2026-07-23T13:30:02.368806",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": [
+        "Steps",
+        "Click",
+        "Reproduce",
+        "GitHub",
+        "Issues",
+        "Open",
+        "Summary\nClicking",
+        "Android"
+      ]
+    },
+    {
+      "id": "6191a6b6-7eb6-450d-966e-91826a672e21",
+      "timestamp": "2026-07-23T13:39:11.483746",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": [
+        "Open",
+        "Click",
+        "Android",
+        "Steps",
+        "Reproduce",
+        "GitHub",
+        "Summary\nClicking",
+        "Issues"
+      ]
+    },
+    {
+      "id": "16b3c316-90d5-4c16-853a-715fdb29b46b",
+      "timestamp": "2026-07-23T13:51:21.618760",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": [
+        "GitHub",
+        "Summary\nClicking",
+        "Open",
+        "Android",
+        "Steps",
+        "Issues",
+        "Click",
+        "Reproduce"
+      ]
+    },
+    {
+      "id": "3a185f29-ec00-4798-bbcc-8f4177d04a61",
+      "timestamp": "2026-07-23T14:59:47.281898",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": [
+        "Open",
+        "Issues",
+        "Steps",
+        "GitHub",
+        "Summary\nClicking",
+        "Click",
+        "Android",
+        "Reproduce"
+      ]
+    },
+    {
+      "id": "75398ee1-2380-421e-bdc9-a44c1a1f3f60",
+      "timestamp": "2026-07-23T15:21:33.437545",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": [
+        "GitHub",
+        "Click",
+        "Issues",
+        "Open",
+        "Reproduce",
+        "Android",
+        "Steps",
+        "Summary\nClicking"
+      ]
+    },
+    {
+      "id": "ca8aea3e-3e77-491f-99e4-f3547138f36b",
+      "timestamp": "2026-07-23T15:23:50.391853",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": [
+        "Open",
+        "Issues",
+        "Summary\nClicking",
+        "Reproduce",
+        "Steps",
+        "Click",
+        "GitHub",
+        "Android"
+      ]
+    },
+    {
+      "id": "bfced09a-c3b8-481d-bdb1-6cd60ec19d3e",
+      "timestamp": "2026-07-23T15:40:08.519144",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": [
+        "Issues",
+        "Android",
+        "Reproduce",
+        "Click",
+        "GitHub",
+        "Steps",
+        "Summary\nClicking",
+        "Open"
+      ]
+    },
+    {
+      "id": "c173e5f3-2d31-4705-882a-b68fedefbbcd",
+      "timestamp": "2026-07-23T15:45:47.194400",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": [
+        "Open",
+        "Click",
+        "Issues",
+        "GitHub",
+        "Android",
+        "Steps",
+        "Reproduce",
+        "Summary\nClicking"
+      ]
+    },
+    {
+      "id": "9ddfa1d1-30d5-4e0a-900e-224244ab4507",
+      "timestamp": "2026-07-23T16:23:28.308100",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": [
+        "Steps",
+        "Reproduce",
+        "Summary\nClicking",
+        "GitHub",
+        "Android",
+        "Open",
+        "Click",
+        "Issues"
+      ]
+    },
+    {
+      "id": "48c19765-fda0-4a12-b3ab-14fbd1d1a4f2",
+      "timestamp": "2026-07-23T16:28:57.666330",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": [
+        "GitHub",
+        "Steps",
+        "Android",
+        "Open",
+        "Issues",
+        "Summary\nClicking",
+        "Reproduce",
+        "Click"
+      ]
+    },
+    {
+      "id": "ceec8bc1-3535-4214-8f5d-2ed33cebbc16",
+      "timestamp": "2026-07-23T16:29:35.380257",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": [
+        "GitHub",
+        "Android",
+        "Reproduce",
+        "Open",
+        "Steps",
+        "Summary\nClicking",
+        "Click",
+        "Issues"
+      ]
+    },
+    {
+      "id": "9faa4802-5bed-4df1-835e-11c554bf4dc1",
+      "timestamp": "2026-07-23T16:40:11.599891",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": []
+    },
+    {
+      "id": "5546bd2e-026a-4fea-b1b8-a0dbbadb4666",
+      "timestamp": "2026-07-23T16:41:01.418694",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": []
+    },
+    {
+      "id": "7907cf69-516f-4273-a09b-365e3622c5de",
+      "timestamp": "2026-07-23T19:34:19.889633",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": []
+    },
+    {
+      "id": "d3a71158-bd71-4d23-a39a-537f7c581220",
+      "timestamp": "2026-07-23T19:44:37.122828",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": []
+    },
+    {
+      "id": "30c26b68-1b36-4bcc-b12d-3887453b0bce",
+      "timestamp": "2026-07-23T19:52:48.770948",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": []
+    },
+    {
+      "id": "f8480877-9291-44a6-935d-98a2109ff3ea",
+      "timestamp": "2026-07-23T22:26:17.444751",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": []
+    },
+    {
+      "id": "6407d0bb-bd92-44be-8ab1-80d2156aede3",
+      "timestamp": "2026-07-24T13:23:17.829340",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": []
+    },
+    {
+      "id": "b1ab6a27-4312-4e22-a661-df33b99f83b4",
+      "timestamp": "2026-07-24T13:25:39.066588",
+      "title": "Issues · owner/repo · GitHub",
+      "scenario": "GITHUB_ISSUE_BUG_REPORT",
+      "original_text": "submit button crashes app on android",
+      "rewritten_text": "### Summary\nClicking submit button crashes application on Android.\n\n### Steps to Reproduce\n1. Open app\n2. Click submit",
+      "entities": []
+    }
+  ]
+}

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spider-Man Desktop Companion</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+        html, body {
+            width: 100%; height: 100%; overflow: hidden;
+            background: transparent !important;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        canvas { display: block; width: 100%; height: 100%; background: transparent !important; }
+
+        #speech-bubble {
+            position: absolute; top: 6px; left: 50%;
+            transform: translateX(-50%) translateY(-6px) scale(0.9);
+            max-width: 160px;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(239, 68, 68, 0.7);
+            border-radius: 10px; padding: 4px 10px;
+            color: #f8fafc; font-size: 10px; font-weight: 600;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.7);
+            z-index: 20; opacity: 0; pointer-events: none;
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: center;
+        }
+        #speech-bubble.active {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0) scale(1);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="petCanvas"></canvas>
+    <div id="speech-bubble"><span id="bubble-text">✨ Ready</span></div>
+
+    <script>
+        window.addEventListener('contextmenu', (e) => e.preventDefault());
+
+        const canvas = document.getElementById('petCanvas');
+        const ctx = canvas.getContext('2d');
+        ctx.imageSmoothingEnabled = false;
+
+        let width, height, centerX, centerY;
+        let mouseX = 0, mouseY = 0;
+        let petMode = "IDLE";
+        let characterStyle = "01 [Default]";
+        let userScale = 0.85;
+        let headPatTimer = 0;
+        let animFrameIndex = 0;
+        let lastFrameTime = 0;
+
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            centerX = width / 2; centerY = height / 2 + 10;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX - centerX) / (width / 2);
+            mouseY = (e.clientY - centerY) / (height / 2);
+        });
+
+        // Retro Web Audio Synthesizer
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+
+        function playThwipSound() {
+            try {
+                if (!audioCtx) audioCtx = new AudioCtx();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(120, audioCtx.currentTime + 0.15);
+                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.15);
+            } catch(e) {}
+        }
+
+        let activeWebProjectiles = [];
+
+        canvas.addEventListener('click', (e) => {
+            const cx = e.clientX, cy = e.clientY;
+            if (Math.abs(cx - centerX) < 60 && Math.abs(cy - centerY) < 70) {
+                headPatTimer = 45;
+                playThwipSound();
+                triggerSpeech("🕸️ Thwip!", 2.0);
+
+                const dir = mouseX < -0.15 ? -1 : 1;
+                activeWebProjectiles.push({
+                    x: centerX + dir * 30,
+                    y: centerY - 8,
+                    vx: dir * 18,
+                    dir: dir,
+                    life: 0
+                });
+            }
+        });
+
+        function triggerSpeech(text, dur=3) {
+            const b = document.getElementById('speech-bubble');
+            const t = document.getElementById('bubble-text');
+            if (t) t.innerText = text;
+            b.classList.add('active');
+            playThwipSound();
+            setTimeout(() => b.classList.remove('active'), dur * 1000);
+        }
+
+        // ============================================================
+        // Sprite Preloader & Cache Engine
+        // ============================================================
+        const spriteCache = {};
+
+        const ANIM_SETS = {
+            Idle: ["Idle_00.png", "Idle_01.png", "Idle_02.png", "Idle_03.png", "Idle_04.png", "Idle_05.png", "Idle_06.png", "Idle_07.png"],
+            Selectscreen: [
+                "Selectscreen_00.png", "Selectscreen_01.png", "Selectscreen_02.png", "Selectscreen_03.png",
+                "Selectscreen_04.png", "Selectscreen_05.png", "Selectscreen_06.png", "Selectscreen_07.png",
+                "Selectscreen_08.png", "Selectscreen_09.png", "Selectscreen_10.png", "Selectscreen_11.png"
+            ],
+            Attack1: ["Attack1_00.png", "Attack1_01.png", "Attack1_02-03.png", "Attack1_04.png"],
+            Attack2: ["Attack2_00.png", "Attack2_01.png", "Attack2_02.png", "Attack2_03.png", "Attack2_04.png", "Attack2_05.png", "Attack2_06.png"],
+            Attack3: ["Attack3_00.png", "Attack3_01.png", "Attack3_02.png", "Attack3_03.png", "Attack3_04.png", "Attack3_05.png", "Attack3_06.png", "Attack3_07.png", "Attack3_08.png"],
+            Attack4: [
+                "Attack4_00.png", "Attack4_01.png", "Attack4_02.png", "Attack4_03.png", "Attack4_04.png",
+                "Attack4_05.png", "Attack4_06.png", "Attack4_07.png", "Attack4_08.png", "Attack4_09.png",
+                "Attack4_10.png", "Attack4_11.png", "Attack4_12.png"
+            ],
+            Attackair: ["Attackair_00.png", "Attackair_01.png", "Attackair_02.png"],
+            Attacksprinting: ["Attacksprinting_00.png", "Attacksprinting_01.png", "Attacksprinting_02.png", "Attacksprinting_03.png", "Attacksprinting_04.png", "Attacksprinting_05.png", "Attacksprinting_06.png"],
+            Attackswinging: [
+                "Attackswinging_00.png", "Attackswinging_01.png", "Attackswinging_02.png", "Attackswinging_03.png",
+                "Attackswinging_04_08_12_16_20_24.png", "Attackswinging_05_09_13_17_21_25.png",
+                "Attackswinging_06_10_14_18_22_26.png", "Attackswinging_07_11_15_19_23_27.png"
+            ],
+            Dodge: [
+                "Dodge_00.png", "Dodge_01.png", "Dodge_02.png", "Dodge_03.png", "Dodge_04.png", "Dodge_05.png",
+                "Dodge_06.png", "Dodge_07.png", "Dodge_08.png", "Dodge_09.png", "Dodge_10.png", "Dodge_11.png"
+            ],
+            Downbounce: ["Downbounce_00.png", "Downbounce_01.png", "Downbounce_02.png", "Downbounce_03.png", "Downbounce_04.png"],
+            Downgetup: ["Downgetup_00.png", "Downgetup_01.png", "Downgetup_02.png", "Downgetup_03.png", "Downgetup_04.png", "Downgetup_05.png"],
+            Jumpapex: ["Jumpapex_00.png", "Jumpapex_01.png", "Jumpapex_02.png", "Jumpapex_03.png", "Jumpapex_04.png"],
+            Land: ["Land_00.png", "Land_01.png", "Land_02.png", "Land_03.png"],
+            Power1: ["Power1_00.png", "Power1_01.png", "Power1_02-03.png"],
+            Power2: ["Power2_00.png", "Power2_01.png", "Power2_02-03.png"],
+            Special: [
+                "Special_00.png", "Special_01.png", "Special_02.png", "Special_03.png", "Special_04.png", "Special_05.png",
+                "Special_06.png", "Special_07.png", "Special_08.png", "Special_09.png", "Special_10.png", "Special_11.png"
+            ],
+            Spidersense: ["Spidersense_00_02_04_06_08.png", "Spidersense_01_03_05_07_09.png"],
+            Sprint: [
+                "Sprint_00.png", "Sprint_01.png", "Sprint_02.png", "Sprint_03.png",
+                "Sprint_04.png", "Sprint_05.png", "Sprint_06.png", "Sprint_07.png"
+            ],
+            Walk: [
+                "Walk_00.png", "Walk_01.png", "Walk_02.png", "Walk_03.png",
+                "Walk_04.png", "Walk_05.png", "Walk_06.png", "Walk_07.png"
+            ]
+        };
+
+        function getSpriteImage(suit, filename) {
+            const key = `${suit}/${filename}`;
+            if (!spriteCache[key]) {
+                const img = new Image();
+                img.crossOrigin = "Anonymous";
+                if (suit === "..") {
+                    img.src = `http://127.0.0.1:8799/sprite_root/${encodeURIComponent(filename)}`;
+                } else {
+                    img.src = `http://127.0.0.1:8799/sprite/${encodeURIComponent(suit)}/${encodeURIComponent(filename)}`;
+                }
+                spriteCache[key] = img;
+            }
+            return spriteCache[key];
+        }
+
+        let motionStateDesktop = "IDLE";
+        let headingDirDesktop = 1;
+        let moveAngleDesktop = 0;
+        let webAnchorXDesktop = null;
+        let webAnchorYDesktop = null;
+        let charRelXDesktop = null;
+        let charRelYDesktop = null;
+        let currentAnimKey = "Idle";
+        let lastValidImg = null;
+
+        // Preload All Sprite Sets to prevent loading flicker on state changes
+        function preloadAllSprites(suit) {
+            const s = suit || "01 [Default]";
+            Object.keys(ANIM_SETS).forEach(key => {
+                ANIM_SETS[key].forEach(file => {
+                    getSpriteImage(s, file);
+                });
+            });
+            // Preload Web Projectiles & Impact Bursts
+            getSpriteImage("..", "PowerProjectileActive_00.png");
+            getSpriteImage("..", "SpecialProjectileActive_00.png");
+            getSpriteImage("..", "SpecialProjectileDeath_02.png");
+            getSpriteImage("..", "PowerProjectileDeath_07.png");
+            getSpriteImage("..", "Webtip.png");
+        }
+        preloadAllSprites("01 [Default]");
+
+        // ============================================================
+        // Main Render Loop
+        // ============================================================
+        function drawSpidermanSprite(t) {
+            const currentSuit = characterStyle || "01 [Default]";
+            let animKey = "Idle";
+
+            // Priority 1: Movement Action Animations
+            if (motionStateDesktop === "SPRINT") {
+                animKey = "Sprint";
+            } else if (motionStateDesktop === "WALK") {
+                animKey = "Walk";
+            } else if (motionStateDesktop === "WEB_UP") {
+                animKey = "Selectscreen";     // Upside-down web hang (Selectscreen_00 - Selectscreen_11)
+            } else if (motionStateDesktop === "WEB_DOWN") {
+                animKey = "Jumpapex";         // Mid-air drop leap (Jumpapex_00 - Jumpapex_04)
+            } else if (motionStateDesktop === "WEB_DIAGONAL") {
+                animKey = "Attackswinging";   // 45-degree mid-air web swing (Attackswinging_00 - Attackswinging_07)
+            } else if (motionStateDesktop === "LAND") {
+                animKey = "Land";             // Superhero 3-point landing crouch (Land_00 - Land_03)
+            } else {
+                // Priority 2: Contextual AI Companion Stances
+                if (headPatTimer > 0) {
+                    animKey = "Power1";       // Web thwip shooting stance
+                } else if (petMode === "THINKING") {
+                    animKey = "Dodge";        // Acrobatic cartwheel dodge
+                } else if (petMode === "CODING" || petMode === "TALKING") {
+                    animKey = "Special";      // 360-degree web cyclone blast (Special_00 - Special_11)
+                } else if (petMode === "SLEEP") {
+                    animKey = "Downbounce";   // Lying ground rest stance (Downbounce_00 - Downbounce_04)
+                } else if (petMode === "CHAT") {
+                    animKey = "Selectscreen"; // Perched upside-down web hang while chatting
+                } else {
+                    animKey = "Idle";
+                }
+            }
+
+            // Zero-Flicker State Transition: Reset frame index when animation set changes
+            if (currentAnimKey !== animKey) {
+                currentAnimKey = animKey;
+                animFrameIndex = 0;
+                lastFrameTime = t;
+            }
+
+            const frames = ANIM_SETS[animKey] || ANIM_SETS.Idle;
+            const isSprint = animKey === "Sprint";
+            if (t - lastFrameTime > (isSprint ? 70 : 110)) {
+                animFrameIndex = (animFrameIndex + 1) % frames.length;
+                lastFrameTime = t;
+            }
+
+            const currentFile = frames[animFrameIndex % frames.length];
+            let img = getSpriteImage(currentSuit, currentFile);
+            if (img.complete && img.naturalWidth > 0) {
+                lastValidImg = img;
+            } else if (lastValidImg) {
+                img = lastValidImg; // Fallback to last rendered frame to prevent 1-frame blank flicker
+            }
+
+            const scale = userScale * 1.6;
+            // Relative Canvas Positioning with GPU Integer Snapping
+            const drawXPos = Math.round((charRelXDesktop !== null && charRelXDesktop !== undefined) ? charRelXDesktop : centerX);
+            const isWebMotion = motionStateDesktop === "WEB_UP" || motionStateDesktop === "WEB_DOWN" || motionStateDesktop === "WEB_DIAGONAL";
+            const baseCenterY = (charRelYDesktop !== null && charRelYDesktop !== undefined) ? charRelYDesktop : centerY;
+            const drawY = Math.round(baseCenterY + (isWebMotion || animKey === "Attackswinging" ? -22 + Math.sin(t * 0.005) * 8 : 0));
+
+            // Render Web Tether Line when moving vertically or diagonally
+            if (isWebMotion) {
+                ctx.save();
+                const handX = Math.round(drawXPos + headingDirDesktop * 22);
+                const handY = Math.round(drawY + 2); // Exact wrist hand position
+                let targetX = Math.round((webAnchorXDesktop !== null && webAnchorXDesktop !== undefined) ? webAnchorXDesktop : (drawXPos + headingDirDesktop * 35));
+                let targetY = Math.round((webAnchorYDesktop !== null && webAnchorYDesktop !== undefined) ? webAnchorYDesktop : -45);
+
+                // Outer glow web beam
+                ctx.beginPath();
+                ctx.moveTo(handX, handY);
+                ctx.lineTo(targetX, targetY);
+                ctx.strokeStyle = "rgba(255, 255, 255, 0.95)";
+                ctx.lineWidth = 2.8;
+                ctx.shadowColor = "#ffffff";
+                ctx.shadowBlur = 8;
+                ctx.stroke();
+
+                // Inner bright core
+                ctx.beginPath();
+                ctx.moveTo(handX, handY);
+                ctx.lineTo(targetX, targetY);
+                ctx.strokeStyle = "rgba(220, 240, 255, 1.0)";
+                ctx.lineWidth = 1.4;
+                ctx.stroke();
+
+                // Web tip anchor sprite
+                const tipImg = getSpriteImage("..", "Webtip.png");
+                if (tipImg.complete && tipImg.naturalWidth > 0) {
+                    ctx.drawImage(tipImg, Math.round(targetX - 10), Math.round(targetY - 10), Math.round(tipImg.naturalWidth * userScale * 1.3), Math.round(tipImg.naturalHeight * userScale * 1.3));
+                }
+                ctx.restore();
+            }
+
+            if (img.complete && img.naturalWidth > 0) {
+                const nw = Math.round(img.naturalWidth * scale);
+                const nh = Math.round(img.naturalHeight * scale);
+                const drawX = Math.round(drawXPos - nw / 2);
+                const posY = Math.round(drawY - nh / 2);
+
+                ctx.save();
+                const isFlipped = headingDirDesktop === -1 || (mouseX < -0.15 && motionStateDesktop === "IDLE");
+                if (isFlipped) {
+                    ctx.translate(drawXPos, drawY);
+                    ctx.scale(-1, 1);
+                    ctx.drawImage(img, Math.round(-nw / 2), Math.round(-nh / 2), nw, nh);
+                } else {
+                    ctx.drawImage(img, drawX, posY, nw, nh);
+                }
+
+                // Render glowing Spider-Sense danger aura above head during THINKING mode
+                if (petMode === "THINKING") {
+                    const senseImg = getSpriteImage(currentSuit, Math.floor(t / 120) % 2 === 0 ? "Spidersense_00_02_04_06_08.png" : "Spidersense_01_03_05_07_09.png");
+                    if (senseImg.complete && senseImg.naturalWidth > 0) {
+                        ctx.drawImage(senseImg, Math.round(drawXPos - 20), Math.round(posY - 28), Math.round(senseImg.naturalWidth * scale * 1.2), Math.round(senseImg.naturalHeight * scale * 1.2));
+                    }
+                }
+                ctx.restore();
+            }
+
+            // Draw traveling web projectiles and impact explosion bursts
+            for (let i = activeWebProjectiles.length - 1; i >= 0; i--) {
+                const p = activeWebProjectiles[i];
+                ctx.save();
+
+                if (!p.impact) {
+                    p.life++;
+                    const pdx = p.targetX - p.x;
+                    const pdy = p.targetY - p.y;
+                    const pdist = Math.sqrt(pdx * pdx + pdy * pdy);
+
+                    if (pdist < p.speed || pdist < 1 || p.life > p.maxLife) {
+                        p.impact = true;
+                        p.x = p.targetX;
+                        p.y = p.targetY;
+                    } else {
+                        p.x += (pdx / pdist) * p.speed;
+                        p.y += (pdy / pdist) * p.speed;
+                    }
+
+                    const px = Math.round(p.x);
+                    const py = Math.round(p.y);
+                    const sx = Math.round(p.startX);
+                    const sy = Math.round(p.startY);
+
+                    // Trailing web beam from Spider-Man's wrist to traveling web bullet
+                    ctx.beginPath();
+                    ctx.moveTo(sx, sy);
+                    ctx.lineTo(px, py);
+                    ctx.strokeStyle = "rgba(255, 255, 255, 0.95)";
+                    ctx.lineWidth = 2.5;
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.moveTo(sx, sy);
+                    ctx.lineTo(px, py);
+                    ctx.strokeStyle = "rgba(180, 230, 255, 1.0)";
+                    ctx.lineWidth = 1.2;
+                    ctx.stroke();
+
+                    const activeImg = getSpriteImage("..", p.activeSprite);
+                    const tipImg = getSpriteImage("..", "Webtip.png");
+
+                    if (activeImg.complete && activeImg.naturalWidth > 0) {
+                        const aw = Math.round(activeImg.naturalWidth * scale * 1.8);
+                        const ah = Math.round(activeImg.naturalHeight * scale * 1.8);
+                        ctx.drawImage(activeImg, Math.round(px - aw / 2), Math.round(py - ah / 2), aw, ah);
+                    }
+                    if (tipImg.complete && tipImg.naturalWidth > 0) {
+                        ctx.drawImage(tipImg, Math.round(px - 8), Math.round(py - 8), Math.round(tipImg.naturalWidth * scale * 1.3), Math.round(tipImg.naturalHeight * scale * 1.3));
+                    }
+                } else {
+                    // Web Impact Explosion Burst Phase at Destination Target Point
+                    p.impactLife++;
+                    const impactImg = getSpriteImage("..", p.deathSprite);
+
+                    if (impactImg.complete && impactImg.naturalWidth > 0) {
+                        const iw = Math.round(impactImg.naturalWidth * scale * 2.2);
+                        const ih = Math.round(impactImg.naturalHeight * scale * 2.2);
+                        ctx.drawImage(impactImg, Math.round(p.x - iw / 2), Math.round(p.y - ih / 2), iw, ih);
+                    }
+
+                    if (p.impactLife > 20) {
+                        activeWebProjectiles.splice(i, 1);
+                    }
+                }
+                ctx.restore();
+            }
+        }
+
+        function render(t) {
+            ctx.clearRect(0, 0, width, height);
+            if (headPatTimer > 0) headPatTimer--;
+
+            drawSpidermanSprite(t);
+
+            requestAnimationFrame(render);
+        }
+
+        let lastWebShootState = false;
+
+        let lastShootTs = 0;
+
+        function triggerInteractiveWebShoot(targetXInput, targetYInput) {
+            const now = Date.now();
+            if (now - lastShootTs < 400) return; // Strict single-pulse debounce guard
+            lastShootTs = now;
+
+            const charX = (charRelXDesktop !== null && charRelXDesktop !== undefined) ? charRelXDesktop : centerX;
+            const charY = (charRelYDesktop !== null && charRelYDesktop !== undefined) ? charRelYDesktop : centerY;
+            const startX = charX + headingDirDesktop * 22;
+            const startY = charY + 2; // Exact wrist hand position in web thwip pose
+
+            const targetX = (targetXInput !== undefined && targetXInput !== null) ? targetXInput : ((webAnchorXDesktop !== null && webAnchorXDesktop !== undefined) ? webAnchorXDesktop : (startX + headingDirDesktop * 800));
+            const targetY = (targetYInput !== undefined && targetYInput !== null) ? targetYInput : ((webAnchorYDesktop !== null && webAnchorYDesktop !== undefined) ? webAnchorYDesktop : (startY - 40));
+
+            const dist = Math.sqrt((targetX - startX)**2 + (targetY - startY)**2);
+            const dynamicSpeed = Math.max(14, Math.min(24, dist / 35));
+            const flightTicks = Math.ceil(dist / dynamicSpeed) + 25;
+            headPatTimer = flightTicks; // Hold thwip pose for exact bullet flight & impact duration
+
+            const activeSprite = Math.random() < 0.5 ? "PowerProjectileActive_00.png" : "SpecialProjectileActive_00.png";
+            const deathSprite = Math.random() < 0.5 ? "SpecialProjectileDeath_02.png" : "PowerProjectileDeath_07.png";
+
+            activeWebProjectiles = [{
+                startX: startX,
+                startY: startY,
+                x: startX,
+                y: startY,
+                targetX: targetX,
+                targetY: targetY,
+                dir: headingDirDesktop,
+                speed: dynamicSpeed,
+                life: 0,
+                maxLife: 100,
+                impact: false,
+                impactLife: 0,
+                activeSprite: activeSprite,
+                deathSprite: deathSprite
+            }];
+        }
+
+        canvas.addEventListener('dblclick', (e) => {
+            if (e) { e.preventDefault(); e.stopPropagation(); }
+        });
+
+        // ============================================================
+        // High-Performance Direct IPC & Polling Engine
+        // ============================================================
+        window.updatePetStateDirect = function(data) {
+            if (!data) return;
+            petMode = data.pet_mode || petMode;
+            motionStateDesktop = data.motion_state || motionStateDesktop;
+            if (data.heading_dir) headingDirDesktop = data.heading_dir;
+            if (data.move_angle !== undefined) moveAngleDesktop = data.move_angle;
+            webAnchorXDesktop = data.web_anchor_x !== undefined ? data.web_anchor_x : null;
+            webAnchorYDesktop = data.web_anchor_y !== undefined ? data.web_anchor_y : null;
+            charRelXDesktop = data.char_rel_x !== undefined ? data.char_rel_x : null;
+            charRelYDesktop = data.char_rel_y !== undefined ? data.char_rel_y : null;
+
+            if (data.web_shoot_trigger && !lastWebShootState) {
+                triggerInteractiveWebShoot(webAnchorXDesktop, webAnchorYDesktop);
+            }
+            lastWebShootState = !!data.web_shoot_trigger;
+
+            if (data.scale) userScale = data.scale;
+            if (data.character_style && data.character_style !== characterStyle) {
+                characterStyle = data.character_style;
+            }
+        };
+
+        async function pollPetState() {
+            try {
+                const res = await fetch('http://127.0.0.1:8799/api/status');
+                if (res.ok) {
+                    const data = await res.json();
+                    window.updatePetStateDirect(data);
+
+                    const speech = data.speech_text, ts = data.speech_timestamp||0, dur=data.speech_duration||4;
+                    const b = document.getElementById('speech-bubble');
+                    const bt = document.getElementById('bubble-text');
+                    const now = Date.now()/1000;
+                    if (speech && (now-ts) < dur) {
+                        if (bt && bt.innerText!==speech) bt.innerText=speech;
+                        b.classList.add('active');
+                    } else { b.classList.remove('active'); }
+                }
+            } catch(e) {}
+        }
+
+        function selectChar(style, sync=true) {
+            characterStyle = style || "01 [Default]";
+            if (sync) fetch(`http://127.0.0.1:8799/api/character?style=${encodeURIComponent(characterStyle)}`);
+        }
+        window.setCharacterStyle = (s) => selectChar(s, false);
+        window.setUserScale = (s) => { if (s) userScale = s; };
+
+        const suits = [
+            "01 [Default]", "02 [Red]", "03 [Orange]", "04 [Yellow]",
+            "05 [Collab - Rivals]", "06 [Black - Black Suit]",
+            "07 [White - Negative Suit]", "08 [Cobalt - Electroproof]", "09 [Gold - Iron Spidey]"
+        ];
+
+        canvas.addEventListener('dblclick', () => {
+            let idx = suits.indexOf(characterStyle);
+            selectChar(suits[(idx + 1) % suits.length], true);
+        });
+
+        requestAnimationFrame(render);
+        setInterval(pollPetState, 30);
+    </script>
+</body>
+</html>

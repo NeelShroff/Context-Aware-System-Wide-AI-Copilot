@@ -1,0 +1,26 @@
+{
+  "total_entries": 245,
+  "applications": {
+    "chrome.exe": {
+      "count": 84,
+      "last_interaction": "2026-07-24T16:16:35.196408",
+      "last_scenario": "PERSONAL_CHAT"
+    },
+    "msedge.exe": {
+      "count": 28,
+      "last_interaction": "2026-07-24T13:25:39.066588",
+      "last_scenario": "GITHUB_ISSUE_BUG_REPORT"
+    },
+    "whatsapp.exe": {
+      "count": 28,
+      "last_interaction": "2026-07-24T13:25:43.198203",
+      "last_scenario": "PERSONAL_CHAT"
+    },
+    "Antigravity IDE.exe": {
+      "count": 105,
+      "last_interaction": "2026-07-25T14:16:36.020904",
+      "last_scenario": "AI_PROMPT_ENGINEERING"
+    }
+  },
+  "last_updated": "2026-07-25T14:16:36.020904"
+}

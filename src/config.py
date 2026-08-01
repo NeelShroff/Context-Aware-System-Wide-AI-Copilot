@@ -20,4 +20,10 @@ class Config:
     # Maximum retries on API failure
     MAX_RETRIES: int = int(os.getenv("MAX_RETRIES", "1"))
 
+    # Neo4j Graph Database Configuration
+    NEO4J_URI: str = os.getenv("NEO4J_URI", "bolt://localhost:7687")
+    NEO4J_USER: str = os.getenv("NEO4J_USER", "neo4j")
+    NEO4J_PASSWORD: str = os.getenv("NEO4J_PASSWORD", "")
+    NEO4J_ENABLED: bool = os.getenv("NEO4J_ENABLED", "true").lower() in ("true", "1", "yes")
+
 config = Config()
